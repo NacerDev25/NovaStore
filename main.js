@@ -61,10 +61,23 @@ function applyTranslations() {
 
     // تحديث النصوص في الهيدر والبطول
     document.title = t.title;
-    document.querySelector('nav a:nth-child(1)').textContent = t.nav_home;
-    document.querySelector('nav div a:nth-child(1)').textContent = t.nav_home;
-    document.querySelector('nav div a:nth-child(2)').textContent = t.nav_products;
-    document.querySelector('nav div a:nth-child(3)').textContent = t.nav_settings;
+    
+    // روابط الكمبيوتر
+    const desktopLinks = document.querySelectorAll('nav div a');
+    if(desktopLinks.length >= 3) {
+        desktopLinks[0].textContent = t.nav_home;
+        desktopLinks[1].textContent = t.nav_products;
+        desktopLinks[2].textContent = t.nav_settings;
+    }
+
+    // روابط الجوال
+    const mobileLinks = document.querySelectorAll('#mobile-menu a');
+    if(mobileLinks.length >= 3) {
+        mobileLinks[0].textContent = t.nav_home;
+        mobileLinks[1].textContent = t.nav_products;
+        mobileLinks[2].textContent = t.nav_settings;
+        mobileLinks.forEach(link => link.style.textAlign = lang === 'ar' ? 'right' : 'left');
+    }
 
     // تحديث Hero Section
     const heroTitle = document.querySelector('section h1');
@@ -118,5 +131,28 @@ function renderProducts(lang) {
     }
 }
 
+// التحكم في قائمة الجوال
+function initMobileMenu() {
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // إغلاق القائمة عند الضغط على أي رابط
+        const links = mobileMenu.querySelectorAll('a');
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    }
+}
+
 // تشغيل عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', applyTranslations);
+document.addEventListener('DOMContentLoaded', () => {
+    applyTranslations();
+    initMobileMenu();
+});

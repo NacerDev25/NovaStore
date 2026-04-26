@@ -39,12 +39,19 @@
                 <a href="settings.html" class="hover:text-blue-600">الإعدادات</a>
             </div>
 
-            <button class="md:hidden p-2" aria-label="فتح القائمة">
+            <button id="menu-btn" class="md:hidden p-2" aria-label="فتح القائمة">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
             </button>
         </nav>
+        
+        <!-- القائمة المنسدلة للجوال -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 space-y-4 shadow-inner">
+            <a href="#" class="block hover:text-blue-600 font-bold py-2 text-right">الرئيسية</a>
+            <a href="#products" class="block hover:text-blue-600 font-bold py-2 text-right">المنتجات</a>
+            <a href="settings.html" class="block hover:text-blue-600 font-bold py-2 text-right">الإعدادات</a>
+        </div>
     </header>
 
     <!-- Hero Section -->
