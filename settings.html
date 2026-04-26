@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات | متجر العمولة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    
+    <header class="bg-white shadow-sm p-4">
+        <div class="container mx-auto flex items-center">
+            <a href="index.html" class="text-blue-600 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                </svg>
+                <span>العودة للمتجر</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 max-w-2xl">
+        <h1 class="text-3xl font-bold mb-8">إعدادات الموقع</h1>
+
+        <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-blue-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
+                </svg>
+                لغة الموقع (Langue)
+            </h2>
+
+            <div class="space-y-4">
+                <button onclick="changeLanguage('ar')" id="lang-ar" class="w-full flex justify-between items-center p-4 rounded-xl border-2 border-blue-600 bg-blue-50">
+                    <span class="font-bold">العربية</span>
+                    <svg id="check-ar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-blue-600">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+
+                <button onclick="changeLanguage('fr')" id="lang-fr" class="w-full flex justify-between items-center p-4 rounded-xl border-2 border-transparent bg-gray-50 hover:bg-gray-100 transition-colors">
+                    <span class="font-bold">Français</span>
+                    <svg id="check-fr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-blue-600 hidden">
+                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            updateUI(lang);
+            // سنقوم بتوجيه المستخدم للرئيسية بعد الاختيار أو ترك الخيار له للعودة يدوياً
+        }
+
+        function updateUI(lang) {
+            const isAr = lang === 'ar';
+            
+            // تحديث شكل الأزرار
+            document.getElementById('lang-ar').className = isAr ? 'w-full flex justify-between items-center p-4 rounded-xl border-2 border-blue-600 bg-blue-50' : 'w-full flex justify-between items-center p-4 rounded-xl border-2 border-transparent bg-gray-50 hover:bg-gray-100';
+            document.getElementById('lang-fr').className = !isAr ? 'w-full flex justify-between items-center p-4 rounded-xl border-2 border-blue-600 bg-blue-50' : 'w-full flex justify-between items-center p-4 rounded-xl border-2 border-transparent bg-gray-50 hover:bg-gray-100';
+            
+            // إظهار/إخفاء علامة الصح
+            document.getElementById('check-ar').classList.toggle('hidden', !isAr);
+            document.getElementById('check-fr').classList.toggle('hidden', isAr);
+
+            // تغيير اتجاه الصفحة
+            document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+        }
+
+        // تحميل اللغة المحفوظة عند فتح الصفحة
+        const savedLang = localStorage.getItem('selectedLang') || 'ar';
+        updateUI(savedLang);
+    </script>
+</body>
+</html>

@@ -1,58 +1,109 @@
-// بيانات المنتجات التجريبية (Affiliate Products)
+// قاموس الترجمات
+const translations = {
+    ar: {
+        title: "متجر العمولة | أفضل المنتجات",
+        nav_home: "الرئيسية",
+        nav_products: "المنتجات",
+        nav_settings: "الإعدادات",
+        hero_title: "تسوق أفضل المنتجات المختارة بعناية",
+        hero_subtitle: "نوفر لك أفضل العروض من أمازون، جوميا، وعلي إكسبريس في مكان واحد.",
+        hero_btn: "تصفح المنتجات الآن",
+        latest_products: "أحدث المنتجات",
+        shop_now: "تسوق الآن",
+        footer_rights: "جميع الحقوق محفوظة.",
+        privacy: "سياسة الخصوصية",
+        terms: "شروط الاستخدام"
+    },
+    fr: {
+        title: "Affiliate Store | Meilleurs Produits",
+        nav_home: "Accueil",
+        nav_products: "Produits",
+        nav_settings: "Paramètres",
+        hero_title: "Découvrez les meilleurs produits sélectionnés",
+        hero_subtitle: "Nous vous offrons les meilleures offres d'Amazon, Jumia et AliExpress au même endroit.",
+        hero_btn: "Voir les produits",
+        latest_products: "Derniers Produits",
+        shop_now: "Acheter maintenant",
+        footer_rights: "Tous droits réservés.",
+        privacy: "Politique de confidentialité",
+        terms: "Conditions d'utilisation"
+    }
+};
+
+// بيانات المنتجات (مترجمة)
 const products = [
     {
         id: 1,
-        title: "ساعة ذكية متطورة",
-        price: "15000 د.ج",
+        titles: { ar: "ساعة ذكية متطورة", fr: "Montre Connectée Avancée" },
+        price: "15000 DA",
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
         link: "https://amazon.com/example-watch",
-        store: "أمازون"
+        store: { ar: "أمازون", fr: "Amazon" }
     },
     {
         id: 2,
-        title: "سماعات لاسلكية عازلة للضوضاء",
-        price: "8500 د.ج",
+        titles: { ar: "سماعات لاسلكية", fr: "Écouteurs Sans Fil" },
+        price: "8500 DA",
         image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
         link: "https://aliexpress.com/example-headphones",
-        store: "علي إكسبريس"
-    },
-    {
-        id: 3,
-        title: "حقيبة ظهر للكمبيوتر المحمول",
-        price: "4200 د.ج",
-        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500",
-        link: "https://jumia.com/example-bag",
-        store: "جوميا"
-    },
-    {
-        id: 4,
-        title: "هاتف ذكي بذاكرة 256 جيجا",
-        price: "45000 د.ج",
-        image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500",
-        link: "https://amazon.com/example-phone",
-        store: "أمازون"
+        store: { ar: "علي إكسبريس", fr: "AliExpress" }
     }
 ];
 
-// دالة لإنشاء بطاقة المنتج (Product Card)
-function createProductCard(product) {
+// دالة لتطبيق الترجمة على الصفحة
+function applyTranslations() {
+    const lang = localStorage.getItem('selectedLang') || 'ar';
+    const t = translations[lang];
+
+    // تحديث اتجاه الصفحة واللغة
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+
+    // تحديث النصوص في الهيدر والبطول
+    document.title = t.title;
+    document.querySelector('nav a:nth-child(1)').textContent = t.nav_home;
+    document.querySelector('nav div a:nth-child(1)').textContent = t.nav_home;
+    document.querySelector('nav div a:nth-child(2)').textContent = t.nav_products;
+    document.querySelector('nav div a:nth-child(3)').textContent = t.nav_settings;
+
+    // تحديث Hero Section
+    const heroTitle = document.querySelector('section h1');
+    if(heroTitle) heroTitle.textContent = t.hero_title;
+    
+    const heroSub = document.querySelector('section p');
+    if(heroSub) heroSub.textContent = t.hero_subtitle;
+    
+    const heroBtn = document.querySelector('section a');
+    if(heroBtn) heroBtn.textContent = t.hero_btn;
+
+    // تحديث عنوان المنتجات
+    const productsTitle = document.querySelector('main h2');
+    if(productsTitle) productsTitle.textContent = t.latest_products;
+
+    // إعادة عرض المنتجات باللغة الجديدة
+    renderProducts(lang);
+}
+
+// دالة لإنشاء بطاقة المنتج
+function createProductCard(product, lang) {
+    const shopNowText = translations[lang].shop_now;
     return `
         <article class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col">
             <div class="relative pb-[100%]">
-                <img src="${product.image}" alt="${product.title}" class="absolute inset-0 w-full h-full object-cover">
+                <img src="${product.image}" alt="${product.titles[lang]}" class="absolute inset-0 w-full h-full object-cover">
                 <span class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg">
-                    ${product.store}
+                    ${product.store[lang]}
                 </span>
             </div>
             
             <div class="p-5 flex flex-col flex-grow">
-                <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">${product.title}</h3>
+                <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">${product.titles[lang]}</h3>
                 <p class="text-blue-600 font-extrabold text-xl mb-4">${product.price}</p>
                 
                 <div class="mt-auto">
                     <a href="${product.link}" target="_blank" rel="noopener noreferrer" 
                        class="block w-full text-center bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">
-                        تسوق الآن
+                        ${shopNowText}
                     </a>
                 </div>
             </div>
@@ -60,17 +111,12 @@ function createProductCard(product) {
     `;
 }
 
-// عرض المنتجات عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
+function renderProducts(lang) {
     const productsContainer = document.getElementById('products-container');
-    
     if (productsContainer) {
-        // تفريغ المحتوى التجريبي (Skeleton)
-        productsContainer.innerHTML = '';
-        
-        // إضافة المنتجات
-        products.forEach(product => {
-            productsContainer.innerHTML += createProductCard(product);
-        });
+        productsContainer.innerHTML = products.map(p => createProductCard(p, lang)).join('');
     }
-});
+}
+
+// تشغيل عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', applyTranslations);
