@@ -18,7 +18,10 @@ const translations = {
         all_categories: "الكل",
         cat_electronics: "إلكترونيات",
         cat_watches: "ساعات",
-        cat_audio: "صوتيات"
+        cat_audio: "صوتيات",
+        theme_title: "مظهر الموقع (Theme)",
+        theme_light: "الوضع الفاتح",
+        theme_dark: "الوضع الليلي"
     },
     fr: {
         title: "NovaStore | Meilleurs Produits",
@@ -38,7 +41,10 @@ const translations = {
         all_categories: "Tout",
         cat_electronics: "Électronique",
         cat_watches: "Montres",
-        cat_audio: "Audio"
+        cat_audio: "Audio",
+        theme_title: "Thème du site",
+        theme_light: "Mode Clair",
+        theme_dark: "Mode Sombre"
     }
 };
 
@@ -75,6 +81,16 @@ const products = [
 
 let currentCategory = "all";
 let currentSearch = "";
+
+// دالة لتطبيق المظهر (Theme)
+function applyTheme() {
+    const theme = localStorage.getItem('selectedTheme') || 'light';
+    if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
+    }
+}
 
 // دالة لتطبيق الترجمة على الصفحة
 function applyTranslations() {
@@ -132,7 +148,7 @@ function renderCategories(lang) {
 
     container.innerHTML = categories.map(cat => `
         <button onclick="filterByCategory('${cat.id}')" 
-                class="px-6 py-2 rounded-full font-bold transition-all whitespace-nowrap ${currentCategory === cat.id ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-indigo-50 border border-gray-100'}">
+                class="px-6 py-2 rounded-full font-bold transition-all whitespace-nowrap ${currentCategory === cat.id ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-indigo-50 border border-gray-100 dark:border-gray-700'}">
             ${cat.name}
         </button>
     `).join('');
@@ -160,7 +176,7 @@ function createProductCard(product, lang) {
     const shopNowText = translations[lang].shop_now;
     const productTitle = product.titles[lang];
     return `
-        <article class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col group">
+        <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group">
             <div class="relative pb-[100%] overflow-hidden">
                 <img src="${product.image}" alt="${productTitle}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                 <span class="absolute top-2 right-2 bg-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
@@ -168,11 +184,12 @@ function createProductCard(product, lang) {
                 </span>
             </div>
             <div class="p-5 flex flex-col flex-grow">
-                <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-indigo-600 transition-colors">${productTitle}</h3>
-                <p class="text-indigo-600 font-extrabold text-xl mb-4">${product.price}</p>
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-2 group-hover:text-indigo-600 transition-colors">${productTitle}</h3>
+                <p class="text-indigo-600 dark:text-indigo-400 font-extrabold text-xl mb-4">${product.price}</p>
                 <div class="mt-auto">
                     <a href="${product.link}" target="_blank" rel="noopener noreferrer" 
-                       class="block w-full text-center bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-indigo-600 transition-all shadow-md hover:shadow-indigo-200">
+                       aria-label="Shop Now: ${productTitle}"
+                       class="block w-full text-center bg-gray-900 dark:bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-600 dark:hover:bg-indigo-500 transition-all shadow-md">
                         ${shopNowText}
                     </a>
                 </div>
@@ -186,13 +203,9 @@ function renderProducts(lang, searchTerm = "") {
     if (!productsContainer) return;
 
     let filtered = products;
-    
-    // تصفية حسب التصنيف
     if (currentCategory !== 'all') {
         filtered = filtered.filter(p => p.category === currentCategory);
     }
-
-    // تصفية حسب البحث
     if (searchTerm) {
         filtered = filtered.filter(p => 
             p.titles[lang].toLowerCase().includes(searchTerm) ||
@@ -224,6 +237,7 @@ function initMobileMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    applyTheme(); // تطبيق الثيم أولاً
     applyTranslations();
     initMobileMenu();
     initSearch();

@@ -8,84 +8,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الإعدادات | NovaStore</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         body { font-family: 'Cairo', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     
-    <header class="bg-white shadow-sm p-4">
+    <header class="bg-white dark:bg-gray-800 shadow-sm p-4 sticky top-0 z-50">
         <div class="container mx-auto flex items-center">
-            <a href="index.html" class="text-indigo-600 hover:text-indigo-800 transition-colors flex items-center gap-2 font-bold">
+            <a href="index.html" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 transition-colors flex items-center gap-2 font-bold">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
-                <span>العودة للمتجر</span>
+                <span id="back-text">العودة للمتجر</span>
             </a>
         </div>
     </header>
 
     <main class="container mx-auto px-4 py-12 max-w-2xl">
-        <h1 class="text-3xl font-bold mb-8">إعدادات الموقع</h1>
+        <h1 id="settings-title" class="text-3xl font-bold mb-8">إعدادات الموقع</h1>
 
-        <section class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
-                </svg>
-                لغة الموقع (Langue)
-            </h2>
-
-            <div class="space-y-4">
-                <button onclick="changeLanguage('ar')" id="lang-ar" class="w-full flex justify-between items-center p-4 rounded-xl border-2 border-indigo-600 bg-indigo-50 transition-all">
-                    <span class="font-bold text-indigo-900">العربية</span>
-                    <svg id="check-ar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600">
-                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+        <div class="space-y-8">
+            <!-- لغة الموقع -->
+            <section class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+                <h2 id="lang-title" class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
                     </svg>
-                </button>
+                    لغة الموقع (Language)
+                </h2>
 
-                <button onclick="changeLanguage('fr')" id="lang-fr" class="w-full flex justify-between items-center p-4 rounded-xl border-2 border-transparent bg-gray-50 hover:bg-gray-100 transition-all">
-                    <span class="font-bold">Français</span>
-                    <svg id="check-fr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
-                        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                <div class="grid grid-cols-1 gap-4">
+                    <button onclick="changeLanguage('ar')" id="lang-ar" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
+                        <span class="font-bold">العربية</span>
+                        <svg id="check-ar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
+                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    <button onclick="changeLanguage('fr')" id="lang-fr" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
+                        <span class="font-bold">Français</span>
+                        <svg id="check-fr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
+                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <!-- مظهر الموقع -->
+            <section class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+                <h2 id="theme-title" class="text-xl font-bold mb-6 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
                     </svg>
-                </button>
-            </div>
-        </section>
+                    مظهر الموقع (Theme)
+                </h2>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="changeTheme('light')" id="theme-light" class="flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591" />
+                        </svg>
+                        <span id="text-light" class="font-bold">الوضع الفاتح</span>
+                    </button>
+
+                    <button onclick="changeTheme('dark')" id="theme-dark" class="flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+                        </svg>
+                        <span id="text-dark" class="font-bold">الوضع الليلي</span>
+                    </button>
+                </div>
+            </section>
+        </div>
     </main>
 
     <script>
+        const translations = {
+            ar: {
+                back: "العودة للمتجر",
+                title: "إعدادات الموقع",
+                lang_title: "لغة الموقع (Language)",
+                theme_title: "مظهر الموقع (Theme)",
+                light: "الوضع الفاتح",
+                dark: "الوضع الليلي"
+            },
+            fr: {
+                back: "Retour au magasin",
+                title: "Paramètres du site",
+                lang_title: "Langue du site",
+                theme_title: "Thème du site",
+                light: "Mode Clair",
+                dark: "Mode Sombre"
+            }
+        };
+
         function changeLanguage(lang) {
             localStorage.setItem('selectedLang', lang);
-            updateUI(lang);
+            updateUI();
         }
 
-        function updateUI(lang) {
+        function changeTheme(theme) {
+            localStorage.setItem('selectedTheme', theme);
+            updateUI();
+        }
+
+        function updateUI() {
+            const lang = localStorage.getItem('selectedLang') || 'ar';
+            const theme = localStorage.getItem('selectedTheme') || 'light';
             const isAr = lang === 'ar';
-            
-            const activeClass = 'w-full flex justify-between items-center p-4 rounded-xl border-2 border-indigo-600 bg-indigo-50 transition-all';
-            const inactiveClass = 'w-full flex justify-between items-center p-4 rounded-xl border-2 border-transparent bg-gray-50 hover:bg-gray-100 transition-all';
+            const isDark = theme === 'dark';
+            const t = translations[lang];
 
-            document.getElementById('lang-ar').className = isAr ? activeClass : inactiveClass;
-            document.getElementById('lang-fr').className = !isAr ? activeClass : inactiveClass;
-            
-            const arSpan = document.getElementById('lang-ar').querySelector('span');
-            const frSpan = document.getElementById('lang-fr').querySelector('span');
-            
-            if(arSpan) arSpan.className = isAr ? 'font-bold text-indigo-900' : 'font-bold';
-            if(frSpan) frSpan.className = !isAr ? 'font-bold text-indigo-900' : 'font-bold';
+            // تطبيق اللغة والاتجاه
+            document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
 
+            // تطبيق المظهر
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            // تحديث النصوص
+            document.getElementById('back-text').textContent = t.back;
+            document.getElementById('settings-title').textContent = t.title;
+            document.getElementById('lang-title').innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600"><path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" /></svg>
+                ${t.lang_title}`;
+            document.getElementById('theme-title').innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
+                ${t.theme_title}`;
+            document.getElementById('text-light').textContent = t.light;
+            document.getElementById('text-dark').textContent = t.dark;
+
+            // تحديث شكل الأزرار
+            const activeClass = 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400';
+            const inactiveClass = 'border-transparent bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700';
+
+            document.getElementById('lang-ar').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${isAr ? activeClass : inactiveClass}`;
+            document.getElementById('lang-fr').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${!isAr ? activeClass : inactiveClass}`;
             document.getElementById('check-ar').classList.toggle('hidden', !isAr);
             document.getElementById('check-fr').classList.toggle('hidden', isAr);
 
-            document.documentElement.dir = isAr ? 'rtl' : 'ltr';
-            document.documentElement.lang = lang;
+            document.getElementById('theme-light').className = `flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${!isDark ? activeClass : inactiveClass}`;
+            document.getElementById('theme-dark').className = `flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${isDark ? activeClass : inactiveClass}`;
         }
 
-        // تحميل اللغة المحفوظة عند فتح الصفحة
-        const savedLang = localStorage.getItem('selectedLang') || 'ar';
-        updateUI(savedLang);
+        updateUI();
     </script>
 </body>
 </html>

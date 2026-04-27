@@ -10,8 +10,9 @@
     <!-- Tailwind CSS عبر الرابط المباشر (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // تهيئة ألوان مخصصة لـ Tailwind
+        // تهيئة ألوان مخصصة لـ Tailwind ودعم الوضع الليلي
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -40,20 +41,24 @@
             max-width: 400px;
             width: 100%;
         }
+
+        /* منع شريط التمرير للتصنيفات */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
     
     <!-- Header / Navbar -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4" aria-label="القائمة الرئيسية">
-            <a href="/" class="text-2xl font-bold text-indigo-600 flex-shrink-0">NovaStore</a>
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50 transition-colors">
+        <nav class="container mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4" aria-label="Main Navigation">
+            <a href="/" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 flex-shrink-0">NovaStore</a>
             
             <!-- شريط البحث -->
             <div class="search-container order-3 md:order-2 flex-grow mx-auto md:mx-4">
                 <div class="relative">
                     <input type="search" id="product-search" 
-                           class="w-full bg-gray-100 border-none rounded-xl py-2 px-10 focus:ring-2 focus:ring-indigo-600 transition-all text-sm"
+                           class="w-full bg-gray-100 dark:bg-gray-700 border-none rounded-xl py-2 px-10 focus:ring-2 focus:ring-indigo-600 transition-all text-sm dark:text-white"
                            placeholder="ابحث عن المنتجات...">
                     <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -62,12 +67,12 @@
             </div>
 
             <div class="hidden md:flex space-x-reverse space-x-6 order-2 md:order-3">
-                <a href="#" class="hover:text-indigo-600 transition-colors font-medium">الرئيسية</a>
-                <a href="#products" class="hover:text-indigo-600 transition-colors font-medium">المنتجات</a>
-                <a href="settings.html" class="hover:text-indigo-600 transition-colors font-medium">الإعدادات</a>
+                <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">الرئيسية</a>
+                <a href="#products" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">المنتجات</a>
+                <a href="settings.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">الإعدادات</a>
             </div>
 
-            <button id="menu-btn" class="md:hidden p-2 text-gray-600 hover:text-indigo-600 transition-colors order-2" aria-label="فتح القائمة">
+            <button id="menu-btn" class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors order-2" aria-label="Toggle Menu">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
@@ -75,10 +80,10 @@
         </nav>
         
         <!-- القائمة المنسدلة للجوال -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 p-4 space-y-4 shadow-inner">
-            <a href="#" class="block hover:text-indigo-600 font-bold py-2 text-right">الرئيسية</a>
-            <a href="#products" class="block hover:text-indigo-600 font-bold py-2 text-right">المنتجات</a>
-            <a href="settings.html" class="block hover:text-indigo-600 font-bold py-2 text-right">الإعدادات</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 p-4 space-y-4 shadow-inner">
+            <a href="#" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">الرئيسية</a>
+            <a href="#products" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">المنتجات</a>
+            <a href="settings.html" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">الإعدادات</a>
         </div>
     </header>
 
@@ -92,7 +97,7 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="bg-white border-b border-gray-100 sticky top-[73px] md:top-[80px] z-40 overflow-x-auto no-scrollbar">
+    <section class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 sticky top-[73px] md:top-[80px] z-40 overflow-x-auto no-scrollbar transition-colors">
         <div id="categories-container" class="container mx-auto px-4 py-4 flex justify-start md:justify-center items-center gap-3 min-w-max">
             <!-- التصنيفات ستظهر هنا عبر JavaScript -->
         </div>
@@ -100,7 +105,7 @@
 
     <!-- Products Grid -->
     <main id="products" class="container mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold mb-12 text-center text-gray-800 relative inline-block left-1/2 -translate-x-1/2">
+        <h2 class="text-3xl font-bold mb-12 text-center text-gray-800 dark:text-white relative inline-block left-1/2 -translate-x-1/2">
             أحدث المنتجات
             <span class="block h-1 w-1/2 bg-indigo-600 mx-auto mt-2 rounded-full"></span>
         </h2>
@@ -118,12 +123,6 @@
             <div class="flex justify-center space-x-reverse space-x-6">
                 <a href="#" class="hover:text-white transition-colors">سياسة الخصوصية</a>
                 <a href="#" class="hover:text-white transition-colors">شروط الاستخدام</a>
-            </div>
-        </div>
-    </footer>
-            <div class="flex justify-center space-x-reverse space-x-4">
-                <a href="#" class="hover:text-white">سياسة الخصوصية</a>
-                <a href="#" class="hover:text-white">شروط الاستخدام</a>
             </div>
         </div>
     </footer>
