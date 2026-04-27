@@ -23,6 +23,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
         body { font-family: 'Cairo', sans-serif; }
+        
+        /* تصميم مفتاح التبديل (Toggle Switch) */
+        .dot { transition: all 0.3s ease-in-out; }
+        input:checked ~ .dot { transform: translateX(-100%); background-color: #4f46e5; }
+        [dir="ltr"] input:checked ~ .dot { transform: translateX(100%); }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -41,7 +46,7 @@
     <main class="container mx-auto px-4 py-12 max-w-2xl">
         <h1 id="settings-title" class="text-3xl font-bold mb-8">إعدادات الموقع</h1>
 
-        <div class="space-y-8">
+        <div class="space-y-6">
             <!-- لغة الموقع -->
             <section class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
                 <h2 id="lang-title" class="text-xl font-bold mb-6 flex items-center gap-2">
@@ -51,7 +56,7 @@
                     لغة الموقع (Language)
                 </h2>
 
-                <div class="grid grid-cols-1 gap-4">
+                <div class="grid grid-cols-1 gap-3">
                     <button onclick="changeLanguage('ar')" id="lang-ar" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
                         <span class="font-bold">العربية</span>
                         <svg id="check-ar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
@@ -68,29 +73,29 @@
                 </div>
             </section>
 
-            <!-- مظهر الموقع -->
+            <!-- مظهر الموقع (Toggle) -->
             <section class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-                <h2 id="theme-title" class="text-xl font-bold mb-6 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-                    </svg>
-                    مظهر الموقع (Theme)
-                </h2>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
+                            <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path id="icon-path" stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591M12 18.75V21m-4.773-4.227l-1.591 1.591" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 id="theme-title" class="text-lg font-bold">مظهر الموقع (Theme)</h2>
+                            <p id="theme-status" class="text-sm text-gray-500 dark:text-gray-400">الوضع الفاتح</p>
+                        </div>
+                    </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <button onclick="changeTheme('light')" id="theme-light" class="flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591" />
-                        </svg>
-                        <span id="text-light" class="font-bold">الوضع الفاتح</span>
-                    </button>
-
-                    <button onclick="changeTheme('dark')" id="theme-dark" class="flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-                        </svg>
-                        <span id="text-dark" class="font-bold">الوضع الليلي</span>
-                    </button>
+                    <!-- مفتاح التبديل -->
+                    <label for="theme-toggle" class="flex items-center cursor-pointer select-none" aria-label="Toggle Theme">
+                        <div class="relative">
+                            <input type="checkbox" id="theme-toggle" class="sr-only" onchange="toggleTheme()">
+                            <div class="block bg-gray-200 dark:bg-gray-700 w-14 h-8 rounded-full transition-colors"></div>
+                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow transition-all"></div>
+                        </div>
+                    </label>
                 </div>
             </section>
         </div>
@@ -121,8 +126,9 @@
             updateUI();
         }
 
-        function changeTheme(theme) {
-            localStorage.setItem('selectedTheme', theme);
+        function toggleTheme() {
+            const isDark = document.getElementById('theme-toggle').checked;
+            localStorage.setItem('selectedTheme', isDark ? 'dark' : 'light');
             updateUI();
         }
 
@@ -133,11 +139,9 @@
             const isDark = theme === 'dark';
             const t = translations[lang];
 
-            // تطبيق اللغة والاتجاه
             document.documentElement.dir = isAr ? 'rtl' : 'ltr';
             document.documentElement.lang = lang;
 
-            // تطبيق المظهر
             if (isDark) {
                 document.documentElement.classList.add('dark');
             } else {
@@ -150,13 +154,21 @@
             document.getElementById('lang-title').innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600"><path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" /></svg>
                 ${t.lang_title}`;
-            document.getElementById('theme-title').innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" /></svg>
-                ${t.theme_title}`;
-            document.getElementById('text-light').textContent = t.light;
-            document.getElementById('text-dark').textContent = t.dark;
+            document.getElementById('theme-title').textContent = t.theme_title;
+            document.getElementById('theme-status').textContent = isDark ? t.dark : t.light;
 
-            // تحديث شكل الأزرار
+            // تحديث حالة مفتاح التبديل
+            document.getElementById('theme-toggle').checked = isDark;
+
+            // تحديث الأيقونة
+            const iconPath = document.getElementById('icon-path');
+            if (isDark) {
+                iconPath.setAttribute('d', 'M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z');
+            } else {
+                iconPath.setAttribute('d', 'M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591M12 18.75V21m-4.773-4.227l-1.591 1.591');
+            }
+
+            // تحديث شكل أزرار اللغة
             const activeClass = 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400';
             const inactiveClass = 'border-transparent bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700';
 
@@ -164,9 +176,6 @@
             document.getElementById('lang-fr').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${!isAr ? activeClass : inactiveClass}`;
             document.getElementById('check-ar').classList.toggle('hidden', !isAr);
             document.getElementById('check-fr').classList.toggle('hidden', isAr);
-
-            document.getElementById('theme-light').className = `flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${!isDark ? activeClass : inactiveClass}`;
-            document.getElementById('theme-dark').className = `flex flex-col items-center gap-3 p-4 rounded-xl border-2 transition-all ${isDark ? activeClass : inactiveClass}`;
         }
 
         updateUI();
