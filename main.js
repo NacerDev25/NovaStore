@@ -16,9 +16,9 @@ const translations = {
         privacy: "سياسة الخصوصية",
         terms: "شروط الاستخدام",
         all_categories: "الكل",
-        cat_electronics: "إلكترونيات",
-        cat_watches: "ساعات",
-        cat_audio: "صوتيات",
+        cat_women: "عالم المرأة",
+        cat_men: "عالم الرجل",
+        cat_tech: "قسم التقنية",
         theme_title: "مظهر الموقع (Theme)",
         theme_light: "الوضع الفاتح",
         theme_dark: "الوضع الليلي"
@@ -39,43 +39,52 @@ const translations = {
         privacy: "Politique de confidentialité",
         terms: "Conditions d'utilisation",
         all_categories: "Tout",
-        cat_electronics: "Électronique",
-        cat_watches: "Montres",
-        cat_audio: "Audio",
+        cat_women: "Monde des Femmes",
+        cat_men: "Monde des Hommes",
+        cat_tech: "Technologie",
         theme_title: "Thème du site",
-        theme_light: "Mode Clair",
-        theme_dark: "Mode Sombre"
-    }
-};
+        }
+        };
 
-// بيانات المنتجات (مترجمة)
-const products = [
-    {
+        // بيانات المنتجات (مترجمة)
+        const products = [
+        {
         id: 1,
-        titles: { ar: "ساعة ذكية متطورة", fr: "Montre Connectée Avancée" },
-        category: "watches",
+        titles: { ar: "ساعة رجالية فاخرة", fr: "Montre Luxe pour Homme" },
+        category: "men",
         price: "15000 DA",
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
         link: "https://amazon.com/example-watch",
         store: { ar: "أمازون", fr: "Amazon" }
-    },
-    {
+        },
+        {
         id: 2,
-        titles: { ar: "سماعات لاسلكية", fr: "Écouteurs Sans Fil" },
-        category: "audio",
+        titles: { ar: "طقم إكسسوارات نسائي", fr: "Ensemble Bijoux Femme" },
+        category: "women",
         price: "8500 DA",
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
-        link: "https://aliexpress.com/example-headphones",
+        image: "https://images.unsplash.com/photo-1535633302704-b02923cf8c72?w=500",
+        link: "https://aliexpress.com/example-jewelry",
         store: { ar: "علي إكسبريس", fr: "AliExpress" }
-    },
-    {
+        },
+        {
         id: 3,
-        titles: { ar: "لوحة مفاتيح ميكانيكية", fr: "Clavier Mécanique" },
-        category: "electronics",
+        titles: { ar: "لوحة مفاتيح ميكانيكية احترافية", fr: "Clavier Mécanique Pro" },
+        category: "tech",
         price: "12000 DA",
         image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500",
         link: "https://amazon.com/example-keyboard",
         store: { ar: "أمازون", fr: "Amazon" }
+        },
+        {
+        id: 4,
+        titles: { ar: "حقيبة يد نسائية أنيقة", fr: "Sac à Main Élégant" },
+        category: "women",
+        price: "11000 DA",
+        image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500",
+        link: "https://jumia.com.dz/example-bag",
+        store: { ar: "جوميا", fr: "Jumia" }
+        }
+        ];
     }
 ];
 
@@ -102,18 +111,27 @@ function applyTranslations() {
     document.title = t.title;
     
     // تحديث الروابط
-    const desktopLinks = document.querySelectorAll('nav .hidden.md\\:flex a');
-    if(desktopLinks.length >= 3) {
+    const desktopLinks = document.querySelectorAll('nav .hidden.lg\\:flex a');
+    if(desktopLinks.length >= 4) {
         desktopLinks[0].textContent = t.nav_home;
-        desktopLinks[1].textContent = t.nav_products;
-        desktopLinks[2].textContent = t.nav_settings;
+        desktopLinks[1].textContent = t.cat_women;
+        desktopLinks[2].textContent = t.cat_men;
+        desktopLinks[3].textContent = t.cat_tech;
+    }
+
+    const settingsBtn = document.getElementById('settings-btn');
+    if(settingsBtn) {
+        settingsBtn.setAttribute('aria-label', t.nav_settings);
+        const settingsText = settingsBtn.querySelector('span');
+        if(settingsText) settingsText.textContent = t.nav_settings;
     }
 
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
     mobileLinks.forEach((link, i) => {
         if(i === 0) link.textContent = t.nav_home;
-        if(i === 1) link.textContent = t.nav_products;
-        if(i === 2) link.textContent = t.nav_settings;
+        if(i === 1) link.textContent = t.cat_women;
+        if(i === 2) link.textContent = t.cat_men;
+        if(i === 3) link.textContent = t.cat_tech;
         link.style.textAlign = lang === 'ar' ? 'right' : 'left';
     });
 
@@ -141,9 +159,9 @@ function renderCategories(lang) {
     const t = translations[lang];
     const categories = [
         { id: 'all', name: t.all_categories },
-        { id: 'electronics', name: t.cat_electronics },
-        { id: 'watches', name: t.cat_watches },
-        { id: 'audio', name: t.cat_audio }
+        { id: 'women', name: t.cat_women },
+        { id: 'men', name: t.cat_men },
+        { id: 'tech', name: t.cat_tech }
     ];
 
     container.innerHTML = categories.map(cat => `
@@ -159,6 +177,14 @@ function filterByCategory(catId) {
     const lang = localStorage.getItem('selectedLang') || 'ar';
     renderCategories(lang);
     renderProducts(lang, currentSearch);
+
+    // إغلاق قائمة الجوال إذا كانت مفتوحة
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuBtn = document.getElementById('menu-btn');
+    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    }
 }
 
 function initSearch() {
