@@ -43,12 +43,14 @@ const translations = {
         cat_men: "Monde des Hommes",
         cat_tech: "Technologie",
         theme_title: "Thème du site",
-        }
-        };
+        theme_light: "Mode Clair",
+        theme_dark: "Mode Sombre"
+    }
+};
 
-        // بيانات المنتجات (مترجمة)
-        const products = [
-        {
+// بيانات المنتجات
+const products = [
+    {
         id: 1,
         titles: { ar: "ساعة رجالية فاخرة", fr: "Montre Luxe pour Homme" },
         category: "men",
@@ -56,8 +58,8 @@ const translations = {
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
         link: "https://amazon.com/example-watch",
         store: { ar: "أمازون", fr: "Amazon" }
-        },
-        {
+    },
+    {
         id: 2,
         titles: { ar: "طقم إكسسوارات نسائي", fr: "Ensemble Bijoux Femme" },
         category: "women",
@@ -65,8 +67,8 @@ const translations = {
         image: "https://images.unsplash.com/photo-1535633302704-b02923cf8c72?w=500",
         link: "https://aliexpress.com/example-jewelry",
         store: { ar: "علي إكسبريس", fr: "AliExpress" }
-        },
-        {
+    },
+    {
         id: 3,
         titles: { ar: "لوحة مفاتيح ميكانيكية احترافية", fr: "Clavier Mécanique Pro" },
         category: "tech",
@@ -74,8 +76,8 @@ const translations = {
         image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500",
         link: "https://amazon.com/example-keyboard",
         store: { ar: "أمازون", fr: "Amazon" }
-        },
-        {
+    },
+    {
         id: 4,
         titles: { ar: "حقيبة يد نسائية أنيقة", fr: "Sac à Main Élégant" },
         category: "women",
@@ -83,8 +85,6 @@ const translations = {
         image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500",
         link: "https://jumia.com.dz/example-bag",
         store: { ar: "جوميا", fr: "Jumia" }
-        }
-        ];
     }
 ];
 
@@ -110,7 +110,7 @@ function applyTranslations() {
     document.documentElement.lang = lang;
     document.title = t.title;
     
-    // تحديث الروابط
+    // تحديث الروابط العلوية
     const desktopLinks = document.querySelectorAll('nav .hidden.lg\\:flex a');
     if(desktopLinks.length >= 4) {
         desktopLinks[0].textContent = t.nav_home;
@@ -186,7 +186,7 @@ function filterByCategory(catId) {
         if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
     }
 
-    // نقل التركيز إلى عنوان المنتجات ليعرف المستخدم أن المحتوى تغير
+    // نقل التركيز إلى عنوان المنتجات
     const productsHeading = document.getElementById('products-heading');
     if (productsHeading) {
         productsHeading.focus();
@@ -266,11 +266,9 @@ function initMobileMenu() {
             menuBtn.setAttribute('aria-expanded', !isHidden);
             
             if (!isHidden) {
-                // عند فتح القائمة، نقل التركيز لأول رابط
                 const firstLink = mobileMenu.querySelector('a');
                 if (firstLink) firstLink.focus();
             } else {
-                // عند إغلاق القائمة (بدون اختيار)، إعادة التركيز لزر القائمة
                 menuBtn.focus();
             }
         });
@@ -278,7 +276,7 @@ function initMobileMenu() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    applyTheme(); // تطبيق الثيم أولاً
+    applyTheme();
     applyTranslations();
     initMobileMenu();
     initSearch();
