@@ -100,21 +100,23 @@ function applyTranslations() {
 // دالة لإنشاء بطاقة المنتج
 function createProductCard(product, lang) {
     const shopNowText = translations[lang].shop_now;
+    const productTitle = product.titles[lang];
     return `
         <article class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col">
             <div class="relative pb-[100%]">
-                <img src="${product.image}" alt="${product.titles[lang]}" class="absolute inset-0 w-full h-full object-cover">
+                <img src="${product.image}" alt="${productTitle}" class="absolute inset-0 w-full h-full object-cover">
                 <span class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded-lg">
                     ${product.store[lang]}
                 </span>
             </div>
             
             <div class="p-5 flex flex-col flex-grow">
-                <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">${product.titles[lang]}</h3>
+                <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">${productTitle}</h3>
                 <p class="text-blue-600 font-extrabold text-xl mb-4">${product.price}</p>
                 
                 <div class="mt-auto">
                     <a href="${product.link}" target="_blank" rel="noopener noreferrer" 
+                       aria-label="${shopNowText}: ${productTitle}"
                        class="block w-full text-center bg-gray-900 text-white py-3 rounded-xl font-bold hover:bg-blue-600 transition-colors">
                         ${shopNowText}
                     </a>
@@ -138,7 +140,8 @@ function initMobileMenu() {
 
     if (menuBtn && mobileMenu) {
         menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
         });
 
         // إغلاق القائمة عند الضغط على أي رابط
@@ -146,6 +149,7 @@ function initMobileMenu() {
         links.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
+                menuBtn.setAttribute('aria-expanded', 'false');
             });
         });
     }
