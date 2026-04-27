@@ -1,30 +1,12 @@
 {
-  "name": "affiliate-store",
-  "version": "0.1.0",
-  "private": true,
+  "name": "e-commerce-store",
+  "version": "1.0.0",
+  "description": "متجر إلكتروني بسيط باستخدام HTML و JavaScript",
+  "main": "main.js",
   "scripts": {
-    "dev": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --watch",
-    "build": "tailwindcss -i ./src/css/input.css -o ./dist/output.css --minify"
+    "start": "echo \"المشروع يعمل الآن كصفحة استاتيكية\""
   },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "firebase": "^12.12.1",
-    "lucide-react": "^0.378.0",
-    "next": "14.2.3",
-    "next-themes": "^0.4.6",
-    "react": "^18",
-    "react-dom": "^18",
-    "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
-  },
-  "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.3",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
-  }
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

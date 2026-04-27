@@ -86,6 +86,23 @@
         </div>
     </footer>
 
+    <script>
+        // كود لتنظيف أي Service Workers قديمة من Next.js
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for(let registration of registrations) {
+                    registration.unregister();
+                    console.log('Old Service Worker unregistered');
+                }
+            });
+        }
+        // مسح الكاش يدوياً
+        if (window.caches) {
+            caches.keys().then(function(names) {
+                for (let name of names) caches.delete(name);
+            });
+        }
+    </script>
     <!-- Main JS with Versioning for Cache Busting -->
     <script src="./main.js?v=1.0.1"></script>
 </body>
