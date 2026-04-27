@@ -83,7 +83,7 @@
                     <span class="hidden md:inline font-medium">الإعدادات</span>
                 </a>
 
-                <button id="menu-btn" class="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors" aria-label="Toggle Menu">
+                <button id="menu-btn" class="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors" aria-label="Toggle Menu">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
@@ -92,7 +92,7 @@
         </nav>
         
         <!-- القائمة المنسدلة للجوال -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 p-4 space-y-4 shadow-inner">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 p-4 space-y-4 shadow-inner">
             <a href="#" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">الرئيسية</a>
             <a href="#products" onclick="filterByCategory('women')" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">عالم المرأة</a>
             <a href="#products" onclick="filterByCategory('men')" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">عالم الرجل</a>
@@ -118,7 +118,7 @@
 
     <!-- Products Grid -->
     <main id="products" class="container mx-auto px-4 py-16">
-        <h2 class="text-3xl font-bold mb-12 text-center text-gray-800 dark:text-white relative inline-block left-1/2 -translate-x-1/2">
+        <h2 id="products-heading" tabindex="-1" class="text-3xl font-bold mb-12 text-center text-gray-800 dark:text-white relative inline-block left-1/2 -translate-x-1/2 focus:outline-none">
             أحدث المنتجات
             <span class="block h-1 w-1/2 bg-indigo-600 mx-auto mt-2 rounded-full"></span>
         </h2>

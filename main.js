@@ -185,6 +185,12 @@ function filterByCategory(catId) {
         mobileMenu.classList.add('hidden');
         if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
     }
+
+    // نقل التركيز إلى عنوان المنتجات ليعرف المستخدم أن المحتوى تغير
+    const productsHeading = document.getElementById('products-heading');
+    if (productsHeading) {
+        productsHeading.focus();
+    }
 }
 
 function initSearch() {
@@ -258,6 +264,15 @@ function initMobileMenu() {
         menuBtn.addEventListener('click', () => {
             const isHidden = mobileMenu.classList.toggle('hidden');
             menuBtn.setAttribute('aria-expanded', !isHidden);
+            
+            if (!isHidden) {
+                // عند فتح القائمة، نقل التركيز لأول رابط
+                const firstLink = mobileMenu.querySelector('a');
+                if (firstLink) firstLink.focus();
+            } else {
+                // عند إغلاق القائمة (بدون اختيار)، إعادة التركيز لزر القائمة
+                menuBtn.focus();
+            }
         });
     }
 }
