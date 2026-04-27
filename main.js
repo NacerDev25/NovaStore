@@ -31,7 +31,7 @@ const translations = {
         search_placeholder: "Rechercher des produits...",
         no_results: "Aucun produit ne correspond à votre recherche.",
         hero_title: "Découvrez les meilleurs produits sélectionnés",
-        hero_subtitle: "Nous vous offrons les meilleures offres d'Amazon, Jumia et AliExpress au même endroit.",
+        hero_subtitle: "Nous vous offرس المزايا أفضل العروض d'Amazon, Jumia et AliExpress au même endroit.",
         hero_btn: "Voir les produits",
         latest_products: "Derniers Produits",
         shop_now: "Acheter maintenant",
@@ -101,6 +101,32 @@ function applyTheme() {
     }
 }
 
+// دالة لعزل أو استعادة محتوى الموقع (لإمكانية الوصول والجمالية البصرية)
+function toggleSiteInert(active) {
+    const mainElements = document.querySelectorAll('section, main, footer');
+    const overlay = document.getElementById('menu-overlay');
+    
+    mainElements.forEach(el => {
+        if (active) {
+            el.setAttribute('inert', '');
+            el.setAttribute('aria-hidden', 'true');
+        } else {
+            el.removeAttribute('inert');
+            el.removeAttribute('aria-hidden');
+        }
+    });
+
+    if (overlay) {
+        if (active) {
+            overlay.classList.remove('hidden');
+            setTimeout(() => overlay.classList.replace('opacity-0', 'opacity-100'), 10);
+        } else {
+            overlay.classList.replace('opacity-100', 'opacity-0');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+        }
+    }
+}
+
 // دالة لتطبيق الترجمة على الصفحة
 function applyTranslations() {
     const lang = localStorage.getItem('selectedLang') || 'ar';
@@ -110,7 +136,6 @@ function applyTranslations() {
     document.documentElement.lang = lang;
     document.title = t.title;
     
-    // تحديث الروابط العلوية
     const desktopLinks = document.querySelectorAll('nav .hidden.lg\\:flex a');
     if(desktopLinks.length >= 4) {
         desktopLinks[0].textContent = t.nav_home;
@@ -178,15 +203,14 @@ function filterByCategory(catId) {
     renderCategories(lang);
     renderProducts(lang, currentSearch);
 
-    // إغلاق قائمة الجوال إذا كانت مفتوحة
     const mobileMenu = document.getElementById('mobile-menu');
     const menuBtn = document.getElementById('menu-btn');
     if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
         mobileMenu.classList.add('hidden');
         if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+        toggleSiteInert(false); // استعادة تفاعل الموقع
     }
 
-    // نقل التركيز إلى عنوان المنتجات
     const productsHeading = document.getElementById('products-heading');
     if (productsHeading) {
         productsHeading.focus();
@@ -266,9 +290,11 @@ function initMobileMenu() {
             menuBtn.setAttribute('aria-expanded', !isHidden);
             
             if (!isHidden) {
+                toggleSiteInert(true); // عزل باقي الموقع
                 const firstLink = mobileMenu.querySelector('a');
                 if (firstLink) firstLink.focus();
             } else {
+                toggleSiteInert(false); // استعادة تفاعل الموقع
                 menuBtn.focus();
             }
         });
