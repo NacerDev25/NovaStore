@@ -1,0 +1,30 @@
+{
+  "name": "NovaStore | نوفا ستور",
+  "short_name": "NovaStore",
+  "description": "متجر نوفا ستور - تسوق أفضل المنتجات المختارة بعناية من أمازون، جوميا، وعلي إكسبريس.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#4f46e5",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://www.svgrepo.com/show/533041/shop-bag.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

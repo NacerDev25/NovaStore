@@ -157,6 +157,14 @@
             document.getElementById('theme-title').textContent = t.theme_title;
             document.getElementById('theme-status').textContent = isDark ? t.dark : t.light;
 
+            // تحديث نصوص PWA
+            const pwaTitle = document.getElementById('pwa-install-title');
+            if (pwaTitle) pwaTitle.textContent = t.pwa_title;
+            const pwaStatus = document.getElementById('pwa-install-status');
+            if (pwaStatus) pwaStatus.textContent = t.pwa_status;
+            const pwaBtn = document.getElementById('pwa-install-settings-btn');
+            if (pwaBtn) pwaBtn.textContent = t.pwa_btn;
+
             // تحديث حالة مفتاح التبديل
             document.getElementById('theme-toggle').checked = isDark;
 
@@ -170,6 +178,21 @@
 
             // تحديث شكل أزرار اللغة
             const activeClass = 'border-indigo-600 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400';
+            const inactiveClass = 'border-transparent bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700';
+
+            document.getElementById('lang-ar').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${isAr ? activeClass : inactiveClass}`;
+            document.getElementById('lang-fr').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${!isAr ? activeClass : inactiveClass}`;
+            document.getElementById('check-ar').classList.toggle('hidden', !isAr);
+            document.getElementById('check-fr').classList.toggle('hidden', isAr);
+        }
+
+        updateUI();
+        // التركيز على عنوان الصفحة عند التحميل لتحسين إمكانية الوصول
+        document.getElementById('settings-title').focus();
+    </script>
+</body>
+</html>
+go-600 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400';
             const inactiveClass = 'border-transparent bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700';
 
             document.getElementById('lang-ar').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${isAr ? activeClass : inactiveClass}`;
