@@ -112,17 +112,47 @@ function initPWA() {
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        
+
+        // حفظ الحالة في sessionStorage لتعرف صفحة الإعدادات أن التثبيت متاح
+        sessionStorage.setItem('pwa-install-available', 'true');
+
         // إظهار قسم التثبيت في الإعدادات (إذا كنا في صفحة الإعدادات)
         const pwaSettingsSection = document.getElementById('pwa-settings-section');
-        if (pwaSettingsSection) pwaSettingsSection.classList.remove('hidden');
+        if (pwaSettingsSection) {
+            pwaSettingsSection.classList.remove('hidden');
+            updatePWAButtonState('ready');
+        }
 
         // إظهار البانر في الصفحة الرئيسية بشروط
-        if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+        if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
             showInstallBanner();
         }
     });
 
+    // الاستماع لنجاح التثبيت
+    window.addEventListener('appinstalled', (evt) => {
+        console.log('NovaStore was installed');
+        sessionStorage.setItem('pwa-installed', 'true');
+        updatePWAButtonState('installed');
+    });
+    }
+
+    // دالة لتحديث حالة زر التثبيت في الإعدادات
+    function updatePWAButtonState(state) {
+    const pwaBtn = document.getElementById('pwa-install-settings-btn');
+    const pwaStatus = document.getElementById('pwa-install-status');
+    const lang = localStorage.getItem('selectedLang') || 'ar';
+
+    if (!pwaBtn || !pwaStatus) return;
+
+    if (state === 'installed' || window.matchMedia('(display-mode: standalone)').matches) {
+        pwaBtn.classList.add('hidden');
+        pwaStatus.textContent = lang === 'ar' ? 'التطبيق مثبت بالفعل على جهازك' : 'Application déjà installée';
+    } else if (state === 'ready' || sessionStorage.getItem('pwa-install-available') === 'true') {
+        const pwaSection = document.getElementById('pwa-settings-section');
+        if (pwaSection) pwaSection.classList.remove('hidden');
+    }
+    }
     // 3. التعامل مع أزرار التثبيت
     const installBtn = document.getElementById('pwa-install-btn');
     const settingsInstallBtn = document.getElementById('pwa-install-settings-btn');

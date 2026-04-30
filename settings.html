@@ -252,10 +252,37 @@
 
         // تنفيذ التحديث عند التحميل
         updateUI();
+
+        // فحص حالة PWA عند فتح صفحة الإعدادات
+        function checkPWAStateOnLoad() {
+            const pwaSection = document.getElementById('pwa-settings-section');
+            const pwaStatus = document.getElementById('pwa-install-status');
+            const pwaBtn = document.getElementById('pwa-install-settings-btn');
+            const lang = localStorage.getItem('selectedLang') || 'ar';
+
+            // إذا كان التطبيق مثبتاً بالفعل
+            if (window.matchMedia('(display-mode: standalone)').matches || localStorage.getItem('pwa-installed') === 'true') {
+                if (pwaSection) pwaSection.classList.remove('hidden');
+                if (pwaBtn) pwaBtn.classList.add('hidden');
+                if (pwaStatus) pwaStatus.textContent = lang === 'ar' ? 'التطبيق مثبت بالفعل على جهازك ✅' : 'Application déjà installée ✅';
+                return;
+            }
+
+            // إذا كان التثبيت متاحاً (تم حفظ الحالة من الصفحة الرئيسية)
+            if (sessionStorage.getItem('pwa-install-available') === 'true') {
+                if (pwaSection) pwaSection.classList.remove('hidden');
+            } else {
+                // حالة افتراضية احترافية: إظهار القسم مع توضيح أن التثبيت يدوي إذا لم يدعمه المتصفح تلقائياً
+                if (pwaSection) pwaSection.classList.remove('hidden');
+                if (pwaBtn) pwaBtn.classList.add('opacity-50', 'cursor-not-available');
+                if (pwaStatus) pwaStatus.textContent = lang === 'ar' ? 'التثبيت التلقائي غير متاح، يمكنك التثبيت يدوياً من قائمة المتصفح' : 'Installation automatique non disponible';
+            }
+        }
         
         // التركيز على عنوان الصفحة عند التحميل لتحسين إمكانية الوصول
         window.addEventListener('load', () => {
             document.getElementById('settings-title').focus();
+            checkPWAStateOnLoad();
         });
     </script>
 </body>
