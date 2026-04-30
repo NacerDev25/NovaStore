@@ -306,4 +306,13 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTranslations();
     initMobileMenu();
     initSearch();
+
+    // إعادة التركيز لزر الإعدادات إذا كان المستخدم عائداً من صفحة الإعدادات
+    if (localStorage.getItem('returnFocus') === 'true') {
+        const settingsBtn = document.getElementById('settings-btn');
+        if (settingsBtn) {
+            settingsBtn.focus();
+        }
+        localStorage.removeItem('returnFocus');
+    }
 });
