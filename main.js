@@ -21,9 +21,7 @@ const translations = {
         cat_tech: "قسم التقنية",
         theme_title: "مظهر الموقع (Theme)",
         theme_light: "الوضع الفاتح",
-        theme_dark: "الوضع الليلي",
-        pwa_install_text: "تثبيت تطبيق نوفا ستور",
-        pwa_install_subtext: "لتجربة تسوق أسرع وسهلة"
+        theme_dark: "الوضع الليلي"
     },
     fr: {
         title: "NovaStore | Meilleurs Produits",
@@ -33,7 +31,7 @@ const translations = {
         search_placeholder: "Rechercher des produits...",
         no_results: "Aucun produit ne correspond à votre recherche.",
         hero_title: "Découvrez les meilleurs produits sélectionnés",
-        hero_subtitle: "Nous vous offrons أفضل العروض d'Amazon, Jumia et AliExpress au même endroit.",
+        hero_subtitle: "Nous vous offرس المزايا أفضل العروض d'Amazon, Jumia et AliExpress au même endroit.",
         hero_btn: "Voir les produits",
         latest_products: "Derniers Produits",
         shop_now: "Acheter maintenant",
@@ -46,9 +44,7 @@ const translations = {
         cat_tech: "Technologie",
         theme_title: "Thème du site",
         theme_light: "Mode Clair",
-        theme_dark: "Mode Sombre",
-        pwa_install_text: "Installer NovaStore",
-        pwa_install_subtext: "Pour une expérience plus rapide"
+        theme_dark: "Mode Sombre"
     }
 };
 
@@ -94,128 +90,8 @@ const products = [
 
 let currentCategory = "all";
 let currentSearch = "";
-let deferredPrompt; // لحفظ حدث التثبيت
 
-// --- منطق PWA الاحترافي ---
-
-function initPWA() {
-    // 1. تسجيل الـ Service Worker
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('SW Registered'))
-                .catch(err => console.log('SW Error:', err));
-        });
-    }
-
-    // 2. الاستماع لحدث التثبيت
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-
-        // حفظ الحالة في sessionStorage لتعرف صفحة الإعدادات أن التثبيت متاح
-        sessionStorage.setItem('pwa-install-available', 'true');
-
-        // إظهار قسم التثبيت في الإعدادات (إذا كنا في صفحة الإعدادات)
-        const pwaSettingsSection = document.getElementById('pwa-settings-section');
-        if (pwaSettingsSection) {
-            pwaSettingsSection.classList.remove('hidden');
-            updatePWAButtonState('ready');
-        }
-
-        // إظهار البانر في الصفحة الرئيسية بشروط
-        if (window.location.pathname.includes('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
-            showInstallBanner();
-        }
-    });
-
-    // الاستماع لنجاح التثبيت
-    window.addEventListener('appinstalled', (evt) => {
-        console.log('NovaStore was installed');
-        sessionStorage.setItem('pwa-installed', 'true');
-        updatePWAButtonState('installed');
-    });
-    }
-
-    // دالة لتحديث حالة زر التثبيت في الإعدادات
-    function updatePWAButtonState(state) {
-    const pwaBtn = document.getElementById('pwa-install-settings-btn');
-    const pwaStatus = document.getElementById('pwa-install-status');
-    const lang = localStorage.getItem('selectedLang') || 'ar';
-
-    if (!pwaBtn || !pwaStatus) return;
-
-    if (state === 'installed' || window.matchMedia('(display-mode: standalone)').matches) {
-        pwaBtn.classList.add('hidden');
-        pwaStatus.textContent = lang === 'ar' ? 'التطبيق مثبت بالفعل على جهازك' : 'Application déjà installée';
-    } else if (state === 'ready' || sessionStorage.getItem('pwa-install-available') === 'true') {
-        const pwaSection = document.getElementById('pwa-settings-section');
-        if (pwaSection) pwaSection.classList.remove('hidden');
-    }
-    }
-    // 3. التعامل مع أزرار التثبيت
-    const installBtn = document.getElementById('pwa-install-btn');
-    const settingsInstallBtn = document.getElementById('pwa-install-settings-btn');
-
-    [installBtn, settingsInstallBtn].forEach(btn => {
-        if (btn) {
-            btn.addEventListener('click', async () => {
-                if (!deferredPrompt) return;
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('User accepted PWA install');
-                    hideInstallBanner();
-                }
-                deferredPrompt = null;
-            });
-        }
-    });
-
-    // زر الإغلاق
-    const closeBtn = document.getElementById('pwa-close-btn');
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            hideInstallBanner();
-            // حفظ في الذاكرة أن المستخدم أغلق الرسالة لعدم إزعاجه مجدداً في هذه الجلسة
-            sessionStorage.setItem('pwa-banner-closed', 'true');
-        });
-    }
-}
-
-function showInstallBanner() {
-    // التحقق مما إذا كان المستخدم قد أغلق الرسالة مسبقاً في هذه الجلسة
-    if (sessionStorage.getItem('pwa-banner-closed')) return;
-
-    const banner = document.getElementById('pwa-install-banner');
-    if (banner) {
-        banner.classList.remove('hidden');
-        // تأخير بسيط لتفعيل الترانزيشن
-        setTimeout(() => {
-            banner.classList.remove('translate-y-full');
-            // تنبيه قارئ الشاشة
-            const text = document.getElementById('pwa-text').textContent;
-            const msg = new SpeechSynthesisUtterance(text);
-            // window.speechSynthesis.speak(msg); // اختيارياً يمكن تفعيلها
-        }, 100);
-
-        // إخفاء تلقائي بعد 8 ثوانٍ (احترافي وغير مزعج)
-        setTimeout(() => {
-            hideInstallBanner();
-        }, 8000);
-    }
-}
-
-function hideInstallBanner() {
-    const banner = document.getElementById('pwa-install-banner');
-    if (banner) {
-        banner.classList.add('translate-y-full');
-        setTimeout(() => banner.classList.add('hidden'), 500);
-    }
-}
-
-// --- بقية الكود الأساسي ---
-
+// دالة لتطبيق المظهر (Theme)
 function applyTheme() {
     const theme = localStorage.getItem('selectedTheme') || 'light';
     if (theme === 'dark') {
@@ -225,6 +101,7 @@ function applyTheme() {
     }
 }
 
+// دالة لعزل أو استعادة محتوى الموقع (لإمكانية الوصول والجمالية البصرية)
 function toggleSiteInert(active) {
     const mainElements = document.querySelectorAll('section, main, footer');
     const overlay = document.getElementById('menu-overlay');
@@ -250,6 +127,7 @@ function toggleSiteInert(active) {
     }
 }
 
+// دالة لتطبيق الترجمة على الصفحة
 function applyTranslations() {
     const lang = localStorage.getItem('selectedLang') || 'ar';
     const t = translations[lang];
@@ -295,12 +173,6 @@ function applyTranslations() {
     const searchInput = document.getElementById('product-search');
     if(searchInput) searchInput.placeholder = t.search_placeholder;
 
-    // تحديث نصوص PWA في البانر
-    const pwaText = document.getElementById('pwa-text');
-    if (pwaText) pwaText.textContent = t.pwa_install_text;
-    const pwaSub = document.getElementById('pwa-subtext');
-    if (pwaSub) pwaSub.textContent = t.pwa_install_subtext;
-
     renderCategories(lang);
     renderProducts(lang);
 }
@@ -336,7 +208,7 @@ function filterByCategory(catId) {
     if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
         mobileMenu.classList.add('hidden');
         if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-        toggleSiteInert(false);
+        toggleSiteInert(false); // استعادة تفاعل الموقع
     }
 
     const productsHeading = document.getElementById('products-heading');
@@ -418,14 +290,26 @@ function initMobileMenu() {
             menuBtn.setAttribute('aria-expanded', !isHidden);
             
             if (!isHidden) {
-                toggleSiteInert(true);
+                toggleSiteInert(true); // عزل باقي الموقع
                 const firstLink = mobileMenu.querySelector('a');
                 if (firstLink) firstLink.focus();
             } else {
-                toggleSiteInert(false);
+                toggleSiteInert(false); // استعادة تفاعل الموقع
                 menuBtn.focus();
             }
         });
+    }
+}
+
+// دالة لاستعادة التركيز عند العودة من صفحة الإعدادات
+function restoreFocus() {
+    if (window.location.hash === '#settings-btn') {
+        const settingsBtn = document.getElementById('settings-btn');
+        if (settingsBtn) {
+            settingsBtn.focus();
+            // تنظيف الهاش من الرابط دون إعادة تحميل الصفحة لتجنب تكرار التركيز غير الضروري
+            history.replaceState(null, null, ' ');
+        }
     }
 }
 
@@ -434,13 +318,5 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTranslations();
     initMobileMenu();
     initSearch();
-    initPWA(); // تشغيل منطق PWA
-
-    if (localStorage.getItem('returnFocus') === 'true') {
-        const settingsBtn = document.getElementById('settings-btn');
-        if (settingsBtn) {
-            settingsBtn.focus();
-        }
-        localStorage.removeItem('returnFocus');
-    }
+    restoreFocus();
 });
