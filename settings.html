@@ -44,7 +44,7 @@
     </header>
 
     <main class="container mx-auto px-4 py-12 max-w-2xl">
-        <h1 id="settings-title" class="text-3xl font-bold mb-8">إعدادات الموقع</h1>
+        <h1 id="settings-title" tabindex="-1" class="text-3xl font-bold mb-8 focus:outline-none">إعدادات الموقع</h1>
 
         <div class="space-y-6">
             <!-- لغة الموقع -->
@@ -179,6 +179,8 @@
         }
 
         updateUI();
+        // التركيز على عنوان الصفحة عند التحميل لتحسين إمكانية الوصول
+        document.getElementById('settings-title').focus();
     </script>
 </body>
 </html>
