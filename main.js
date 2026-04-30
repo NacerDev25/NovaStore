@@ -146,9 +146,11 @@ function applyTranslations() {
 
     const settingsBtn = document.getElementById('settings-btn');
     if(settingsBtn) {
-        settingsBtn.title = t.nav_settings;
-        const settingsTexts = settingsBtn.querySelectorAll('span');
-        settingsTexts.forEach(span => span.textContent = t.nav_settings);
+        // نحدث النص بصيغة تمنع التكرار
+        const visibleText = settingsBtn.querySelector('.md\\:inline');
+        const srText = settingsBtn.querySelector('.sr-only');
+        if(visibleText) visibleText.textContent = t.nav_settings;
+        if(srText) srText.textContent = t.nav_settings;
     }
 
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
@@ -231,7 +233,6 @@ function initSearch() {
 function createProductCard(product, lang) {
     const shopNowText = translations[lang].shop_now;
     const productTitle = product.titles[lang];
-    const forText = lang === 'ar' ? 'لـ' : 'pour';
     return `
         <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group">
             <div class="relative pb-[100%] overflow-hidden">
@@ -246,7 +247,7 @@ function createProductCard(product, lang) {
                 <div class="mt-auto">
                     <a href="${product.link}" target="_blank" rel="noopener noreferrer" 
                        class="block w-full text-center bg-gray-900 dark:bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-600 dark:hover:bg-indigo-500 transition-all shadow-md">
-                        ${shopNowText} <span class="sr-only"> ${forText} ${productTitle} </span>
+                        ${shopNowText}
                     </a>
                 </div>
             </div>
