@@ -31,7 +31,7 @@ const translations = {
         search_placeholder: "Rechercher des produits...",
         no_results: "Aucun produit ne correspond à votre recherche.",
         hero_title: "Découvrez les meilleurs produits sélectionnés",
-        hero_subtitle: "Nous vous offrons les meilleurs offres d'Amazon, Jumia et AliExpress au même endroit.",
+        hero_subtitle: "Nous vous offرس المزايا أفضل العروض d'Amazon, Jumia et AliExpress au même endroit.",
         hero_btn: "Voir les produits",
         latest_products: "Derniers Produits",
         shop_now: "Acheter maintenant",
@@ -146,11 +146,9 @@ function applyTranslations() {
 
     const settingsBtn = document.getElementById('settings-btn');
     if(settingsBtn) {
-        // نحدث النص بصيغة تمنع التكرار
-        const visibleText = settingsBtn.querySelector('.md\\:inline');
-        const srText = settingsBtn.querySelector('.sr-only');
-        if(visibleText) visibleText.textContent = t.nav_settings;
-        if(srText) srText.textContent = t.nav_settings;
+        settingsBtn.setAttribute('aria-label', t.nav_settings);
+        const settingsText = settingsBtn.querySelector('span');
+        if(settingsText) settingsText.textContent = t.nav_settings;
     }
 
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
@@ -210,7 +208,7 @@ function filterByCategory(catId) {
     if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
         mobileMenu.classList.add('hidden');
         if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-        toggleSiteInert(false); 
+        toggleSiteInert(false); // استعادة تفاعل الموقع
     }
 
     const productsHeading = document.getElementById('products-heading');
@@ -246,6 +244,7 @@ function createProductCard(product, lang) {
                 <p class="text-indigo-600 dark:text-indigo-400 font-extrabold text-xl mb-4">${product.price}</p>
                 <div class="mt-auto">
                     <a href="${product.link}" target="_blank" rel="noopener noreferrer" 
+                       aria-label="Shop Now: ${productTitle}"
                        class="block w-full text-center bg-gray-900 dark:bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-600 dark:hover:bg-indigo-500 transition-all shadow-md">
                         ${shopNowText}
                     </a>
@@ -291,28 +290,14 @@ function initMobileMenu() {
             menuBtn.setAttribute('aria-expanded', !isHidden);
             
             if (!isHidden) {
-                toggleSiteInert(true); 
+                toggleSiteInert(true); // عزل باقي الموقع
                 const firstLink = mobileMenu.querySelector('a');
                 if (firstLink) firstLink.focus();
             } else {
-                toggleSiteInert(false); 
+                toggleSiteInert(false); // استعادة تفاعل الموقع
                 menuBtn.focus();
             }
         });
-    }
-}
-
-function initSettingsFocus() {
-    const settingsBtn = document.getElementById('settings-btn');
-    if (settingsBtn) {
-        settingsBtn.addEventListener('click', () => {
-            sessionStorage.setItem('returnToSettings', 'true');
-        });
-
-        if (sessionStorage.getItem('returnToSettings') === 'true') {
-            settingsBtn.focus();
-            sessionStorage.removeItem('returnToSettings');
-        }
     }
 }
 
@@ -321,5 +306,4 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTranslations();
     initMobileMenu();
     initSearch();
-    initSettingsFocus();
 });
