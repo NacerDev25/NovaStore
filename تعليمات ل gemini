@@ -1,0 +1,18 @@
+فهمت عليك، بما أنك تستخدم Gemini CLI (الذي يعتمد على الأوامر النصية)، سأكتب لك "برومبت" (Prompt) تقنياً ودقيقاً جداً. هذا البرومبت يشرح له أن الكود يتسرب كأنه نص (Text Leak) ويطلب منه إعادة تنظيمه بشكل صحيح داخل وسوم البرمجة مع مراعاة إمكانية الوصول (Accessibility).
+​انسخ هذا النص المكتوب باللغة الإنجليزية وقدمه لـ Gemini CLI لأنه يفهم الأوامر التقنية بهذا الشكل بدقة أعلى:
+​البرومبت (انسخ النص أدناه):
+​Role: Senior Frontend Developer & Accessibility Expert.
+​The Issue: I am building a PWA. My screen reader is reading out the JavaScript logic as plain text instead of executing it silently. This is happening specifically in the Settings page near the Dark Mode and Language toggle buttons.
+​The Code Snippet causing the issue:
+go-600 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'; const inactiveClass = 'border-transparent bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'; document.getElementById('lang-ar').className = ... [and the rest of the logic]
+​Tasks:
+​Wrap this logic correctly inside a <script> tag so it's not treated as text.
+​Ensure the updateUI() function and the focus() on #settings-title are implemented in a way that respects Screen Readers (A11y).
+​Provide the clean HTML structure for the Language toggle buttons (Arabic/French) with the correct IDs and aria-labels to prevent the screen reader from reading CSS classes.
+​Make sure the PWA manifest/service worker won't cache this as a static text element.
+​Output format: Give me the complete, corrected code block for the Settings section.
+​لماذا هذا البرومبت سيفيدك؟
+​Senior Expert: طلبت منه أن يتصرف كخبير إمكانية وصول (Accessibility) لكي يركز على حالتك ككفيف ويضمن أن الزر يقرأ "لغة عربية" وليس "bg-indigo-50".
+​Plain text vs Script: أخبرته أن المشكلة هي أن الكود يُقرأ "كنص عادي" (Plain text)، وهو سيفهم فوراً أن هناك خطأ في مكان وضع الكود في الـ HTML.
+​Clean Structure: طلبت منه أن يعطيك الكود كاملاً لكي تقوم بنسخه ولصقه مباشرة في مشروعك عبر الـ CLI.
+​بمجرد أن يعطيك الكود، تأكد من وضعه في ملفك، وبإذن الله ستختفي تلك العبارات التقنية المزعجة من أمام قارئ الشاشة. هل تحتاج مساعدة في صياغة أي جزء آخر؟
