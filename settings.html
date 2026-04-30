@@ -34,8 +34,8 @@
     
     <header class="bg-white dark:bg-gray-800 shadow-sm p-4 sticky top-0 z-50">
         <div class="container mx-auto flex items-center">
-            <a href="index.html" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 transition-colors flex items-center gap-2 font-bold">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+            <a href="index.html" id="back-btn" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 transition-colors flex items-center gap-2 font-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
                 <span id="back-text">العودة للمتجر</span>
@@ -44,13 +44,13 @@
     </header>
 
     <main class="container mx-auto px-4 py-12 max-w-2xl">
-        <h1 id="settings-title" class="text-3xl font-bold mb-8">إعدادات الموقع</h1>
+        <h1 id="settings-title" tabindex="-1" class="text-3xl font-bold mb-8 outline-none">إعدادات الموقع</h1>
 
         <div class="space-y-6">
             <!-- لغة الموقع -->
             <section class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
                 <h2 id="lang-title" class="text-xl font-bold mb-6 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
                     </svg>
                     لغة الموقع (Language)
@@ -59,14 +59,14 @@
                 <div class="grid grid-cols-1 gap-3">
                     <button onclick="changeLanguage('ar')" id="lang-ar" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
                         <span class="font-bold">العربية</span>
-                        <svg id="check-ar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
+                        <svg id="check-ar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden" aria-hidden="true">
                             <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
                         </svg>
                     </button>
 
                     <button onclick="changeLanguage('fr')" id="lang-fr" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
                         <span class="font-bold">Français</span>
-                        <svg id="check-fr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
+                        <svg id="check-fr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden" aria-hidden="true">
                             <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
                         </svg>
                     </button>
@@ -78,7 +78,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
-                            <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
                                 <path id="icon-path" stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591M12 18.75V21m-4.773-4.227l-1.591 1.591" />
                             </svg>
                         </div>
@@ -89,9 +89,9 @@
                     </div>
 
                     <!-- مفتاح التبديل -->
-                    <label for="theme-toggle" class="flex items-center cursor-pointer select-none" aria-label="Toggle Theme">
+                    <label for="theme-toggle" class="flex items-center cursor-pointer select-none">
                         <div class="relative">
-                            <input type="checkbox" id="theme-toggle" class="sr-only" onchange="toggleTheme()">
+                            <input type="checkbox" id="theme-toggle" class="sr-only" onchange="toggleTheme()" aria-labelledby="theme-title theme-status">
                             <div class="block bg-gray-200 dark:bg-gray-700 w-14 h-8 rounded-full transition-colors"></div>
                             <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow transition-all"></div>
                         </div>
@@ -152,7 +152,7 @@
             document.getElementById('back-text').textContent = t.back;
             document.getElementById('settings-title').textContent = t.title;
             document.getElementById('lang-title').innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600"><path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" /></svg>
                 ${t.lang_title}`;
             document.getElementById('theme-title').textContent = t.theme_title;
             document.getElementById('theme-status').textContent = isDark ? t.dark : t.light;
@@ -179,6 +179,12 @@
         }
 
         updateUI();
+
+        // نقل التركيز للعنوان عند تحميل الصفحة لتحسين إمكانية الوصول
+        document.addEventListener('DOMContentLoaded', () => {
+            const title = document.getElementById('settings-title');
+            if (title) title.focus();
+        });
     </script>
 </body>
 </html>

@@ -31,7 +31,7 @@ const translations = {
         search_placeholder: "Rechercher des produits...",
         no_results: "Aucun produit ne correspond à votre recherche.",
         hero_title: "Découvrez les meilleurs produits sélectionnés",
-        hero_subtitle: "Nous vous offرس المزايا أفضل العروض d'Amazon, Jumia et AliExpress au même endroit.",
+        hero_subtitle: "Nous vous offrons les meilleurs offres d'Amazon, Jumia et AliExpress au même endroit.",
         hero_btn: "Voir les produits",
         latest_products: "Derniers Produits",
         shop_now: "Acheter maintenant",
@@ -146,9 +146,9 @@ function applyTranslations() {
 
     const settingsBtn = document.getElementById('settings-btn');
     if(settingsBtn) {
-        settingsBtn.setAttribute('aria-label', t.nav_settings);
-        const settingsText = settingsBtn.querySelector('span');
-        if(settingsText) settingsText.textContent = t.nav_settings;
+        settingsBtn.title = t.nav_settings;
+        const settingsTexts = settingsBtn.querySelectorAll('span');
+        settingsTexts.forEach(span => span.textContent = t.nav_settings);
     }
 
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
@@ -208,7 +208,7 @@ function filterByCategory(catId) {
     if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
         mobileMenu.classList.add('hidden');
         if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-        toggleSiteInert(false); // استعادة تفاعل الموقع
+        toggleSiteInert(false); 
     }
 
     const productsHeading = document.getElementById('products-heading');
@@ -231,6 +231,7 @@ function initSearch() {
 function createProductCard(product, lang) {
     const shopNowText = translations[lang].shop_now;
     const productTitle = product.titles[lang];
+    const forText = lang === 'ar' ? 'لـ' : 'pour';
     return `
         <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group">
             <div class="relative pb-[100%] overflow-hidden">
@@ -244,9 +245,8 @@ function createProductCard(product, lang) {
                 <p class="text-indigo-600 dark:text-indigo-400 font-extrabold text-xl mb-4">${product.price}</p>
                 <div class="mt-auto">
                     <a href="${product.link}" target="_blank" rel="noopener noreferrer" 
-                       aria-label="Shop Now: ${productTitle}"
                        class="block w-full text-center bg-gray-900 dark:bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-600 dark:hover:bg-indigo-500 transition-all shadow-md">
-                        ${shopNowText}
+                        ${shopNowText} <span class="sr-only"> ${forText} ${productTitle} </span>
                     </a>
                 </div>
             </div>
@@ -290,14 +290,28 @@ function initMobileMenu() {
             menuBtn.setAttribute('aria-expanded', !isHidden);
             
             if (!isHidden) {
-                toggleSiteInert(true); // عزل باقي الموقع
+                toggleSiteInert(true); 
                 const firstLink = mobileMenu.querySelector('a');
                 if (firstLink) firstLink.focus();
             } else {
-                toggleSiteInert(false); // استعادة تفاعل الموقع
+                toggleSiteInert(false); 
                 menuBtn.focus();
             }
         });
+    }
+}
+
+function initSettingsFocus() {
+    const settingsBtn = document.getElementById('settings-btn');
+    if (settingsBtn) {
+        settingsBtn.addEventListener('click', () => {
+            sessionStorage.setItem('returnToSettings', 'true');
+        });
+
+        if (sessionStorage.getItem('returnToSettings') === 'true') {
+            settingsBtn.focus();
+            sessionStorage.removeItem('returnToSettings');
+        }
     }
 }
 
@@ -306,4 +320,5 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTranslations();
     initMobileMenu();
     initSearch();
+    initSettingsFocus();
 });
