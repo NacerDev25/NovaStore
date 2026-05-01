@@ -42,6 +42,11 @@
             width: 100%;
         }
 
+        /* تحسين أيقونة القائمة التفاعلية */
+        #menu-btn .icon-close { display: none; }
+        #menu-btn.is-open .icon-open { display: none; }
+        #menu-btn.is-open .icon-close { display: block; }
+
         /* منع شريط التمرير للتصنيفات */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -83,9 +88,14 @@
                     <span class="hidden md:inline font-medium">الإعدادات</span>
                 </a>
 
-                <button id="menu-btn" class="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors" aria-label="Toggle Menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <button id="menu-btn" class="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors relative z-50" aria-label="فتح قائمة التنقل" aria-expanded="false">
+                    <!-- أيقونة الهمبرغر (فتح) -->
+                    <svg class="icon-open w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                    <!-- أيقونة X (إغلاق) -->
+                    <svg class="icon-close w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>

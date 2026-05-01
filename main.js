@@ -21,7 +21,9 @@ const translations = {
         cat_tech: "قسم التقنية",
         theme_title: "مظهر الموقع (Theme)",
         theme_light: "الوضع الفاتح",
-        theme_dark: "الوضع الليلي"
+        theme_dark: "الوضع الليلي",
+        menu_open: "فتح قائمة التنقل",
+        menu_close: "إغلاق قائمة التنقل"
     },
     fr: {
         title: "NovaStore | Meilleurs Produits",
@@ -44,7 +46,9 @@ const translations = {
         cat_tech: "Technologie",
         theme_title: "Thème du site",
         theme_light: "Mode Clair",
-        theme_dark: "Mode Sombre"
+        theme_dark: "Mode Sombre",
+        menu_open: "Ouvrir le menu",
+        menu_close: "Fermer le menu"
     }
 };
 
@@ -149,6 +153,13 @@ function applyTranslations() {
         settingsBtn.setAttribute('aria-label', t.nav_settings);
         const settingsText = settingsBtn.querySelector('span');
         if(settingsText) settingsText.textContent = t.nav_settings;
+    }
+
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if(menuBtn && mobileMenu) {
+        const isOpen = !mobileMenu.classList.contains('hidden');
+        menuBtn.setAttribute('aria-label', isOpen ? t.menu_close : t.menu_open);
     }
 
     const mobileLinks = document.querySelectorAll('#mobile-menu a');
@@ -287,7 +298,14 @@ function initMobileMenu() {
     if (menuBtn && mobileMenu) {
         menuBtn.addEventListener('click', () => {
             const isHidden = mobileMenu.classList.toggle('hidden');
+            const lang = localStorage.getItem('selectedLang') || 'ar';
+            const t = translations[lang];
+
             menuBtn.setAttribute('aria-expanded', !isHidden);
+            menuBtn.setAttribute('aria-label', isHidden ? t.menu_open : t.menu_close);
+            
+            // تبديل فئة لتمكين الأيقونات التفاعلية عبر CSS
+            menuBtn.classList.toggle('is-open', !isHidden);
             
             if (!isHidden) {
                 toggleSiteInert(true); // عزل باقي الموقع
