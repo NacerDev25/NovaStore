@@ -47,6 +47,14 @@
         #menu-btn.is-open .icon-open { display: none; }
         #menu-btn.is-open .icon-close { display: block; }
 
+        /* تأثير دوران أيقونة الإعدادات */
+        #settings-btn:hover svg {
+            transform: rotate(45deg);
+        }
+        #settings-btn svg {
+            transition: transform 0.3s ease-in-out;
+        }
+
         /* منع شريط التمرير للتصنيفات */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -117,7 +125,12 @@
         <div class="container mx-auto px-4 text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">تسوق أفضل المنتجات المختارة بعناية</h1>
             <p class="text-xl mb-10 text-indigo-100 max-w-2xl mx-auto">نوفر لك أفضل العروض من أمازون، جوميا، وعلي إكسبريس في مكان واحد وبجودة مضمونة.</p>
-            <a href="#products" class="bg-white text-indigo-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-indigo-50 transition-all transform hover:scale-105 shadow-lg inline-block">تصفح المنتجات الآن</a>
+            <a href="#products" class="bg-white text-indigo-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-indigo-50 transition-all transform hover:scale-105 shadow-lg flex items-center justify-center inline-flex">
+                <svg class="w-6 h-6 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                </svg>
+                <span>تصفح المنتجات الآن</span>
+            </a>
         </div>
     </section>
 

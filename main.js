@@ -143,9 +143,12 @@ function applyTranslations() {
     const desktopLinks = document.querySelectorAll('nav .hidden.lg\\:flex a');
     if(desktopLinks.length >= 4) {
         desktopLinks[0].textContent = t.nav_home;
-        desktopLinks[1].textContent = t.cat_women;
-        desktopLinks[2].textContent = t.cat_men;
-        desktopLinks[3].textContent = t.cat_tech;
+        desktopLinks[1].innerHTML = `<svg class="w-4 h-4 me-1.5 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>${t.cat_women}`;
+        desktopLinks[2].innerHTML = `<svg class="w-4 h-4 me-1.5 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.62 1.96V10a2 2 0 0 0 2 2h2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8h2a2 2 0 0 0 2-2V5.42a2 2 0 0 0-1.62-1.96Z"></path><path d="M12 2v6"></path><path d="m12 11 2 2 2-2"></path></svg>${t.cat_men}`;
+        desktopLinks[3].innerHTML = `<svg class="w-4 h-4 me-1.5 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>${t.cat_tech}`;
+        
+        // تحسين مظهر روابط الهيدر لتكون flex
+        desktopLinks.forEach(link => link.classList.add('flex', 'items-center'));
     }
 
     const settingsBtn = document.getElementById('settings-btn');
@@ -176,7 +179,11 @@ function applyTranslations() {
     const heroSub = document.querySelector('section p');
     if(heroSub) heroSub.textContent = t.hero_subtitle;
     const heroBtn = document.querySelector('section a');
-    if(heroBtn) heroBtn.textContent = t.hero_btn;
+    if(heroBtn) {
+        const span = heroBtn.querySelector('span');
+        if(span) span.textContent = t.hero_btn;
+        else heroBtn.textContent = t.hero_btn;
+    }
 
     const productsTitle = document.querySelector('main h2');
     if(productsTitle) productsTitle.textContent = t.latest_products;
@@ -193,6 +200,13 @@ function renderCategories(lang) {
     if (!container) return;
 
     const t = translations[lang];
+    const categoryIcons = {
+        all: `<svg class="w-5 h-5 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>`,
+        women: `<svg class="w-5 h-5 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>`,
+        men: `<svg class="w-5 h-5 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.62 1.96V10a2 2 0 0 0 2 2h2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8h2a2 2 0 0 0 2-2V5.42a2 2 0 0 0-1.62-1.96Z"></path><path d="M12 2v6"></path><path d="m12 11 2 2 2-2"></path></svg>`,
+        tech: `<svg class="w-5 h-5 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>`
+    };
+
     const categories = [
         { id: 'all', name: t.all_categories },
         { id: 'women', name: t.cat_women },
@@ -202,7 +216,8 @@ function renderCategories(lang) {
 
     container.innerHTML = categories.map(cat => `
         <button onclick="filterByCategory('${cat.id}')" 
-                class="px-6 py-2 rounded-full font-bold transition-all whitespace-nowrap ${currentCategory === cat.id ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-indigo-50 border border-gray-100 dark:border-gray-700'}">
+                class="px-6 py-2.5 rounded-full font-bold transition-all flex items-center justify-center whitespace-nowrap ${currentCategory === cat.id ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-indigo-50 border border-gray-100 dark:border-gray-700'}">
+            ${categoryIcons[cat.id]}
             ${cat.name}
         </button>
     `).join('');
@@ -242,6 +257,8 @@ function initSearch() {
 function createProductCard(product, lang) {
     const shopNowText = translations[lang].shop_now;
     const productTitle = product.titles[lang];
+    const cartIcon = `<svg class="w-5 h-5 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>`;
+    
     return `
         <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group">
             <div class="relative pb-[100%] overflow-hidden">
@@ -255,8 +272,9 @@ function createProductCard(product, lang) {
                 <p class="text-indigo-600 dark:text-indigo-400 font-extrabold text-xl mb-4">${product.price}</p>
                 <div class="mt-auto">
                     <a href="${product.link}" target="_blank" rel="noopener noreferrer" 
-                       aria-label="Shop Now: ${productTitle}"
-                       class="block w-full text-center bg-gray-900 dark:bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-600 dark:hover:bg-indigo-500 transition-all shadow-md">
+                       aria-label="${shopNowText}: ${productTitle}"
+                       class="flex items-center justify-center w-full text-center bg-gray-900 dark:bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-600 dark:hover:bg-indigo-500 transition-all shadow-md">
+                        ${cartIcon}
                         ${shopNowText}
                     </a>
                 </div>
