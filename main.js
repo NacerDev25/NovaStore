@@ -191,6 +191,14 @@ function applyTranslations() {
     const searchInput = document.getElementById('product-search');
     if(searchInput) searchInput.placeholder = t.search_placeholder;
 
+    // روابط التذييل (Footer)
+    const footerLinks = document.querySelectorAll('footer a');
+    if (footerLinks.length >= 2) {
+        footerLinks[0].innerHTML = `<svg class="w-4 h-4 me-1.5 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>${t.privacy}`;
+        footerLinks[1].innerHTML = `<svg class="w-4 h-4 me-1.5 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>${t.terms}`;
+        footerLinks.forEach(link => link.classList.add('flex', 'items-center', 'justify-center'));
+    }
+
     renderCategories(lang);
     renderProducts(lang);
 }
@@ -245,11 +253,30 @@ function filterByCategory(catId) {
 
 function initSearch() {
     const searchInput = document.getElementById('product-search');
+    const clearBtn = document.getElementById('clear-search');
+    
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             currentSearch = e.target.value.toLowerCase().trim();
             const lang = localStorage.getItem('selectedLang') || 'ar';
+            
+            // إظهار أو إخفاء زر المسح
+            if (clearBtn) {
+                clearBtn.classList.toggle('hidden', currentSearch === "");
+            }
+            
             renderProducts(lang, currentSearch);
+        });
+    }
+
+    if (clearBtn && searchInput) {
+        clearBtn.addEventListener('click', () => {
+            searchInput.value = "";
+            currentSearch = "";
+            clearBtn.classList.add('hidden');
+            const lang = localStorage.getItem('selectedLang') || 'ar';
+            renderProducts(lang, "");
+            searchInput.focus();
         });
     }
 }
@@ -300,8 +327,17 @@ function renderProducts(lang, searchTerm = "") {
 
     if (filtered.length === 0) {
         productsContainer.innerHTML = `
-            <div class="col-span-full text-center py-12">
-                <p class="text-gray-500 text-xl font-medium">${translations[lang].no_results}</p>
+            <div class="col-span-full text-center py-16 flex flex-col items-center justify-center">
+                <div class="bg-gray-100 dark:bg-gray-800 p-6 rounded-full mb-6">
+                    <svg class="w-16 h-16 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="11" y1="8" x2="11" y2="14"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                </div>
+                <p class="text-gray-500 dark:text-gray-400 text-xl font-bold mb-2">${translations[lang].no_results}</p>
+                <p class="text-gray-400 dark:text-gray-500">جرب البحث بكلمات أخرى أو اختر تصنيفاً مختلفاً</p>
             </div>
         `;
         return;
