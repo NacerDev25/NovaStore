@@ -392,15 +392,23 @@ function initMobileMenu() {
     }
 }
 
-// دالة لاستعادة التركيز عند العودة من صفحة الإعدادات
+// دالة لاستعادة التركيز عند العودة من صفحة الإعدادات أو لوحة التحكم
 function restoreFocus() {
     if (window.location.hash === '#settings-btn') {
         const settingsBtn = document.getElementById('settings-btn');
-        if (settingsBtn) {
-            settingsBtn.focus();
-            // تنظيف الهاش من الرابط دون إعادة تحميل الصفحة لتجنب تكرار التركيز غير الضروري
-            history.replaceState(null, null, ' ');
+        if (settingsBtn) settingsBtn.focus();
+        history.replaceState(null, null, ' ');
+    } else if (window.location.hash === '#admin-btn') {
+        const adminBtn = document.getElementById('admin-btn');
+        const adminBtnMobile = document.getElementById('admin-btn-mobile');
+        
+        // استعادة التركيز حسب الجهاز المستخدم (مكتبي أو جوال)
+        if (window.innerWidth >= 1024 && adminBtn) {
+            adminBtn.focus();
+        } else if (adminBtnMobile) {
+            adminBtnMobile.focus();
         }
+        history.replaceState(null, null, ' ');
     }
 }
 
