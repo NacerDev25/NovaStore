@@ -23,7 +23,8 @@ const translations = {
         theme_light: "الوضع الفاتح",
         theme_dark: "الوضع الليلي",
         menu_open: "فتح قائمة التنقل",
-        menu_close: "إغلاق قائمة التنقل"
+        menu_close: "إغلاق قائمة التنقل",
+        nav_admin: "لوحة التحكم"
     },
     fr: {
         title: "NovaStore | Meilleurs Produits",
@@ -48,7 +49,8 @@ const translations = {
         theme_light: "Mode Clair",
         theme_dark: "Mode Sombre",
         menu_open: "Ouvrir le menu",
-        menu_close: "Fermer le menu"
+        menu_close: "Fermer le menu",
+        nav_admin: "Tableau de bord"
     }
 };
 
@@ -374,6 +376,25 @@ function initMobileMenu() {
 }
 
 // دالة لاستعادة التركيز عند العودة من صفحة الإعدادات
+function restoreFocus() {
+    if (window.location.hash === '#settings-btn') {
+        const settingsBtn = document.getElementById('settings-btn');
+        if (settingsBtn) {
+            settingsBtn.focus();
+            // تنظيف الهاش من الرابط دون إعادة تحميل الصفحة لتجنب تكرار التركيز غير الضروري
+            history.replaceState(null, null, ' ');
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    applyTheme();
+    applyTranslations();
+    initMobileMenu();
+    initSearch();
+    restoreFocus();
+});
+د العودة من صفحة الإعدادات
 function restoreFocus() {
     if (window.location.hash === '#settings-btn') {
         const settingsBtn = document.getElementById('settings-btn');
