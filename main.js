@@ -394,20 +394,14 @@ function initMobileMenu() {
 
 // دالة لاستعادة التركيز عند العودة من صفحة الإعدادات أو لوحة التحكم
 function restoreFocus() {
-    if (window.location.hash === '#settings-btn') {
+    const hash = window.location.hash;
+    if (hash === '#settings-btn') {
         const settingsBtn = document.getElementById('settings-btn');
         if (settingsBtn) settingsBtn.focus();
         history.replaceState(null, null, ' ');
-    } else if (window.location.hash === '#admin-btn') {
+    } else if (hash === '#admin-btn') {
         const adminBtn = document.getElementById('admin-btn');
-        const adminBtnMobile = document.getElementById('admin-btn-mobile');
-        
-        // استعادة التركيز حسب الجهاز المستخدم (مكتبي أو جوال)
-        if (window.innerWidth >= 1024 && adminBtn) {
-            adminBtn.focus();
-        } else if (adminBtnMobile) {
-            adminBtnMobile.focus();
-        }
+        if (adminBtn) adminBtn.focus();
         history.replaceState(null, null, ' ');
     }
 }
