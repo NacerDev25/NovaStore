@@ -34,7 +34,7 @@ const translations = {
         search_placeholder: "Rechercher des produits...",
         no_results: "Aucun produit ne correspond à votre recherche.",
         hero_title: "Découvrez les meilleurs produits sélectionnés",
-        hero_subtitle: "Nous vous offرس المزايا أفضل العروض d'Amazon, Jumia et AliExpress au même endroit.",
+        hero_subtitle: "Nous vous offrons les meilleures offres d'Amazon, Jumia et AliExpress au même endroit.",
         hero_btn: "Voir les produits",
         latest_products: "Derniers Produits",
         shop_now: "Acheter maintenant",
@@ -158,6 +158,23 @@ function applyTranslations() {
         settingsBtn.setAttribute('aria-label', t.nav_settings);
         const settingsText = settingsBtn.querySelector('span');
         if(settingsText) settingsText.textContent = t.nav_settings;
+    }
+
+    const adminBtn = document.getElementById('admin-btn');
+    const adminBtnMobile = document.getElementById('admin-btn-mobile');
+    
+    if(adminBtn) {
+        adminBtn.setAttribute('aria-label', t.nav_admin);
+        const adminText = adminBtn.querySelector('span');
+        if(adminText) adminText.textContent = t.nav_admin;
+    }
+
+    if(adminBtnMobile) {
+        const adminMobileText = adminBtnMobile.querySelector('span');
+        if(adminMobileText) adminMobileText.textContent = t.nav_admin;
+        adminBtnMobile.style.textAlign = lang === 'ar' ? 'right' : 'left';
+        adminBtnMobile.classList.toggle('justify-end', lang === 'ar');
+        adminBtnMobile.classList.toggle('justify-start', lang !== 'ar');
     }
 
     const menuBtn = document.getElementById('menu-btn');
@@ -376,25 +393,6 @@ function initMobileMenu() {
 }
 
 // دالة لاستعادة التركيز عند العودة من صفحة الإعدادات
-function restoreFocus() {
-    if (window.location.hash === '#settings-btn') {
-        const settingsBtn = document.getElementById('settings-btn');
-        if (settingsBtn) {
-            settingsBtn.focus();
-            // تنظيف الهاش من الرابط دون إعادة تحميل الصفحة لتجنب تكرار التركيز غير الضروري
-            history.replaceState(null, null, ' ');
-        }
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    applyTheme();
-    applyTranslations();
-    initMobileMenu();
-    initSearch();
-    restoreFocus();
-});
-د العودة من صفحة الإعدادات
 function restoreFocus() {
     if (window.location.hash === '#settings-btn') {
         const settingsBtn = document.getElementById('settings-btn');
