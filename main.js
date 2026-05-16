@@ -24,7 +24,8 @@ const translations = {
         theme_dark: "الوضع الليلي",
         menu_open: "فتح قائمة التنقل",
         menu_close: "إغلاق قائمة التنقل",
-        nav_admin: "لوحة التحكم"
+        nav_admin: "لوحة التحكم",
+        nav_notifications: "الإشعارات"
     },
     fr: {
         title: "NovaStore | Meilleurs Produits",
@@ -50,7 +51,8 @@ const translations = {
         theme_dark: "Mode Sombre",
         menu_open: "Ouvrir le menu",
         menu_close: "Fermer le menu",
-        nav_admin: "Tableau de bord"
+        nav_admin: "Tableau de bord",
+        nav_notifications: "Notifications"
     }
 };
 
@@ -158,6 +160,13 @@ function applyTranslations() {
         settingsBtn.setAttribute('aria-label', t.nav_settings);
         const settingsText = settingsBtn.querySelector('span');
         if(settingsText) settingsText.textContent = t.nav_settings;
+    }
+
+    const notificationsBtn = document.getElementById('notifications-btn');
+    if(notificationsBtn) {
+        notificationsBtn.setAttribute('aria-label', t.nav_notifications);
+        const notificationsText = notificationsBtn.querySelector('span');
+        if(notificationsText) notificationsText.textContent = t.nav_notifications;
     }
 
     const adminBtn = document.getElementById('admin-btn');
