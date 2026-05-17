@@ -412,6 +412,10 @@ function restoreFocus() {
         const adminBtn = document.getElementById('admin-btn');
         if (adminBtn) adminBtn.focus();
         history.replaceState(null, null, ' ');
+    } else if (hash === '#terms-link') {
+        const termsLink = document.getElementById('terms-link');
+        if (termsLink) termsLink.focus();
+        history.replaceState(null, null, ' ');
     }
 }
 

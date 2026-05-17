@@ -16,7 +16,7 @@
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-indigo-600">NovaStore</a>
-            <a href="index.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors">
+            <a href="index.html#terms-link" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors">
                 <svg class="w-5 h-5 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 العودة للمتجر
             </a>
@@ -26,7 +26,7 @@
     <!-- Content -->
     <main class="container mx-auto px-4 py-12 max-w-4xl">
         <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100 dark:border-gray-700">
-            <h1 class="text-3xl md:text-4xl font-bold mb-8 text-indigo-600 border-b pb-4">اتفاقية شروط الخدمة والوساطة التجارية</h1>
+            <h1 id="terms-heading" tabindex="-1" class="text-3xl md:text-4xl font-bold mb-8 text-indigo-600 border-b pb-4 outline-none">اتفاقية شروط الخدمة والوساطة التجارية</h1>
             
             <div class="space-y-10 leading-relaxed">
                 <!-- المادة الأولى: تعريف النشاط -->
@@ -101,6 +101,12 @@
         // تطبيق الثيم من localStorage
         const theme = localStorage.getItem('selectedTheme') || 'light';
         if (theme === 'dark') document.documentElement.classList.add('dark');
+
+        // إدارة التركيز: التركيز على أول عنوان عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            const heading = document.getElementById('terms-heading');
+            if (heading) heading.focus();
+        });
     </script>
 </body>
 </html>
