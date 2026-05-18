@@ -76,6 +76,16 @@
                             <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
                         </svg>
                     </button>
+
+                    <button onclick="changeLanguage('en')" id="lang-en" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            <span class="font-bold">English</span>
+                        </div>
+                        <svg id="check-en" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
+                            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
                 </div>
             </section>
 
@@ -124,6 +134,14 @@
                 theme_title: "Thème du site",
                 light: "Mode Clair",
                 dark: "Mode Sombre"
+            },
+            en: {
+                back: "Back to store",
+                title: "Site Settings",
+                lang_title: "Site Language",
+                theme_title: "Site Theme",
+                light: "Light Mode",
+                dark: "Dark Mode"
             }
         };
 
@@ -142,6 +160,8 @@
             const lang = localStorage.getItem('selectedLang') || 'ar';
             const theme = localStorage.getItem('selectedTheme') || 'light';
             const isAr = lang === 'ar';
+            const isEn = lang === 'en';
+            const isFr = lang === 'fr';
             const isDark = theme === 'dark';
             const t = translations[lang];
 
@@ -179,9 +199,12 @@
             const inactiveClass = 'border-transparent bg-gray-50 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700';
 
             document.getElementById('lang-ar').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${isAr ? activeClass : inactiveClass}`;
-            document.getElementById('lang-fr').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${!isAr ? activeClass : inactiveClass}`;
+            document.getElementById('lang-fr').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${isFr ? activeClass : inactiveClass}`;
+            document.getElementById('lang-en').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${isEn ? activeClass : inactiveClass}`;
+            
             document.getElementById('check-ar').classList.toggle('hidden', !isAr);
-            document.getElementById('check-fr').classList.toggle('hidden', isAr);
+            document.getElementById('check-fr').classList.toggle('hidden', !isFr);
+            document.getElementById('check-en').classList.toggle('hidden', !isEn);
         }
 
         updateUI();

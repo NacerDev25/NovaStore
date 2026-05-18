@@ -53,6 +53,33 @@ const translations = {
         menu_close: "Fermer le menu",
         nav_admin: "Tableau de bord",
         nav_notifications: "Notifications"
+    },
+    en: {
+        title: "NovaStore | Best Products",
+        nav_home: "Home",
+        nav_products: "Products",
+        nav_settings: "Settings",
+        search_placeholder: "Search products...",
+        no_results: "No products match your search.",
+        hero_title: "Shop the Best Selected Products",
+        hero_subtitle: "We provide the best offers from Amazon, Jumia, and AliExpress in one place.",
+        hero_btn: "Browse Products Now",
+        latest_products: "Latest Products",
+        shop_now: "Shop Now",
+        footer_rights: "All rights reserved.",
+        privacy: "Privacy Policy",
+        terms: "Terms of Use",
+        all_categories: "All",
+        cat_women: "Women's World",
+        cat_men: "Men's World",
+        cat_tech: "Tech Section",
+        theme_title: "Site Theme",
+        theme_light: "Light Mode",
+        theme_dark: "Dark Mode",
+        menu_open: "Open menu",
+        menu_close: "Close menu",
+        nav_admin: "Admin Panel",
+        nav_notifications: "Notifications"
     }
 };
 
@@ -60,39 +87,39 @@ const translations = {
 const products = [
     {
         id: 1,
-        titles: { ar: "ساعة رجالية فاخرة", fr: "Montre Luxe pour Homme" },
+        titles: { ar: "ساعة رجالية فاخرة", fr: "Montre Luxe pour Homme", en: "Luxury Men's Watch" },
         category: "men",
         price: "15000 DA",
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500",
         link: "https://amazon.com/example-watch",
-        store: { ar: "أمازون", fr: "Amazon" }
+        store: { ar: "أمازون", fr: "Amazon", en: "Amazon" }
     },
     {
         id: 2,
-        titles: { ar: "طقم إكسسوارات نسائي", fr: "Ensemble Bijoux Femme" },
+        titles: { ar: "طقم إكسسوارات نسائي", fr: "Ensemble Bijoux Femme", en: "Women's Jewelry Set" },
         category: "women",
         price: "8500 DA",
         image: "https://images.unsplash.com/photo-1535633302704-b02923cf8c72?w=500",
         link: "https://aliexpress.com/example-jewelry",
-        store: { ar: "علي إكسبريس", fr: "AliExpress" }
+        store: { ar: "علي إكسبريس", fr: "AliExpress", en: "AliExpress" }
     },
     {
         id: 3,
-        titles: { ar: "لوحة مفاتيح ميكانيكية احترافية", fr: "Clavier Mécanique Pro" },
+        titles: { ar: "لوحة مفاتيح ميكانيكية احترافية", fr: "Clavier Mécanique Pro", en: "Professional Mechanical Keyboard" },
         category: "tech",
         price: "12000 DA",
         image: "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=500",
         link: "https://amazon.com/example-keyboard",
-        store: { ar: "أمازون", fr: "Amazon" }
+        store: { ar: "أمازون", fr: "Amazon", en: "Amazon" }
     },
     {
         id: 4,
-        titles: { ar: "حقيبة يد نسائية أنيقة", fr: "Sac à Main Élégant" },
+        titles: { ar: "حقيبة يد نسائية أنيقة", fr: "Sac à Main Élégant", en: "Elegant Women's Handbag" },
         category: "women",
         price: "11000 DA",
         image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500",
         link: "https://jumia.com.dz/example-bag",
-        store: { ar: "جوميا", fr: "Jumia" }
+        store: { ar: "جوميا", fr: "Jumia", en: "Jumia" }
     }
 ];
 
