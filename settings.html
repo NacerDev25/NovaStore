@@ -114,6 +114,46 @@
                     </label>
                 </div>
             </section>
+
+            <!-- إعدادات الإشعارات -->
+            <section id="notification-settings" class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 space-y-6">
+                <h2 id="notif-title" class="text-xl font-bold flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                    </svg>
+                    إعدادات الإشعارات
+                </h2>
+
+                <!-- تفعيل الإشعارات -->
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 id="label-notif-enable" class="font-bold">تفعيل الإشعارات</h3>
+                        <p id="status-notif-enable" class="text-sm text-gray-500 dark:text-gray-400">مفعل</p>
+                    </div>
+                    <label for="notif-toggle" class="flex items-center cursor-pointer select-none" aria-label="Toggle Notifications">
+                        <div class="relative">
+                            <input type="checkbox" id="notif-toggle" class="sr-only" onchange="toggleNotifications()">
+                            <div class="block bg-gray-200 dark:bg-gray-700 w-14 h-8 rounded-full transition-colors"></div>
+                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow transition-all"></div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- صوت التنبيه -->
+                <div class="flex items-center justify-between border-t border-gray-100 dark:border-gray-800 pt-6">
+                    <div>
+                        <h3 id="label-notif-sound" class="font-bold">صوت التنبيه</h3>
+                        <p id="status-notif-sound" class="text-sm text-gray-500 dark:text-gray-400">مفعل</p>
+                    </div>
+                    <label for="sound-toggle" class="flex items-center cursor-pointer select-none" aria-label="Toggle Notification Sound">
+                        <div class="relative">
+                            <input type="checkbox" id="sound-toggle" class="sr-only" onchange="toggleSound()">
+                            <div class="block bg-gray-200 dark:bg-gray-700 w-14 h-8 rounded-full transition-colors"></div>
+                            <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow transition-all"></div>
+                        </div>
+                    </label>
+                </div>
+            </section>
         </div>
     </main>
 
@@ -125,7 +165,12 @@
                 lang_title: "لغة الموقع (Language)",
                 theme_title: "مظهر الموقع (Theme)",
                 light: "الوضع الفاتح",
-                dark: "الوضع الليلي"
+                dark: "الوضع الليلي",
+                notif_title: "إعدادات الإشعارات",
+                notif_enable: "تفعيل الإشعارات",
+                notif_sound: "صوت التنبيه",
+                on: "مفعل",
+                off: "معطل"
             },
             fr: {
                 back: "Retour au magasin",
@@ -133,7 +178,12 @@
                 lang_title: "Langue du site",
                 theme_title: "Thème du site",
                 light: "Mode Clair",
-                dark: "Mode Sombre"
+                dark: "Mode Sombre",
+                notif_title: "Paramètres des notifications",
+                notif_enable: "Activer les notifications",
+                notif_sound: "Son d'alerte",
+                on: "Activé",
+                off: "Désactivé"
             },
             en: {
                 back: "Back to store",
@@ -141,7 +191,12 @@
                 lang_title: "Site Language",
                 theme_title: "Site Theme",
                 light: "Light Mode",
-                dark: "Dark Mode"
+                dark: "Dark Mode",
+                notif_title: "Notification Settings",
+                notif_enable: "Enable Notifications",
+                notif_sound: "Alert Sound",
+                on: "On",
+                off: "Off"
             }
         };
 
@@ -156,9 +211,24 @@
             updateUI();
         }
 
+        function toggleNotifications() {
+            const isEnabled = document.getElementById('notif-toggle').checked;
+            localStorage.setItem('notificationsEnabled', isEnabled);
+            updateUI();
+        }
+
+        function toggleSound() {
+            const isEnabled = document.getElementById('sound-toggle').checked;
+            localStorage.setItem('notificationSound', isEnabled);
+            updateUI();
+        }
+
         function updateUI() {
             const lang = localStorage.getItem('selectedLang') || 'ar';
             const theme = localStorage.getItem('selectedTheme') || 'light';
+            const notifEnabled = localStorage.getItem('notificationsEnabled') !== 'false';
+            const soundEnabled = localStorage.getItem('notificationSound') !== 'false';
+
             const isAr = lang === 'ar';
             const isEn = lang === 'en';
             const isFr = lang === 'fr';
@@ -183,8 +253,20 @@
             document.getElementById('theme-title').textContent = t.theme_title;
             document.getElementById('theme-status').textContent = isDark ? t.dark : t.light;
 
-            // تحديث حالة مفتاح التبديل
+            document.getElementById('notif-title').innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                </svg>
+                ${t.notif_title}`;
+            document.getElementById('label-notif-enable').textContent = t.notif_enable;
+            document.getElementById('status-notif-enable').textContent = notifEnabled ? t.on : t.off;
+            document.getElementById('label-notif-sound').textContent = t.notif_sound;
+            document.getElementById('status-notif-sound').textContent = soundEnabled ? t.on : t.off;
+
+            // تحديث حالة مفاتيح التبديل
             document.getElementById('theme-toggle').checked = isDark;
+            document.getElementById('notif-toggle').checked = notifEnabled;
+            document.getElementById('sound-toggle').checked = soundEnabled;
 
             // تحديث الأيقونة
             const iconPath = document.getElementById('icon-path');
@@ -205,6 +287,12 @@
             document.getElementById('check-ar').classList.toggle('hidden', !isAr);
             document.getElementById('check-fr').classList.toggle('hidden', !isFr);
             document.getElementById('check-en').classList.toggle('hidden', !isEn);
+
+            // استعادة التركيز إذا كان هناك hash (لمساعدة المكفوفين عند الانتقال من الإشعارات)
+            if (window.location.hash === '#notification-settings') {
+                const section = document.getElementById('notification-settings');
+                if (section) section.scrollIntoView({ behavior: 'smooth' });
+            }
         }
 
         updateUI();
