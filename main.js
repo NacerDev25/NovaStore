@@ -443,6 +443,10 @@ function restoreFocus() {
         const termsLink = document.getElementById('terms-link');
         if (termsLink) termsLink.focus();
         history.replaceState(null, null, ' ');
+    } else if (hash === '#notifications-btn') {
+        const notificationsBtn = document.getElementById('notifications-btn');
+        if (notificationsBtn) notificationsBtn.focus();
+        history.replaceState(null, null, ' ');
     }
 }
 
