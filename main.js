@@ -196,6 +196,13 @@ function applyTranslations() {
         if(notificationsText) notificationsText.textContent = t.nav_notifications;
     }
 
+    const drawerSettingsBtn = document.querySelector('#notifications-drawer a[href*="settings.html"]');
+    if (drawerSettingsBtn) {
+        drawerSettingsBtn.setAttribute('aria-label', t.nav_settings);
+        const drawerSettingsText = drawerSettingsBtn.querySelector('span');
+        if (drawerSettingsText) drawerSettingsText.textContent = t.nav_settings;
+    }
+
     const adminBtn = document.getElementById('admin-btn');
     const adminBtnMobile = document.getElementById('admin-btn-mobile');
     

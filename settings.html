@@ -263,6 +263,10 @@
             document.getElementById('label-notif-sound').textContent = t.notif_sound;
             document.getElementById('status-notif-sound').textContent = soundEnabled ? t.on : t.off;
 
+            // تحديث الـ aria-labels لتحسين الوصول
+            document.querySelector('label[for="notif-toggle"]').setAttribute('aria-label', t.notif_enable);
+            document.querySelector('label[for="sound-toggle"]').setAttribute('aria-label', t.notif_sound);
+
             // تحديث حالة مفاتيح التبديل
             document.getElementById('theme-toggle').checked = isDark;
             document.getElementById('notif-toggle').checked = notifEnabled;
