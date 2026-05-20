@@ -428,6 +428,82 @@ function initMobileMenu() {
     }
 }
 
+// تهيئة حاوية الإشعارات التفاعلية
+function initNotificationsDrawer() {
+    const notificationsBtn = document.getElementById('notifications-btn');
+    const drawer = document.getElementById('notifications-drawer');
+    const closeBtn = document.getElementById('close-notifications');
+    const overlay = document.getElementById('notifications-overlay');
+
+    if (!notificationsBtn || !drawer || !closeBtn || !overlay) return;
+
+    function openDrawer() {
+        drawer.classList.remove('invisible');
+        drawer.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+        setTimeout(() => overlay.classList.replace('opacity-0', 'opacity-100'), 10);
+        
+        notificationsBtn.setAttribute('aria-expanded', 'true');
+        drawer.setAttribute('aria-hidden', 'false');
+        
+        // منع التمرير في الخلفية
+        document.body.style.overflow = 'hidden';
+        
+        // إدارة التركيز
+        const drawerTitle = document.getElementById('drawer-title');
+        if (drawerTitle) {
+            drawerTitle.setAttribute('tabindex', '-1');
+            drawerTitle.focus();
+        }
+
+        // حبس التركيز داخل الحاوية (Focus Trap)
+        drawer.addEventListener('keydown', handleFocusTrap);
+    }
+
+    function closeDrawer() {
+        drawer.classList.add('-translate-x-full');
+        overlay.classList.replace('opacity-100', 'opacity-0');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            drawer.classList.add('invisible');
+        }, 300);
+        
+        notificationsBtn.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+        
+        document.body.style.overflow = '';
+        
+        // استعادة التركيز للزر
+        notificationsBtn.focus();
+        drawer.removeEventListener('keydown', handleFocusTrap);
+    }
+
+    function handleFocusTrap(e) {
+        if (e.key === 'Tab') {
+            const focusableElements = drawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    lastElement.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    firstElement.focus();
+                    e.preventDefault();
+                }
+            }
+        }
+        if (e.key === 'Escape') closeDrawer();
+    }
+
+    notificationsBtn.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+}
+
 // دالة لاستعادة التركيز عند العودة من صفحة الإعدادات أو لوحة التحكم
 function restoreFocus() {
     const hash = window.location.hash;
@@ -454,6 +530,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTheme();
     applyTranslations();
     initMobileMenu();
+    initNotificationsDrawer();
     initSearch();
     restoreFocus();
 });
