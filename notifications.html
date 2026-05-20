@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإشعارات | NovaStore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">NovaStore</a>
+            <a href="index.html" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors font-bold gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                </svg>
+                <span id="back-text">العودة للمتجر</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12 max-w-2xl">
+        <div class="flex items-center justify-between mb-8">
+            <h1 id="notifications-title" class="text-3xl font-bold">الإشعارات</h1>
+            <span class="bg-indigo-100 text-indigo-600 py-1 px-3 rounded-full text-sm font-bold dark:bg-indigo-900/50 dark:text-indigo-400">3 إشعارات جديدة</span>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Notification Item 1 -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border-l-4 border-indigo-600 dark:border-indigo-400 flex gap-4 transition-transform hover:scale-[1.01]">
+                <div class="bg-indigo-50 dark:bg-indigo-900/30 p-3 rounded-xl h-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600 dark:text-indigo-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                    </svg>
+                </div>
+                <div class="flex-grow">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-bold text-lg">مرحباً بك في NovaStore!</h3>
+                        <span class="text-xs text-gray-400">منذ دقيقتين</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">شكراً لانضمامك إلينا. استمتع بتجربة تسوق فريدة مع أفضل العروض المختارة بعناية من أجلك.</p>
+                </div>
+            </div>
+
+            <!-- Notification Item 2 -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border-l-4 border-green-500 dark:border-green-400 flex gap-4 transition-transform hover:scale-[1.01]">
+                <div class="bg-green-50 dark:bg-green-900/30 p-3 rounded-xl h-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-600 dark:text-green-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="flex-grow">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-bold text-lg">تم تحديث سياسة الخدمة</h3>
+                        <span class="text-xs text-gray-400">منذ ساعة</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">لقد قمنا بتحديث شروط الخدمة لضمان حماية أفضل لبياناتك وحقوقك كزبون في متجرنا.</p>
+                    <a href="terms.html" class="text-indigo-600 dark:text-indigo-400 text-xs font-bold mt-2 inline-block hover:underline">اقرأ المزيد</a>
+                </div>
+            </div>
+
+            <!-- Notification Item 3 -->
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border-l-4 border-orange-500 dark:border-orange-400 flex gap-4 transition-transform hover:scale-[1.01]">
+                <div class="bg-orange-50 dark:bg-orange-900/30 p-3 rounded-xl h-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-orange-600 dark:text-orange-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <div class="flex-grow">
+                    <div class="flex justify-between items-start mb-1">
+                        <h3 class="font-bold text-lg">عروض نهاية الأسبوع</h3>
+                        <span class="text-xs text-gray-400">منذ 5 ساعات</span>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">لا تفوت عروضنا الحصرية لنهاية هذا الأسبوع في قسم التقنية وعالم المرأة. تخفيضات تصل إلى 30%!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State (Hidden for now) -->
+        <div id="no-notifications" class="hidden text-center py-20">
+            <div class="bg-gray-100 dark:bg-gray-800 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-gray-400">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold mb-2">لا توجد إشعارات حالياً</h3>
+            <p class="text-gray-500 dark:text-gray-400">سنقوم بإخطارك عند وجود عروض جديدة أو تحديثات تهمك.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-gray-500 text-sm">
+        &copy; 2026 NovaStore. جميع الحقوق محفوظة.
+    </footer>
+
+    <script>
+        // مزامنة الوضع الليلي
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // الترجمات
+        const translations = {
+            ar: {
+                back: "العودة للمتجر",
+                title: "الإشعارات",
+                new: "إشعارات جديدة",
+                none: "لا توجد إشعارات حالياً",
+                none_desc: "سنقوم بإخطارك عند وجود عروض جديدة أو تحديثات تهمك.",
+                welcome: "مرحباً بك في NovaStore!",
+                welcome_desc: "شكراً لانضمامك إلينا. استمتع بتجربة تسوق فريدة مع أفضل العروض المختارة بعناية من أجلك.",
+                terms: "تم تحديث سياسة الخدمة",
+                terms_desc: "لقد قمنا بتحديث شروط الخدمة لضمان حماية أفضل لبياناتك وحقوقك كزبون في متجرنا.",
+                terms_more: "اقرأ المزيد",
+                offers: "عروض نهاية الأسبوع",
+                offers_desc: "لا تفوت عروضنا الحصرية لنهاية هذا الأسبوع في قسم التقنية وعالم المرأة. تخفيضات تصل إلى 30%!",
+                time_now: "الآن",
+                time_hour: "منذ ساعة",
+                time_day: "منذ يوم"
+            },
+            fr: {
+                back: "Retour au magasin",
+                title: "Notifications",
+                new: "nouvelles notifications",
+                none: "Aucune notification pour le moment",
+                none_desc: "Nous vous informerons lorsqu'il y aura de nouvelles offres ou mises à jour qui vous intéressent.",
+                welcome: "Bienvenue sur NovaStore !",
+                welcome_desc: "Merci de nous avoir rejoint. Profitez d'une expérience de magasinage unique avec les meilleures offres soigneusement sélectionnées pour vous.",
+                terms: "Politique de service mise à jour",
+                terms_desc: "Nous avons mis à jour nos conditions de service pour assurer une meilleure protection de vos données et de vos droits en tant que client.",
+                terms_more: "Lire la suite",
+                offers: "Offres du week-end",
+                offers_desc: "Ne manquez pas nos offres exclusives ce week-end dans les sections Technologie et Monde de la Femme. Jusqu'à 30% de réduction !",
+                time_now: "Maintenant",
+                time_hour: "Il y a 1h",
+                time_day: "Il y a 1j"
+            },
+            en: {
+                back: "Back to store",
+                title: "Notifications",
+                new: "new notifications",
+                none: "No notifications yet",
+                none_desc: "We'll notify you when there are new offers or updates that interest you.",
+                welcome: "Welcome to NovaStore!",
+                welcome_desc: "Thank you for joining us. Enjoy a unique shopping experience with the best deals carefully selected for you.",
+                terms: "Service Policy Updated",
+                terms_desc: "We've updated our terms of service to ensure better protection of your data and rights as a customer.",
+                terms_more: "Read more",
+                offers: "Weekend Offers",
+                offers_desc: "Don't miss our exclusive deals this weekend in the Tech and Women's World sections. Up to 30% off!",
+                time_now: "Now",
+                time_hour: "1h ago",
+                time_day: "1d ago"
+            }
+        };
+
+        function updateUI() {
+            const lang = localStorage.getItem('selectedLang') || 'ar';
+            const t = translations[lang];
+            
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            if(document.getElementById('back-text')) document.getElementById('back-text').textContent = t.back;
+            if(document.getElementById('notifications-title')) document.getElementById('notifications-title').textContent = t.title;
+        }
+
+        updateUI();
+    </script>
+</body>
+</html>
