@@ -28,12 +28,14 @@
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+    <!-- رابط الانتقال السريع للمحتوى الأساسي -->
+    <a href="#login-title" id="skip-link" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:z-[100] focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">تخطي إلى المحتوى الأساسي</a>
 
     <!-- Header المصغر -->
     <header class="bg-white dark:bg-gray-800 shadow-sm p-4">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html#admin-btn" id="back-to-home" class="text-indigo-600 dark:text-indigo-400 font-bold flex items-center gap-2 hover:underline" aria-label="العودة للرئيسية">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                 </svg>
                 <span id="nav-back">العودة للرئيسية</span>
@@ -46,31 +48,37 @@
         <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100 dark:border-gray-700">
             <div class="text-center mb-8">
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 dark:bg-indigo-900/30 rounded-full mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-indigo-600" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                     </svg>
                 </div>
-                <h1 id="login-title" class="text-2xl font-bold text-gray-800 dark:text-white">دخول المسؤول</h1>
+                <h1 id="login-title" tabindex="-1" class="text-2xl font-bold text-gray-800 dark:text-white focus:outline-none">دخول المسؤول</h1>
                 <p id="login-subtitle" class="text-gray-500 dark:text-gray-400 mt-2">يرجى إدخال بيانات الاعتماد للوصول للوحة التحكم</p>
             </div>
+
+            <div id="form-status" class="text-center text-green-600 dark:text-green-400 font-bold p-4 bg-green-50 dark:bg-green-900/30 rounded-xl hidden" role="status" aria-live="polite"></div>
 
             <form id="admin-login-form" class="space-y-6" novalidate>
                 <div>
                     <label for="admin-email" id="label-email" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">البريد الإلكتروني</label>
                     <input type="email" id="admin-email" name="email" required
                            class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-indigo-600 transition-all dark:text-white"
-                           placeholder="admin@example.com">
+                           placeholder="admin@example.com"
+                           aria-describedby="email-error">
+                    <span id="email-error" class="text-xs text-red-500 mt-1.5 block hidden" role="alert"></span>
                 </div>
 
                 <div>
                     <label for="admin-password" id="label-password" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">كلمة السر</label>
                     <input type="password" id="admin-password" name="password" required
                            class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-indigo-600 transition-all dark:text-white"
-                           placeholder="••••••••">
+                           placeholder="••••••••"
+                           aria-describedby="password-error">
+                    <span id="password-error" class="text-xs text-red-500 mt-1.5 block hidden" role="alert"></span>
                 </div>
 
                 <button type="submit" id="btn-login" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg transform active:scale-95 flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                     </svg>
                     <span>تسجيل الدخول</span>
@@ -94,7 +102,8 @@
                 label_email: "البريد الإلكتروني",
                 label_pass: "كلمة السر",
                 btn_login: "تسجيل الدخول",
-                email_placeholder: "admin@example.com"
+                email_placeholder: "admin@example.com",
+                skip_to_content: "تخطي إلى المحتوى الأساسي"
             },
             fr: {
                 title: "Connexion Administrateur | NovaStore",
@@ -104,7 +113,8 @@
                 label_email: "Email",
                 label_pass: "Mot de passe",
                 btn_login: "Se connecter",
-                email_placeholder: "admin@example.com"
+                email_placeholder: "admin@example.com",
+                skip_to_content: "Passer au contenu principal"
             },
             en: {
                 title: "Admin Login | NovaStore",
@@ -114,7 +124,8 @@
                 label_email: "Email",
                 label_pass: "Password",
                 btn_login: "Login",
-                email_placeholder: "admin@example.com"
+                email_placeholder: "admin@example.com",
+                skip_to_content: "Skip to main content"
             }
         };
 
@@ -125,6 +136,9 @@
             document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
             document.documentElement.lang = lang;
             document.title = t.title;
+
+            const skipLink = document.getElementById('skip-link');
+            if (skipLink) skipLink.textContent = t.skip_to_content;
 
             document.getElementById('nav-back').textContent = t.back;
             document.getElementById('login-title').textContent = t.login_title;
@@ -153,10 +167,80 @@
                 setTimeout(() => emailInput.focus(), 100);
             }
 
-            // منع الإرسال الافتراضي حالياً (لأغراض العرض)
+            // التحقق من صحة الحقول بشكل يمكن الوصول إليه
             document.getElementById('admin-login-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                alert(document.documentElement.lang === 'ar' ? 'تم استلام البيانات (هذا نموذج تجريبي)' : 'Données reçues (ceci est une démo)');
+                
+                const emailInput = document.getElementById('admin-email');
+                const passwordInput = document.getElementById('admin-password');
+                const emailError = document.getElementById('email-error');
+                const passwordError = document.getElementById('password-error');
+                const lang = document.documentElement.lang;
+                
+                let isValid = true;
+                
+                // رسائل التحقق
+                const errorMsgs = {
+                    ar: {
+                        email_required: "يرجى إدخال البريد الإلكتروني.",
+                        email_invalid: "يرجى إدخال بريد إلكتروني صالح.",
+                        pass_required: "يرجى إدخال كلمة السر."
+                    },
+                    fr: {
+                        email_required: "Veuillez entrer l'adresse e-mail.",
+                        email_invalid: "Veuillez entrer une adresse e-mail valide.",
+                        pass_required: "Veuillez entrer le mot de passe."
+                    },
+                    en: {
+                        email_required: "Please enter your email.",
+                        email_invalid: "Please enter a valid email address.",
+                        pass_required: "Please enter your password."
+                    }
+                };
+                
+                const msg = errorMsgs[lang] || errorMsgs['ar'];
+                
+                // التحقق من الإيميل
+                if (!emailInput.value.trim()) {
+                    emailError.textContent = msg.email_required;
+                    emailError.classList.remove('hidden');
+                    emailInput.setAttribute('aria-invalid', 'true');
+                    isValid = false;
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
+                    emailError.textContent = msg.email_invalid;
+                    emailError.classList.remove('hidden');
+                    emailInput.setAttribute('aria-invalid', 'true');
+                    isValid = false;
+                } else {
+                    emailError.textContent = "";
+                    emailError.classList.add('hidden');
+                    emailInput.removeAttribute('aria-invalid');
+                }
+                
+                // التحقق من كلمة السر
+                if (!passwordInput.value.trim()) {
+                    passwordError.textContent = msg.pass_required;
+                    passwordError.classList.remove('hidden');
+                    passwordInput.setAttribute('aria-invalid', 'true');
+                    isValid = false;
+                } else {
+                    passwordError.textContent = "";
+                    passwordError.classList.add('hidden');
+                    passwordInput.removeAttribute('aria-invalid');
+                }
+                
+                if (isValid) {
+                    const successMsg = document.getElementById('form-status');
+                    successMsg.textContent = lang === 'ar' ? 'تم استلام البيانات بنجاح (نموذج تجريبي)' : 'Données reçues avec succès (ceci est une démo)';
+                    successMsg.classList.remove('hidden');
+                } else {
+                    // تركيز لوحة المفاتيح على أول حقل غير صالح
+                    if (emailInput.getAttribute('aria-invalid') === 'true') {
+                        emailInput.focus();
+                    } else if (passwordInput.getAttribute('aria-invalid') === 'true') {
+                        passwordInput.focus();
+                    }
+                }
             });
         });
     </script>

@@ -28,14 +28,17 @@
         .dot { transition: all 0.3s ease-in-out; }
         input:checked ~ .dot { transform: translateX(-100%); background-color: #4f46e5; }
         [dir="ltr"] input:checked ~ .dot { transform: translateX(100%); }
+        input:focus-visible ~ .block { outline: 3px solid #4f46e5; outline-offset: 2px; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- رابط الانتقال السريع للمحتوى الأساسي -->
+    <a href="#settings-title" id="skip-link" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:z-[100] focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">تخطي إلى المحتوى الأساسي</a>
     
     <header class="bg-white dark:bg-gray-800 shadow-sm p-4 sticky top-0 z-50">
         <div class="container mx-auto flex items-center">
             <a href="index.html#settings-btn" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 transition-colors flex items-center gap-2 font-bold">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
                 <span id="back-text">العودة للمتجر</span>
@@ -44,45 +47,45 @@
     </header>
 
     <main class="container mx-auto px-4 py-12 max-w-2xl">
-        <h1 id="settings-title" tabindex="-1" class="text-3xl font-bold mb-8 focus:outline-none">إعدادات الموقع</h1>
+        <h1 id="settings-title" tabindex="-1" class="text-3xl font-bold mb-8 focus:outline-none" aria-live="polite">إعدادات الموقع</h1>
 
         <div class="space-y-6">
             <!-- لغة الموقع -->
             <section class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
                 <h2 id="lang-title" class="text-xl font-bold mb-6 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
                     </svg>
                     لغة الموقع (Language)
                 </h2>
 
                 <div class="grid grid-cols-1 gap-3">
-                    <button onclick="changeLanguage('ar')" id="lang-ar" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
+                    <button onclick="changeLanguage('ar')" id="lang-ar" aria-pressed="false" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
                         <div class="flex items-center gap-3">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
                             <span class="font-bold">العربية</span>
                         </div>
-                        <svg id="check-ar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
+                        <svg id="check-ar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden" aria-hidden="true">
                             <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
                         </svg>
                     </button>
 
-                    <button onclick="changeLanguage('fr')" id="lang-fr" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
+                    <button onclick="changeLanguage('fr')" id="lang-fr" aria-pressed="false" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
                         <div class="flex items-center gap-3">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                             <span class="font-bold">Français</span>
                         </div>
-                        <svg id="check-fr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
+                        <svg id="check-fr" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden" aria-hidden="true">
                             <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
                         </svg>
                     </button>
 
-                    <button onclick="changeLanguage('en')" id="lang-en" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
+                    <button onclick="changeLanguage('en')" id="lang-en" aria-pressed="false" class="w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all">
                         <div class="flex items-center gap-3">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                             <span class="font-bold">English</span>
                         </div>
-                        <svg id="check-en" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden">
+                        <svg id="check-en" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-indigo-600 hidden" aria-hidden="true">
                             <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
                         </svg>
                     </button>
@@ -94,7 +97,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="p-2 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg text-indigo-600 dark:text-indigo-400">
-                            <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
                                 <path id="icon-path" stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M3 12h2.25m.386-6.364l1.591 1.591M12 18.75V21m-4.773-4.227l-1.591 1.591" />
                             </svg>
                         </div>
@@ -105,9 +108,9 @@
                     </div>
 
                     <!-- مفتاح التبديل -->
-                    <label for="theme-toggle" class="flex items-center cursor-pointer select-none" aria-label="Toggle Theme">
+                    <label for="theme-toggle" class="flex items-center cursor-pointer select-none">
                         <div class="relative">
-                            <input type="checkbox" id="theme-toggle" class="sr-only" onchange="toggleTheme()">
+                            <input type="checkbox" id="theme-toggle" class="sr-only" onchange="toggleTheme()" aria-labelledby="theme-title">
                             <div class="block bg-gray-200 dark:bg-gray-700 w-14 h-8 rounded-full transition-colors"></div>
                             <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow transition-all"></div>
                         </div>
@@ -118,7 +121,7 @@
             <!-- إعدادات الإشعارات -->
             <section id="notification-settings" class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 space-y-6">
                 <h2 id="notif-title" class="text-xl font-bold flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                     </svg>
                     إعدادات الإشعارات
@@ -130,9 +133,9 @@
                         <h3 id="label-notif-enable" class="font-bold">تفعيل الإشعارات</h3>
                         <p id="status-notif-enable" class="text-sm text-gray-500 dark:text-gray-400">مفعل</p>
                     </div>
-                    <label for="notif-toggle" class="flex items-center cursor-pointer select-none" aria-label="Toggle Notifications">
+                    <label for="notif-toggle" class="flex items-center cursor-pointer select-none">
                         <div class="relative">
-                            <input type="checkbox" id="notif-toggle" class="sr-only" onchange="toggleNotifications()">
+                            <input type="checkbox" id="notif-toggle" class="sr-only" onchange="toggleNotifications()" aria-labelledby="label-notif-enable">
                             <div class="block bg-gray-200 dark:bg-gray-700 w-14 h-8 rounded-full transition-colors"></div>
                             <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow transition-all"></div>
                         </div>
@@ -145,9 +148,9 @@
                         <h3 id="label-notif-sound" class="font-bold">صوت التنبيه</h3>
                         <p id="status-notif-sound" class="text-sm text-gray-500 dark:text-gray-400">مفعل</p>
                     </div>
-                    <label for="sound-toggle" class="flex items-center cursor-pointer select-none" aria-label="Toggle Notification Sound">
+                    <label for="sound-toggle" class="flex items-center cursor-pointer select-none">
                         <div class="relative">
-                            <input type="checkbox" id="sound-toggle" class="sr-only" onchange="toggleSound()">
+                            <input type="checkbox" id="sound-toggle" class="sr-only" onchange="toggleSound()" aria-labelledby="label-notif-sound">
                             <div class="block bg-gray-200 dark:bg-gray-700 w-14 h-8 rounded-full transition-colors"></div>
                             <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow transition-all"></div>
                         </div>
@@ -170,7 +173,8 @@
                 notif_enable: "تفعيل الإشعارات",
                 notif_sound: "صوت التنبيه",
                 on: "مفعل",
-                off: "معطل"
+                off: "معطل",
+                skip_to_content: "تخطي إلى المحتوى الأساسي"
             },
             fr: {
                 back: "Retour au magasin",
@@ -183,7 +187,8 @@
                 notif_enable: "Activer les notifications",
                 notif_sound: "Son d'alerte",
                 on: "Activé",
-                off: "Désactivé"
+                off: "Désactivé",
+                skip_to_content: "Passer au contenu principal"
             },
             en: {
                 back: "Back to store",
@@ -196,7 +201,8 @@
                 notif_enable: "Enable Notifications",
                 notif_sound: "Alert Sound",
                 on: "On",
-                off: "Off"
+                off: "Off",
+                skip_to_content: "Skip to main content"
             }
         };
 
@@ -245,16 +251,19 @@
             }
 
             // تحديث النصوص
+            const skipLink = document.getElementById('skip-link');
+            if (skipLink) skipLink.textContent = t.skip_to_content;
+            
             document.getElementById('back-text').textContent = t.back;
             document.getElementById('settings-title').textContent = t.title;
             document.getElementById('lang-title').innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600"><path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" /></svg>
                 ${t.lang_title}`;
             document.getElementById('theme-title').textContent = t.theme_title;
             document.getElementById('theme-status').textContent = isDark ? t.dark : t.light;
 
             document.getElementById('notif-title').innerHTML = `
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                 </svg>
                 ${t.notif_title}`;
@@ -262,10 +271,6 @@
             document.getElementById('status-notif-enable').textContent = notifEnabled ? t.on : t.off;
             document.getElementById('label-notif-sound').textContent = t.notif_sound;
             document.getElementById('status-notif-sound').textContent = soundEnabled ? t.on : t.off;
-
-            // تحديث الـ aria-labels لتحسين الوصول
-            document.querySelector('label[for="notif-toggle"]').setAttribute('aria-label', t.notif_enable);
-            document.querySelector('label[for="sound-toggle"]').setAttribute('aria-label', t.notif_sound);
 
             // تحديث حالة مفاتيح التبديل
             document.getElementById('theme-toggle').checked = isDark;
@@ -288,6 +293,10 @@
             document.getElementById('lang-fr').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${isFr ? activeClass : inactiveClass}`;
             document.getElementById('lang-en').className = `w-full flex justify-between items-center p-4 rounded-xl border-2 transition-all ${isEn ? activeClass : inactiveClass}`;
             
+            document.getElementById('lang-ar').setAttribute('aria-pressed', isAr ? 'true' : 'false');
+            document.getElementById('lang-fr').setAttribute('aria-pressed', isFr ? 'true' : 'false');
+            document.getElementById('lang-en').setAttribute('aria-pressed', isEn ? 'true' : 'false');
+
             document.getElementById('check-ar').classList.toggle('hidden', !isAr);
             document.getElementById('check-fr').classList.toggle('hidden', !isFr);
             document.getElementById('check-en').classList.toggle('hidden', !isEn);

@@ -61,6 +61,8 @@
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- رابط الانتقال السريع للمحتوى الأساسي -->
+    <a href="#products-heading" id="skip-link" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:z-[100] focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">تخطي إلى المحتوى الأساسي</a>
     
     <!-- Header / Navbar -->
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50 transition-colors">
@@ -72,13 +74,14 @@
                 <div class="relative group">
                     <input type="search" id="product-search" 
                            class="w-full bg-gray-100 dark:bg-gray-700 border-none rounded-xl py-2 px-10 focus:ring-2 focus:ring-indigo-600 transition-all text-sm dark:text-white"
-                           placeholder="ابحث عن المنتجات...">
-                    <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                           placeholder="ابحث عن المنتجات..."
+                           aria-label="ابحث عن المنتجات...">
+                    <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                     <!-- زر مسح البحث -->
                     <button id="clear-search" class="absolute right-3 top-2 text-gray-400 hover:text-indigo-600 hidden" aria-label="مسح البحث">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
@@ -95,7 +98,7 @@
             <div class="flex items-center space-x-reverse space-x-1 order-2 md:order-3">
                 <!-- زر الإشعارات -->
                 <button id="notifications-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors flex items-center gap-2" aria-label="الإشعارات" aria-expanded="false" aria-controls="notifications-drawer">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                     </svg>
                     <span class="hidden md:inline font-medium">الإشعارات</span>
@@ -103,7 +106,7 @@
 
                 <!-- زر الإعدادات لجميع الأجهزة -->
                 <a href="settings.html" id="settings-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors flex items-center gap-2" aria-label="الإعدادات">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -112,19 +115,19 @@
 
                 <!-- زر لوحة التحكم (Admin Dashboard) -->
                 <a href="admin-login.html" id="admin-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors flex items-center gap-2" aria-label="لوحة تحكم المسؤول">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                     </svg>
                     <span class="hidden md:inline font-medium">لوحة التحكم</span>
                 </a>
 
-                <button id="menu-btn" class="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors relative z-50" aria-label="فتح قائمة التنقل" aria-expanded="false">
+                <button id="menu-btn" class="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors relative z-50" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="mobile-menu">
                     <!-- أيقونة الهمبرغر (فتح) -->
-                    <svg class="icon-open w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <svg class="icon-open w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                     <!-- أيقونة X (إغلاق) -->
-                    <svg class="icon-close w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <svg class="icon-close w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -157,11 +160,14 @@
     </section>
 
     <!-- Categories Section -->
-    <section class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 sticky top-[73px] md:top-[80px] z-40 overflow-x-auto no-scrollbar transition-colors">
+    <section class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 sticky top-[73px] md:top-[80px] z-40 overflow-x-auto no-scrollbar transition-colors" aria-label="تصنيفات المنتجات">
         <div id="categories-container" class="container mx-auto px-4 py-4 flex justify-start md:justify-center items-center gap-3 min-w-max">
             <!-- التصنيفات ستظهر هنا عبر JavaScript -->
         </div>
     </section>
+
+    <!-- منطقة الإعلانات الحية لقارئات الشاشة -->
+    <div id="search-status" class="sr-only" role="status" aria-live="polite"></div>
 
     <!-- Products Grid -->
     <main id="products" class="container mx-auto px-4 py-16">
@@ -170,7 +176,7 @@
             <span class="block h-1 w-1/2 bg-indigo-600 mx-auto mt-2 rounded-full"></span>
         </h2>
         
-        <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <ul id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" role="list">
             <!-- المنتجات ستظهر هنا عبر JavaScript -->
         </div>
     </main>
@@ -196,21 +202,21 @@
             <!-- Drawer Header -->
             <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
                 <h2 id="drawer-title" class="text-xl font-bold flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
                     </svg>
                     <span>الإشعارات</span>
                 </h2>
                 <div class="flex items-center gap-2">
                     <a href="settings.html#notification-settings" class="flex items-center gap-1 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors text-indigo-600 dark:text-indigo-400" aria-label="إعدادات الإشعارات">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                         <span class="text-xs font-bold hidden sm:inline" id="drawer-settings-text">الإعدادات</span>
                     </a>
                     <button id="close-notifications" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors" aria-label="إغلاق الإشعارات">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
@@ -218,28 +224,28 @@
             </div>
 
             <!-- Notifications Content -->
-            <div class="flex-grow overflow-y-auto p-6 space-y-4 no-scrollbar">
+            <ul class="flex-grow overflow-y-auto p-6 space-y-4 no-scrollbar" role="list">
                 <!-- Notification Item 1 -->
-                <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border-r-4 border-indigo-600 dark:border-indigo-400">
+                <li class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border-r-4 border-indigo-600 dark:border-indigo-400" role="listitem">
                     <h3 class="font-bold mb-1">مرحباً بك في NovaStore!</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">استمتع بتجربة تسوق فريدة مع أفضل العروض.</p>
-                    <span class="text-[10px] text-gray-400 mt-2 block">منذ دقيقتين</span>
-                </div>
+                    <span class="text-xs text-gray-400 mt-2 block">منذ دقيقتين</span>
+                </li>
 
                 <!-- Notification Item 2 -->
-                <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border-r-4 border-green-500 dark:border-green-400">
+                <li class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border-r-4 border-green-500 dark:border-green-400" role="listitem">
                     <h3 class="font-bold mb-1">تم تحديث شروط الخدمة</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">قمنا بتحديث سياسة الخصوصية لضمان حمايتك.</p>
-                    <span class="text-[10px] text-gray-400 mt-2 block">منذ ساعة</span>
-                </div>
+                    <span class="text-xs text-gray-400 mt-2 block">منذ ساعة</span>
+                </li>
 
                 <!-- Notification Item 3 -->
-                <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border-r-4 border-orange-500 dark:border-orange-400">
+                <li class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border-r-4 border-orange-500 dark:border-orange-400" role="listitem">
                     <h3 class="font-bold mb-1">عروض حصرية بانتظارك</h3>
                     <p class="text-sm text-gray-600 dark:text-gray-400">تخفيضات تصل إلى 30% في قسم التقنية.</p>
-                    <span class="text-[10px] text-gray-400 mt-2 block">منذ 5 ساعات</span>
-                </div>
-            </div>
+                    <span class="text-xs text-gray-400 mt-2 block">منذ 5 ساعات</span>
+                </li>
+            </ul>
 
             <!-- Drawer Footer -->
             <div class="p-6 border-t border-gray-100 dark:border-gray-800">

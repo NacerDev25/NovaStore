@@ -25,7 +25,11 @@ const translations = {
         menu_open: "فتح قائمة التنقل",
         menu_close: "إغلاق قائمة التنقل",
         nav_admin: "لوحة التحكم",
-        nav_notifications: "الإشعارات"
+        nav_notifications: "الإشعارات",
+        skip_to_content: "تخطي إلى المحتوى الأساسي",
+        clear_search: "مسح البحث",
+        search_results_found: "تم العثور على {count} من المنتجات.",
+        search_results_none: "لا توجد نتائج مطابقة لبحثك."
     },
     fr: {
         title: "NovaStore | Meilleurs Produits",
@@ -52,7 +56,11 @@ const translations = {
         menu_open: "Ouvrir le menu",
         menu_close: "Fermer le menu",
         nav_admin: "Tableau de bord",
-        nav_notifications: "Notifications"
+        nav_notifications: "Notifications",
+        skip_to_content: "Passer au contenu principal",
+        clear_search: "Effacer la recherche",
+        search_results_found: "{count} produits trouvés.",
+        search_results_none: "Aucun produit ne correspond à votre recherche."
     },
     en: {
         title: "NovaStore | Best Products",
@@ -79,7 +87,11 @@ const translations = {
         menu_open: "Open menu",
         menu_close: "Close menu",
         nav_admin: "Admin Panel",
-        nav_notifications: "Notifications"
+        nav_notifications: "Notifications",
+        skip_to_content: "Skip to main content",
+        clear_search: "Clear search",
+        search_results_found: "{count} products found.",
+        search_results_none: "No products match your search."
     }
 };
 
@@ -138,7 +150,7 @@ function applyTheme() {
 
 // دالة لعزل أو استعادة محتوى الموقع (لإمكانية الوصول والجمالية البصرية)
 function toggleSiteInert(active) {
-    const mainElements = document.querySelectorAll('section, main, footer');
+    const mainElements = document.querySelectorAll('header, section, main, footer');
     const overlay = document.getElementById('menu-overlay');
     
     mainElements.forEach(el => {
@@ -170,6 +182,11 @@ function applyTranslations() {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.lang = lang;
     document.title = t.title;
+
+    const skipLink = document.getElementById('skip-link');
+    if (skipLink) {
+        skipLink.textContent = t.skip_to_content;
+    }
     
     const desktopLinks = document.querySelectorAll('nav .hidden.lg\\:flex a');
     if(desktopLinks.length >= 4) {
@@ -251,7 +268,15 @@ function applyTranslations() {
     if(productsTitle) productsTitle.textContent = t.latest_products;
 
     const searchInput = document.getElementById('product-search');
-    if(searchInput) searchInput.placeholder = t.search_placeholder;
+    if(searchInput) {
+        searchInput.placeholder = t.search_placeholder;
+        searchInput.setAttribute('aria-label', t.search_placeholder);
+    }
+
+    const clearBtn = document.getElementById('clear-search');
+    if(clearBtn) {
+        clearBtn.setAttribute('aria-label', t.clear_search);
+    }
 
     // روابط التذييل (Footer)
     const footerLinks = document.querySelectorAll('footer a');
@@ -286,6 +311,7 @@ function renderCategories(lang) {
 
     container.innerHTML = categories.map(cat => `
         <button onclick="filterByCategory('${cat.id}')" 
+                aria-pressed="${currentCategory === cat.id}"
                 class="px-6 py-2.5 rounded-full font-bold transition-all flex items-center justify-center whitespace-nowrap ${currentCategory === cat.id ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-indigo-50 border border-gray-100 dark:border-gray-700'}">
             ${categoryIcons[cat.id]}
             ${cat.name}
@@ -347,12 +373,14 @@ function createProductCard(product, lang) {
     const shopNowText = translations[lang].shop_now;
     const productTitle = product.titles[lang];
     const cartIcon = `<svg class="w-5 h-5 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>`;
+    const storeLabel = lang === 'ar' ? 'المتجر' : (lang === 'fr' ? 'Boutique' : 'Store');
     
     return `
-        <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group">
+        <li role="listitem" class="flex">
+        <article class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 flex flex-col group w-full">
             <div class="relative pb-[100%] overflow-hidden">
                 <img src="${product.image}" alt="${productTitle}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                <span class="absolute top-2 right-2 bg-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                <span class="absolute top-2 right-2 bg-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg" aria-label="${storeLabel}: ${product.store[lang]}">
                     ${product.store[lang]}
                 </span>
             </div>
@@ -369,6 +397,7 @@ function createProductCard(product, lang) {
                 </div>
             </div>
         </article>
+        </li>
     `;
 }
 
@@ -385,6 +414,16 @@ function renderProducts(lang, searchTerm = "") {
             p.titles[lang].toLowerCase().includes(searchTerm) ||
             p.store[lang].toLowerCase().includes(searchTerm)
         );
+    }
+
+    const searchStatus = document.getElementById('search-status');
+    if (searchStatus) {
+        if (filtered.length > 0) {
+            const statusMsg = translations[lang].search_results_found.replace('{count}', filtered.length);
+            searchStatus.textContent = statusMsg;
+        } else {
+            searchStatus.textContent = translations[lang].search_results_none;
+        }
     }
 
     if (filtered.length === 0) {
@@ -445,6 +484,7 @@ function initNotificationsDrawer() {
     if (!notificationsBtn || !drawer || !closeBtn || !overlay) return;
 
     function openDrawer() {
+        toggleSiteInert(true); // عزل باقي الموقع لمنع وصول قارئات الشاشة وعناصر التركيز للمخلفية
         drawer.classList.remove('invisible');
         drawer.classList.remove('-translate-x-full');
         overlay.classList.remove('hidden');
@@ -468,6 +508,7 @@ function initNotificationsDrawer() {
     }
 
     function closeDrawer() {
+        toggleSiteInert(false); // استعادة تفاعل الموقع في الخلفية
         drawer.classList.add('-translate-x-full');
         overlay.classList.replace('opacity-100', 'opacity-0');
         setTimeout(() => {
