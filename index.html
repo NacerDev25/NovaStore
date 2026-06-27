@@ -88,13 +88,6 @@
                 </div>
             </div>
 
-            <div class="hidden lg:flex space-x-reverse space-x-6 order-2 md:order-3">
-                <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">الرئيسية</a>
-                <a href="#products" onclick="filterByCategory('women')" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">عالم المرأة</a>
-                <a href="#products" onclick="filterByCategory('men')" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">عالم الرجل</a>
-                <a href="#products" onclick="filterByCategory('tech')" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium">قسم التقنية</a>
-            </div>
-
             <div class="flex items-center space-x-reverse space-x-1 order-2 md:order-3">
                 <!-- زر الإشعارات -->
                 <button id="notifications-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors flex items-center gap-2" aria-label="الإشعارات" aria-expanded="false" aria-controls="notifications-drawer">
@@ -121,7 +114,7 @@
                     <span class="hidden md:inline font-medium">لوحة التحكم</span>
                 </a>
 
-                <button id="menu-btn" class="lg:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors relative z-50" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="mobile-menu">
+                <button id="menu-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors relative z-50" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="nav-drawer">
                     <!-- أيقونة الهمبرغر (فتح) -->
                     <svg class="icon-open w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -134,15 +127,7 @@
             </div>
         </nav>
         
-        <!-- القائمة المنسدلة للجوال -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700 p-4 space-y-4 shadow-inner">
-            <a href="#" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">الرئيسية</a>
-            <a href="#products" onclick="filterByCategory('women')" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">عالم المرأة</a>
-            <a href="#products" onclick="filterByCategory('men')" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">عالم الرجل</a>
-            <a href="#products" onclick="filterByCategory('tech')" class="block hover:text-indigo-600 dark:text-indigo-400 font-bold py-2 text-right">قسم التقنية</a>
-        </div>
-        <!-- طبقة تعتيم الخلفية (Overlay) -->
-        <div id="menu-overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden transition-opacity duration-300 opacity-0" aria-hidden="true"></div>
+
     </header>
 
     <!-- Hero Section -->
@@ -258,6 +243,67 @@
 
     <!-- Notification Overlay -->
     <div id="notifications-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden opacity-0 transition-opacity duration-300" aria-hidden="true"></div>
+
+    <!-- Navigation Side Drawer -->
+    <div id="nav-drawer" 
+         class="fixed inset-y-0 right-0 w-full max-w-sm bg-white dark:bg-gray-900 z-[60] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out invisible"
+         role="dialog" aria-labelledby="nav-drawer-title" aria-modal="true" aria-hidden="true">
+        
+        <div class="flex flex-col h-full">
+            <!-- Drawer Header -->
+            <div class="p-6 border-b border-gray-100 dark:border-gray-800 flex justify-between items-center">
+                <h2 id="nav-drawer-title" class="text-xl font-bold text-indigo-600 dark:text-indigo-400">NovaStore</h2>
+                <button id="close-nav" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors" aria-label="إغلاق القائمة">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul class="flex-grow overflow-y-auto p-6 space-y-2 no-scrollbar" role="list">
+                <li>
+                    <a href="#" class="flex items-center gap-3 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-lg font-bold" onclick="closeNavDrawer()">
+                        <svg class="w-6 h-6 text-indigo-600 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                        <span>الرئيسية</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#products" onclick="filterByCategory('women'); closeNavDrawer()" class="flex items-center gap-3 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-lg font-bold">
+                        <svg class="w-6 h-6 text-indigo-600 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                        <span>عالم المرأة</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#products" onclick="filterByCategory('men'); closeNavDrawer()" class="flex items-center gap-3 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-lg font-bold">
+                        <svg class="w-6 h-6 text-indigo-600 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.62 1.96V10a2 2 0 0 0 2 2h2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8h2a2 2 0 0 0 2-2V5.42a2 2 0 0 0-1.62-1.96Z"></path><path d="M12 2v6"></path><path d="m12 11 2 2 2-2"></path></svg>
+                        <span>عالم الرجل</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#products" onclick="filterByCategory('tech'); closeNavDrawer()" class="flex items-center gap-3 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-lg font-bold">
+                        <svg class="w-6 h-6 text-indigo-600 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>
+                        <span>قسم التقنية</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Drawer Footer -->
+            <div class="p-6 border-t border-gray-100 dark:border-gray-800 flex flex-col gap-2">
+                <a href="admin-login.html" id="admin-btn-mobile" class="flex items-center gap-3 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-lg font-bold text-gray-600 dark:text-gray-300">
+                    <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"></path></svg>
+                    <span>لوحة التحكم</span>
+                </a>
+                <a href="settings.html" class="flex items-center gap-3 p-4 rounded-2xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors text-lg font-bold text-gray-600 dark:text-gray-300">
+                    <svg class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span>الإعدادات</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Overlay -->
+    <div id="nav-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden opacity-0 transition-opacity duration-300" aria-hidden="true"></div>
 
     <script>
         // كود لتنظيف أي Service Workers قديمة من Next.js

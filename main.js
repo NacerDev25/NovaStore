@@ -151,7 +151,6 @@ function applyTheme() {
 // دالة لعزل أو استعادة محتوى الموقع (لإمكانية الوصول والجمالية البصرية)
 function toggleSiteInert(active) {
     const mainElements = document.querySelectorAll('header, section, main, footer');
-    const overlay = document.getElementById('menu-overlay');
     
     mainElements.forEach(el => {
         if (active) {
@@ -162,16 +161,6 @@ function toggleSiteInert(active) {
             el.removeAttribute('aria-hidden');
         }
     });
-
-    if (overlay) {
-        if (active) {
-            overlay.classList.remove('hidden');
-            setTimeout(() => overlay.classList.replace('opacity-0', 'opacity-100'), 10);
-        } else {
-            overlay.classList.replace('opacity-100', 'opacity-0');
-            setTimeout(() => overlay.classList.add('hidden'), 300);
-        }
-    }
 }
 
 // دالة لتطبيق الترجمة على الصفحة
@@ -188,16 +177,17 @@ function applyTranslations() {
         skipLink.textContent = t.skip_to_content;
     }
     
-    const desktopLinks = document.querySelectorAll('nav .hidden.lg\\:flex a');
-    if(desktopLinks.length >= 4) {
-        desktopLinks[0].textContent = t.nav_home;
-        desktopLinks[1].innerHTML = `<svg class="w-4 h-4 me-1.5 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>${t.cat_women}`;
-        desktopLinks[2].innerHTML = `<svg class="w-4 h-4 me-1.5 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.62 1.96V10a2 2 0 0 0 2 2h2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8h2a2 2 0 0 0 2-2V5.42a2 2 0 0 0-1.62-1.96Z"></path><path d="M12 2v6"></path><path d="m12 11 2 2 2-2"></path></svg>${t.cat_men}`;
-        desktopLinks[3].innerHTML = `<svg class="w-4 h-4 me-1.5 inline-block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><path d="M15 2v2"></path><path d="M15 20v2"></path><path d="M2 15h2"></path><path d="M2 9h2"></path><path d="M20 15h2"></path><path d="M20 9h2"></path><path d="M9 2v2"></path><path d="M9 20v2"></path></svg>${t.cat_tech}`;
-        
-        // تحسين مظهر روابط الهيدر لتكون flex
-        desktopLinks.forEach(link => link.classList.add('flex', 'items-center'));
-    }
+    const navDrawerLinks = document.querySelectorAll('#nav-drawer a');
+    navDrawerLinks.forEach((link, i) => {
+        const span = link.querySelector('span');
+        if (i === 0 && span) span.textContent = t.nav_home;
+        if (i === 1 && span) span.textContent = t.cat_women;
+        if (i === 2 && span) span.textContent = t.cat_men;
+        if (i === 3 && span) span.textContent = t.cat_tech;
+        if (i === 4 && span) span.textContent = t.nav_admin;
+        if (i === 5 && span) span.textContent = t.nav_settings;
+        link.style.textAlign = lang === 'ar' ? 'right' : 'left';
+    });
 
     const settingsBtn = document.getElementById('settings-btn');
     if(settingsBtn) {
@@ -238,20 +228,11 @@ function applyTranslations() {
     }
 
     const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if(menuBtn && mobileMenu) {
-        const isOpen = !mobileMenu.classList.contains('hidden');
+    const drawer = document.getElementById('nav-drawer');
+    if(menuBtn && drawer) {
+        const isOpen = !drawer.classList.contains('invisible') && !drawer.classList.contains('translate-x-full');
         menuBtn.setAttribute('aria-label', isOpen ? t.menu_close : t.menu_open);
     }
-
-    const mobileLinks = document.querySelectorAll('#mobile-menu a');
-    mobileLinks.forEach((link, i) => {
-        if(i === 0) link.textContent = t.nav_home;
-        if(i === 1) link.textContent = t.cat_women;
-        if(i === 2) link.textContent = t.cat_men;
-        if(i === 3) link.textContent = t.cat_tech;
-        link.style.textAlign = lang === 'ar' ? 'right' : 'left';
-    });
 
     const heroTitle = document.querySelector('section h1');
     if(heroTitle) heroTitle.textContent = t.hero_title;
@@ -325,12 +306,9 @@ function filterByCategory(catId) {
     renderCategories(lang);
     renderProducts(lang, currentSearch);
 
-    const mobileMenu = document.getElementById('mobile-menu');
-    const menuBtn = document.getElementById('menu-btn');
-    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-        mobileMenu.classList.add('hidden');
-        if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
-        toggleSiteInert(false); // استعادة تفاعل الموقع
+    const drawer = document.getElementById('nav-drawer');
+    if (drawer && !drawer.classList.contains('invisible') && !drawer.classList.contains('translate-x-full')) {
+        closeNavDrawer();
     }
 
     const productsHeading = document.getElementById('products-heading');
@@ -447,31 +425,104 @@ function renderProducts(lang, searchTerm = "") {
     productsContainer.innerHTML = filtered.map(p => createProductCard(p, lang)).join('');
 }
 
-function initMobileMenu() {
+function initNavDrawer() {
     const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener('click', () => {
-            const isHidden = mobileMenu.classList.toggle('hidden');
-            const lang = localStorage.getItem('selectedLang') || 'ar';
-            const t = translations[lang];
+    const drawer = document.getElementById('nav-drawer');
+    const closeBtn = document.getElementById('close-nav');
+    const overlay = document.getElementById('nav-overlay');
 
-            menuBtn.setAttribute('aria-expanded', !isHidden);
-            menuBtn.setAttribute('aria-label', isHidden ? t.menu_open : t.menu_close);
-            
-            // تبديل فئة لتمكين الأيقونات التفاعلية عبر CSS
-            menuBtn.classList.toggle('is-open', !isHidden);
-            
-            if (!isHidden) {
-                toggleSiteInert(true); // عزل باقي الموقع
-                const firstLink = mobileMenu.querySelector('a');
-                if (firstLink) firstLink.focus();
-            } else {
-                toggleSiteInert(false); // استعادة تفاعل الموقع
-                menuBtn.focus();
-            }
-        });
+    if (!menuBtn || !drawer || !closeBtn || !overlay) return;
+
+    function openDrawer() {
+        toggleSiteInert(true);
+        drawer.classList.remove('invisible');
+        drawer.classList.remove('translate-x-full');
+        overlay.classList.remove('hidden');
+        setTimeout(() => overlay.classList.replace('opacity-0', 'opacity-100'), 10);
+
+        menuBtn.setAttribute('aria-expanded', 'true');
+        drawer.setAttribute('aria-hidden', 'false');
+
+        menuBtn.classList.add('is-open');
+
+        document.body.style.overflow = 'hidden';
+
+        const firstLink = drawer.querySelector('a');
+        if (firstLink) {
+            firstLink.setAttribute('tabindex', '-1');
+            firstLink.focus();
+        }
+
+        drawer.addEventListener('keydown', handleFocusTrap);
     }
+
+    function closeDrawer() {
+        toggleSiteInert(false);
+        drawer.classList.add('translate-x-full');
+        overlay.classList.replace('opacity-100', 'opacity-0');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            drawer.classList.add('invisible');
+        }, 300);
+
+        menuBtn.setAttribute('aria-expanded', 'false');
+        drawer.setAttribute('aria-hidden', 'true');
+
+        menuBtn.classList.remove('is-open');
+
+        document.body.style.overflow = '';
+
+        menuBtn.focus();
+        drawer.removeEventListener('keydown', handleFocusTrap);
+    }
+
+    function handleFocusTrap(e) {
+        if (e.key === 'Tab') {
+            const focusableElements = drawer.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    lastElement.focus();
+                    e.preventDefault();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    firstElement.focus();
+                    e.preventDefault();
+                }
+            }
+        }
+        if (e.key === 'Escape') closeDrawer();
+    }
+
+    menuBtn.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+    overlay.addEventListener('click', closeDrawer);
+
+    window.closeNavDrawer = closeDrawer;
+}
+
+// دالة لإغلاق القائمة الجانبية من روابط HTML
+function closeNavDrawer() {
+    const drawer = document.getElementById('nav-drawer');
+    const menuBtn = document.getElementById('menu-btn');
+    const overlay = document.getElementById('nav-overlay');
+    if (!drawer || drawer.classList.contains('invisible')) return;
+    
+    toggleSiteInert(false);
+    drawer.classList.add('translate-x-full');
+    if (overlay) {
+        overlay.classList.replace('opacity-100', 'opacity-0');
+        setTimeout(() => overlay.classList.add('hidden'), 300);
+    }
+    if (menuBtn) {
+        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.classList.remove('is-open');
+    }
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    setTimeout(() => drawer.classList.add('invisible'), 300);
 }
 
 // تهيئة حاوية الإشعارات التفاعلية
@@ -577,7 +628,7 @@ function restoreFocus() {
 document.addEventListener('DOMContentLoaded', () => {
     applyTheme();
     applyTranslations();
-    initMobileMenu();
+    initNavDrawer();
     initNotificationsDrawer();
     initSearch();
     restoreFocus();
