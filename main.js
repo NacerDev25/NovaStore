@@ -150,9 +150,9 @@ function applyTheme() {
 
 // دالة لعزل أو استعادة محتوى الموقع (لإمكانية الوصول والجمالية البصرية)
 function toggleSiteInert(active) {
-    const mainElements = document.querySelectorAll('header, section, main, footer');
+    const bodyChildren = document.querySelectorAll('body > :not(#nav-drawer):not(#nav-overlay)');
     
-    mainElements.forEach(el => {
+    bodyChildren.forEach(el => {
         if (active) {
             el.setAttribute('inert', '');
             el.setAttribute('aria-hidden', 'true');
