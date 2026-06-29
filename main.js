@@ -295,13 +295,17 @@ function filterByCategory(catId) {
     renderProducts(lang, currentSearch);
 
     const drawer = document.getElementById('nav-drawer');
-    if (drawer && !drawer.classList.contains('invisible') && !drawer.classList.contains('translate-x-full')) {
-        closeNavDrawer();
+    const drawerIsOpen = drawer && !drawer.classList.contains('invisible') && !drawer.classList.contains('translate-x-full');
+
+    function focusHeading() {
+        const productsHeading = document.getElementById('products-heading');
+        if (productsHeading) productsHeading.focus();
     }
 
-    const productsHeading = document.getElementById('products-heading');
-    if (productsHeading) {
-        productsHeading.focus();
+    if (drawerIsOpen) {
+        closeNavDrawer(focusHeading);
+    } else {
+        focusHeading();
     }
 }
 
@@ -444,14 +448,10 @@ function initNavDrawer() {
         drawer.addEventListener('keydown', handleFocusTrap);
     }
 
-    function closeDrawer() {
+    function closeDrawer(callback) {
         toggleSiteInert(false);
         drawer.classList.add('translate-x-full');
         overlay.classList.replace('opacity-100', 'opacity-0');
-        setTimeout(() => {
-            overlay.classList.add('hidden');
-            drawer.classList.add('invisible');
-        }, 300);
 
         menuBtn.setAttribute('aria-expanded', 'false');
         drawer.setAttribute('aria-hidden', 'true');
@@ -460,8 +460,17 @@ function initNavDrawer() {
 
         document.body.style.overflow = '';
 
-        menuBtn.focus();
         drawer.removeEventListener('keydown', handleFocusTrap);
+
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            drawer.classList.add('invisible');
+            if (callback) {
+                callback();
+            } else {
+                menuBtn.focus();
+            }
+        }, 300);
     }
 
     function handleFocusTrap(e) {
@@ -492,11 +501,14 @@ function initNavDrawer() {
 }
 
 // دالة لإغلاق القائمة الجانبية من روابط HTML
-function closeNavDrawer() {
+function closeNavDrawer(callback) {
     const drawer = document.getElementById('nav-drawer');
     const menuBtn = document.getElementById('menu-btn');
     const overlay = document.getElementById('nav-overlay');
-    if (!drawer || drawer.classList.contains('invisible')) return;
+    if (!drawer || drawer.classList.contains('invisible')) {
+        if (callback) callback();
+        return;
+    }
     
     toggleSiteInert(false);
     drawer.classList.add('translate-x-full');
@@ -510,7 +522,14 @@ function closeNavDrawer() {
     }
     drawer.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    setTimeout(() => drawer.classList.add('invisible'), 300);
+    setTimeout(() => {
+        drawer.classList.add('invisible');
+        if (callback) {
+            callback();
+        } else if (menuBtn) {
+            menuBtn.focus();
+        }
+    }, 300);
 }
 
 // تهيئة حاوية الإشعارات التفاعلية
