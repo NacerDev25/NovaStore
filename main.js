@@ -184,8 +184,6 @@ function applyTranslations() {
         if (i === 1 && span) span.textContent = t.cat_women;
         if (i === 2 && span) span.textContent = t.cat_men;
         if (i === 3 && span) span.textContent = t.cat_tech;
-        if (i === 4 && span) span.textContent = t.nav_admin;
-        if (i === 5 && span) span.textContent = t.nav_settings;
         link.style.textAlign = lang === 'ar' ? 'right' : 'left';
     });
 
@@ -211,20 +209,10 @@ function applyTranslations() {
     }
 
     const adminBtn = document.getElementById('admin-btn');
-    const adminBtnMobile = document.getElementById('admin-btn-mobile');
-    
     if(adminBtn) {
         adminBtn.setAttribute('aria-label', t.nav_admin);
         const adminText = adminBtn.querySelector('span');
         if(adminText) adminText.textContent = t.nav_admin;
-    }
-
-    if(adminBtnMobile) {
-        const adminMobileText = adminBtnMobile.querySelector('span');
-        if(adminMobileText) adminMobileText.textContent = t.nav_admin;
-        adminBtnMobile.style.textAlign = lang === 'ar' ? 'right' : 'left';
-        adminBtnMobile.classList.toggle('justify-end', lang === 'ar');
-        adminBtnMobile.classList.toggle('justify-start', lang !== 'ar');
     }
 
     const menuBtn = document.getElementById('menu-btn');
@@ -447,10 +435,10 @@ function initNavDrawer() {
 
         document.body.style.overflow = 'hidden';
 
-        const firstLink = drawer.querySelector('a');
-        if (firstLink) {
-            firstLink.setAttribute('tabindex', '-1');
-            firstLink.focus();
+        const drawerTitle = document.getElementById('nav-drawer-title');
+        if (drawerTitle) {
+            drawerTitle.setAttribute('tabindex', '-1');
+            drawerTitle.focus();
         }
 
         drawer.addEventListener('keydown', handleFocusTrap);
