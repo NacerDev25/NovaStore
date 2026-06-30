@@ -26,6 +26,7 @@ const translations = {
         menu_close: "إغلاق قائمة التنقل",
         nav_admin: "لوحة التحكم",
         nav_notifications: "الإشعارات",
+        nav_menu: "القائمة",
         skip_to_content: "تخطي إلى المحتوى الأساسي",
         clear_search: "مسح البحث",
         search_results_found: "تم العثور على {count} من المنتجات.",
@@ -57,6 +58,7 @@ const translations = {
         menu_close: "Fermer le menu",
         nav_admin: "Tableau de bord",
         nav_notifications: "Notifications",
+        nav_menu: "Menu",
         skip_to_content: "Passer au contenu principal",
         clear_search: "Effacer la recherche",
         search_results_found: "{count} produits trouvés.",
@@ -88,6 +90,7 @@ const translations = {
         menu_close: "Close menu",
         nav_admin: "Admin Panel",
         nav_notifications: "Notifications",
+        nav_menu: "Menu",
         skip_to_content: "Skip to main content",
         clear_search: "Clear search",
         search_results_found: "{count} products found.",
@@ -270,6 +273,8 @@ function applyTranslations() {
     if(menuBtn && drawer) {
         const isOpen = !drawer.classList.contains('invisible') && !drawer.classList.contains('translate-x-full');
         menuBtn.setAttribute('aria-label', isOpen ? t.menu_close : t.menu_open);
+        const menuText = menuBtn.querySelector('span:last-child');
+        if (menuText) menuText.textContent = t.nav_menu;
     }
 
     const heroTitle = document.querySelector('section h1');
