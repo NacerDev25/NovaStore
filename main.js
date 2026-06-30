@@ -181,9 +181,9 @@ function applyTranslations() {
     navDrawerLinks.forEach((link, i) => {
         const span = link.querySelector('span');
         if (i === 0 && span) span.textContent = t.nav_home;
-        if (i === 1 && span) span.textContent = t.cat_women;
-        if (i === 2 && span) span.textContent = t.cat_men;
-        if (i === 3 && span) span.textContent = t.cat_tech;
+        if (i === 1 && span) span.textContent = t.nav_settings;
+        if (i === 2 && span) span.textContent = t.terms;
+        if (i === 3 && span) span.textContent = t.privacy;
         link.style.textAlign = lang === 'ar' ? 'right' : 'left';
     });
 
