@@ -199,7 +199,7 @@ function applyTheme() {
 
 // دالة لعزل أو استعادة محتوى الموقع (لإمكانية الوصول والجمالية البصرية)
 function toggleSiteInert(active) {
-    const bodyChildren = document.querySelectorAll('body > :not(#nav-drawer):not(#nav-overlay)');
+    const bodyChildren = document.querySelectorAll('body > :not(#nav-drawer):not(#nav-overlay):not(#notifications-drawer):not(#notifications-overlay)');
     
     bodyChildren.forEach(el => {
         if (active) {
@@ -593,8 +593,8 @@ function initNotificationsDrawer() {
 
     function openDrawer() {
         toggleSiteInert(true);
-        renderNotifications();
-        updateNotificationBadge();
+        try { renderNotifications(); } catch(e) {}
+        try { updateNotificationBadge(); } catch(e) {}
         drawer.classList.remove('invisible');
         drawer.classList.remove('-translate-x-full');
         overlay.classList.remove('hidden');
