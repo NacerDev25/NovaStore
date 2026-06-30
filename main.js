@@ -135,6 +135,55 @@ const products = [
     }
 ];
 
+// بيانات الإشعارات
+const notificationsData = [
+    {
+        id: 1,
+        type: 'welcome',
+        titles: { ar: 'مرحباً بك في NovaStore!', fr: 'Bienvenue chez NovaStore!', en: 'Welcome to NovaStore!' },
+        messages: { ar: 'استمتع بتجربة تسوق فريدة مع أفضل العروض من أمازون، جوميا وعلي إكسبريس.', fr: 'Profitez d\'une expérience de shopping unique avec les meilleures offres d\'Amazon, Jumia et AliExpress.', en: 'Enjoy a unique shopping experience with the best deals from Amazon, Jumia and AliExpress.' },
+        times: { ar: 'منذ دقيقتين', fr: 'Il y a 2 minutes', en: '2 minutes ago' },
+        color: 'indigo',
+        read: false
+    },
+    {
+        id: 2,
+        type: 'update',
+        titles: { ar: 'تم تحديث شروط الخدمة', fr: 'Mise à jour des conditions', en: 'Terms of Service Updated' },
+        messages: { ar: 'قمنا بتحديث سياسة الخصوصية وشروط الاستخدام لضمان حماية بياناتك.', fr: 'Nous avons mis à jour notre politique de confidentialité pour protéger vos données.', en: 'We have updated our privacy policy to ensure your data protection.' },
+        times: { ar: 'منذ ساعة', fr: 'Il y a 1 heure', en: '1 hour ago' },
+        color: 'green',
+        read: false
+    },
+    {
+        id: 3,
+        type: 'offer',
+        titles: { ar: 'عروض حصرية بانتظارك', fr: 'Offres exclusives vous attendent', en: 'Exclusive Offers Await' },
+        messages: { ar: 'تخفيضات تصل إلى 30% في قسم التقنية لفترة محدودة.', fr: 'Réductions allant jusqu\'à 30% sur la technologie pour une durée limitée.', en: 'Discounts up to 30% on tech section for a limited time.' },
+        times: { ar: 'منذ 5 ساعات', fr: 'Il y a 5 heures', en: '5 hours ago' },
+        color: 'orange',
+        read: false
+    },
+    {
+        id: 4,
+        type: 'order',
+        titles: { ar: 'تتبع الطلب متاح الآن', fr: 'Suivi de commande disponible', en: 'Order Tracking Available' },
+        messages: { ar: 'يمكنك الآن تتبع طلباتك مباشرة من لوحة التحكم.', fr: 'Vous pouvez maintenant suivre vos commandes depuis le tableau de bord.', en: 'You can now track your orders directly from the dashboard.' },
+        times: { ar: 'منذ يوم', fr: 'Il y a 1 jour', en: '1 day ago' },
+        color: 'blue',
+        read: true
+    },
+    {
+        id: 5,
+        type: 'promo',
+        titles: { ar: 'كود خصم خاص بك', fr: 'Code promo spécial', en: 'Special Promo Code' },
+        messages: { ar: 'استخدم كود NOVA10 للحصول على خصم 10% على أول طلب.', fr: 'Utilisez le code NOVA10 pour 10% de réduction sur votre première commande.', en: 'Use code NOVA10 for 10% off your first order.' },
+        times: { ar: 'منذ 3 أيام', fr: 'Il y a 3 jours', en: '3 days ago' },
+        color: 'purple',
+        read: true
+    }
+];
+
 let currentCategory = "all";
 let currentSearch = "";
 
@@ -543,7 +592,9 @@ function initNotificationsDrawer() {
     if (!notificationsBtn || !drawer || !closeBtn || !overlay) return;
 
     function openDrawer() {
-        toggleSiteInert(true); // عزل باقي الموقع لمنع وصول قارئات الشاشة وعناصر التركيز للمخلفية
+        toggleSiteInert(true);
+        renderNotifications();
+        updateNotificationBadge();
         drawer.classList.remove('invisible');
         drawer.classList.remove('-translate-x-full');
         overlay.classList.remove('hidden');
@@ -552,17 +603,14 @@ function initNotificationsDrawer() {
         notificationsBtn.setAttribute('aria-expanded', 'true');
         drawer.setAttribute('aria-hidden', 'false');
         
-        // منع التمرير في الخلفية
         document.body.style.overflow = 'hidden';
         
-        // إدارة التركيز
         const drawerTitle = document.getElementById('drawer-title');
         if (drawerTitle) {
             drawerTitle.setAttribute('tabindex', '-1');
             drawerTitle.focus();
         }
 
-        // حبس التركيز داخل الحاوية (Focus Trap)
         drawer.addEventListener('keydown', handleFocusTrap);
     }
 
@@ -611,6 +659,118 @@ function initNotificationsDrawer() {
     overlay.addEventListener('click', closeDrawer);
 }
 
+// تحديث عداد الإشعارات على الأيقونة
+function updateNotificationBadge() {
+    const btn = document.getElementById('notifications-btn');
+    if (!btn) return;
+    const unreadCount = notificationsData.filter(n => !n.read).length;
+    let badge = btn.querySelector('.notif-badge');
+    if (unreadCount > 0) {
+        if (!badge) {
+            badge = document.createElement('span');
+            badge.className = 'notif-badge absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold min-w-[18px] h-[18px] flex items-center justify-center rounded-full shadow-lg leading-none';
+            badge.setAttribute('aria-live', 'polite');
+            const iconContainer = btn.querySelector('svg');
+            if (iconContainer && iconContainer.parentElement) {
+                iconContainer.parentElement.style.position = 'relative';
+                iconContainer.parentElement.appendChild(badge);
+            }
+        }
+        badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+        badge.classList.remove('hidden');
+    } else if (badge) {
+        badge.classList.add('hidden');
+    }
+}
+
+// عرض الإشعارات في القائمة الجانبية
+function renderNotifications() {
+    const container = document.getElementById('notifications-list');
+    if (!container) return;
+    const lang = localStorage.getItem('selectedLang') || 'ar';
+
+    if (notificationsData.length === 0) {
+        container.innerHTML = `
+            <li class="flex flex-col items-center justify-center py-16 text-center" role="listitem">
+                <div class="bg-gray-100 dark:bg-gray-800 p-5 rounded-full mb-4">
+                    <svg class="w-12 h-12 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/>
+                    </svg>
+                </div>
+                <p class="text-gray-500 dark:text-gray-400 font-bold text-lg">${lang === 'ar' ? 'لا توجد إشعارات' : lang === 'fr' ? 'Aucune notification' : 'No notifications'}</p>
+                <p class="text-gray-400 dark:text-gray-500 text-sm mt-1">${lang === 'ar' ? 'ستظهر الإشعارات هنا عند توفرها' : lang === 'fr' ? 'Les notifications apparaîtront ici' : 'Notifications will appear here'}</p>
+            </li>`;
+        return;
+    }
+
+    const colorMap = {
+        indigo: { bg: 'bg-indigo-100 dark:bg-indigo-900/30', border: 'border-indigo-500 dark:border-indigo-400', icon: 'text-indigo-600 dark:text-indigo-400', dot: 'bg-indigo-500' },
+        green: { bg: 'bg-green-100 dark:bg-green-900/30', border: 'border-green-500 dark:border-green-400', icon: 'text-green-600 dark:text-green-400', dot: 'bg-green-500' },
+        orange: { bg: 'bg-orange-100 dark:bg-orange-900/30', border: 'border-orange-500 dark:border-orange-400', icon: 'text-orange-600 dark:text-orange-400', dot: 'bg-orange-500' },
+        blue: { bg: 'bg-blue-100 dark:bg-blue-900/30', border: 'border-blue-500 dark:border-blue-400', icon: 'text-blue-600 dark:text-blue-400', dot: 'bg-blue-500' },
+        purple: { bg: 'bg-purple-100 dark:bg-purple-900/30', border: 'border-purple-500 dark:border-purple-400', icon: 'text-purple-600 dark:text-purple-400', dot: 'bg-purple-500' }
+    };
+
+    const typeIcons = {
+        welcome: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>`,
+        update: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`,
+        offer: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+        order: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+        promo: `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>`
+    };
+
+    container.innerHTML = notificationsData.map(n => {
+        const c = colorMap[n.color] || colorMap.indigo;
+        const iconSvg = typeIcons[n.type] || typeIcons.welcome;
+        return `
+            <li class="relative ${n.read ? 'opacity-70' : ''} transition-opacity" role="listitem">
+                <button onclick="markNotificationRead(${n.id})" class="w-full text-right group">
+                    <div class="relative bg-gray-50 dark:bg-gray-800/50 p-4 rounded-2xl border-r-4 ${n.border} hover:shadow-md transition-all">
+                        ${!n.read ? `<span class="absolute -top-1 -right-1 w-3 h-3 ${c.dot} rounded-full shadow-sm" aria-label="${lang === 'ar' ? 'غير مقروء' : lang === 'fr' ? 'Non lu' : 'Unread'}"></span>` : ''}
+                        <div class="flex gap-3">
+                            <div class="flex-shrink-0 w-10 h-10 ${c.bg} rounded-xl flex items-center justify-center ${c.icon}">
+                                ${iconSvg}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-bold text-sm text-gray-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">${n.titles[lang]}</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">${n.messages[lang]}</p>
+                                <span class="text-xs text-gray-400 dark:text-gray-500 mt-2 inline-flex items-center gap-1">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    ${n.times[lang]}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+            </li>`;
+    }).join('');
+
+    const clearBtn = document.getElementById('clear-all-notif');
+    if (clearBtn) {
+        clearBtn.classList.toggle('hidden', notificationsData.length === 0);
+        clearBtn.querySelector('span').textContent = lang === 'ar' ? 'مسح الكل' : lang === 'fr' ? 'Tout effacer' : 'Clear all';
+    }
+}
+
+// تحديد إشعار كمقروء
+function markNotificationRead(id) {
+    const notif = notificationsData.find(n => n.id === id);
+    if (!notif) return;
+    if (!notif.read) {
+        notif.read = true;
+        renderNotifications();
+        updateNotificationBadge();
+    }
+}
+
+// مسح جميع الإشعارات
+function clearAllNotifications() {
+    const lang = localStorage.getItem('selectedLang') || 'ar';
+    notificationsData.length = 0;
+    renderNotifications();
+    updateNotificationBadge();
+}
+
 // دالة لاستعادة التركيز عند العودة من صفحة الإعدادات أو لوحة التحكم
 function restoreFocus() {
     const hash = window.location.hash;
@@ -640,4 +800,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initNotificationsDrawer();
     initSearch();
     restoreFocus();
+    updateNotificationBadge();
 });
