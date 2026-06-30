@@ -29,9 +29,7 @@ const translations = {
         skip_to_content: "تخطي إلى المحتوى الأساسي",
         clear_search: "مسح البحث",
         search_results_found: "تم العثور على {count} من المنتجات.",
-        search_results_none: "لا توجد نتائج مطابقة لبحثك.",
-        nav_section_browse: "التصفح",
-        nav_section_control: "لوحة التحكم"
+        search_results_none: "لا توجد نتائج مطابقة لبحثك."
     },
     fr: {
         title: "NovaStore | Meilleurs Produits",
@@ -62,9 +60,7 @@ const translations = {
         skip_to_content: "Passer au contenu principal",
         clear_search: "Effacer la recherche",
         search_results_found: "{count} produits trouvés.",
-        search_results_none: "Aucun produit ne correspond à votre recherche.",
-        nav_section_browse: "Navigation",
-        nav_section_control: "Panneau de contrôle"
+        search_results_none: "Aucun produit ne correspond à votre recherche."
     },
     en: {
         title: "NovaStore | Best Products",
@@ -95,9 +91,7 @@ const translations = {
         skip_to_content: "Skip to main content",
         clear_search: "Clear search",
         search_results_found: "{count} products found.",
-        search_results_none: "No products match your search.",
-        nav_section_browse: "Browse",
-        nav_section_control: "Control Panel"
+        search_results_none: "No products match your search."
     }
 };
 
@@ -183,9 +177,15 @@ function applyTranslations() {
         skipLink.textContent = t.skip_to_content;
     }
     
-    document.querySelectorAll('#nav-drawer [data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key]) el.textContent = t[key];
+    const navDrawerLinks = document.querySelectorAll('#nav-drawer a');
+    navDrawerLinks.forEach((link, i) => {
+        const span = link.querySelector('span');
+        if (i === 0 && span) span.textContent = t.nav_home;
+        if (i === 1 && span) span.textContent = t.nav_settings;
+        if (i === 2 && span) span.textContent = t.nav_admin;
+        if (i === 3 && span) span.textContent = t.terms;
+        if (i === 4 && span) span.textContent = t.privacy;
+        link.style.textAlign = lang === 'ar' ? 'right' : 'left';
     });
 
     const settingsBtn = document.getElementById('settings-btn');
