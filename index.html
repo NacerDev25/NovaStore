@@ -303,6 +303,32 @@
             });
         }
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var skipLink = document.getElementById('skip-link');
+            if (!skipLink) return;
+
+            skipLink.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                var target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+
+                var header = document.querySelector('header');
+                var headerHeight = header ? header.offsetHeight : 73;
+
+                var elementTop = target.getBoundingClientRect().top + window.pageYOffset;
+                var scrollTo = Math.max(0, elementTop - headerHeight);
+
+                window.scrollTo({ top: scrollTo, behavior: 'smooth' });
+
+                target.setAttribute('tabindex', '-1');
+                setTimeout(function() {
+                    target.focus({ preventScroll: true });
+                }, 350);
+            });
+        });
+    </script>
     <!-- Main JS with Versioning for Cache Busting -->
     <script src="./main.js?v=1.0.4"></script>
 </body>
