@@ -58,6 +58,16 @@
         /* منع شريط التمرير للتصنيفات */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* تعويض ارتفاع الـ sticky header عند القفز للتصنيفات */
+        #categories-section {
+            scroll-margin-top: 73px;
+        }
+        @media (min-width: 768px) {
+            #categories-section {
+                scroll-margin-top: 80px;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
