@@ -1,30 +1,58 @@
 {
   "name": "NovaStore | نوفا ستور",
   "short_name": "NovaStore",
-  "description": "متجر نوفا ستور - تسوق أفضل المنتجات المختارة بعناية من أمازون، جوميا، وعلي إكسبريس.",
-  "start_url": "./index.html",
+  "description": "منصة وساطة شراء إلكتروني - أفضل المنتجات من أمازون، جوميا وعلي إكسبريس في مكان واحد",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#4f46e5",
+  "background_color": "#f9fafb",
   "theme_color": "#4f46e5",
-  "orientation": "portrait",
+  "orientation": "any",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["shopping", "lifestyle"],
+  "iarc_rating_id": "e8b4cdf9-3e5f-4c7d-b6a1-2a9f8e7d5c3b",
+  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "https://www.svgrepo.com/show/533041/shop-bag.svg",
+      "src": "assets/icons/icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "الرئيسية",
+      "short_name": "الرئيسية",
+      "description": "الصفحة الرئيسية للمتجر",
+      "url": ".",
+      "icons": [
+        {
+          "src": "assets/icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "name": "الإعدادات",
+      "short_name": "الإعدادات",
+      "description": "إعدادات الموقع واللغة والثيم",
+      "url": "settings.html",
+      "icons": [
+        {
+          "src": "assets/icons/icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
     }
   ]
 }

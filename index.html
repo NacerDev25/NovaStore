@@ -6,6 +6,11 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/icons/icon.svg">
     <title>NovaStore | نوفا ستور - أفضل المنتجات</title>
     <!-- Tailwind CSS عبر الرابط المباشر (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -308,28 +313,28 @@
             var skipLink = document.getElementById('skip-link');
             if (!skipLink) return;
 
-            skipLink.addEventListener('click', function(e) {
-                e.preventDefault();
-
+            skipLink.addEventListener('click', function() {
                 var target = document.querySelector(this.getAttribute('href'));
-                if (!target) return;
-
-                var header = document.querySelector('header');
-                var headerHeight = header ? header.offsetHeight : 73;
-
-                var elementTop = target.getBoundingClientRect().top + window.pageYOffset;
-                var scrollTo = Math.max(0, elementTop - headerHeight);
-
-                window.scrollTo({ top: scrollTo, behavior: 'smooth' });
-
-                target.setAttribute('tabindex', '-1');
-                setTimeout(function() {
-                    target.focus({ preventScroll: true });
-                }, 350);
+                if (target) {
+                    setTimeout(function() {
+                        target.setAttribute('tabindex', '-1');
+                        target.focus();
+                    }, 400);
+                }
             });
         });
     </script>
     <!-- Main JS with Versioning for Cache Busting -->
     <script src="./main.js?v=1.0.4"></script>
+    <script src="install.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(function (reg) {
+                console.log('Service Worker registered');
+            }).catch(function (err) {
+                console.warn('Service Worker registration failed:', err);
+            });
+        }
+    </script>
 </body>
 </html>
