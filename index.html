@@ -291,23 +291,7 @@
     <!-- Navigation Overlay -->
     <div id="nav-overlay" class="fixed inset-0 bg-black/50 z-[55] hidden opacity-0 transition-opacity duration-300" aria-hidden="true"></div>
 
-    <script>
-        // كود لتنظيف أي Service Workers قديمة من Next.js
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister();
-                    console.log('Old Service Worker unregistered');
-                }
-            });
-        }
-        // مسح الكاش يدوياً
-        if (window.caches) {
-            caches.keys().then(function(names) {
-                for (let name of names) caches.delete(name);
-            });
-        }
-    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var skipLink = document.getElementById('skip-link');
