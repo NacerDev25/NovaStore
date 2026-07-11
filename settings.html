@@ -157,54 +157,12 @@
                     </label>
                 </div>
             </section>
-
-            <!-- قسم تثبيت التطبيق -->
-            <section id="install-section" class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-700" aria-label="تثبيت التطبيق">
-                <h2 id="install-title" class="text-xl font-bold flex items-center gap-2 mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-indigo-600" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                    </svg>
-                    <span id="install-title-text">تثبيت التطبيق</span>
-                </h2>
-
-                <div class="flex flex-col items-center text-center">
-                    <div class="w-20 h-20 bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl flex items-center justify-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-indigo-600 dark:text-indigo-400" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
-                        </svg>
-                    </div>
-
-                    <p id="install-desc" class="text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
-                        قم بتثبيت NovaStore على جهازك للوصول السريع والتصفح حتى بدون اتصال بالإنترنت.
-                    </p>
-
-                    <div id="install-btn-wrapper" class="hidden">
-                        <button id="install-btn" onclick="handleInstallClick()" class="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg transform active:scale-95" aria-label="تثبيت التطبيق">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                            </svg>
-                            <span id="install-btn-text">تثبيت التطبيق</span>
-                        </button>
-                    </div>
-
-                    <div id="install-status-wrapper" class="hidden">
-                        <div class="flex items-center gap-3 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-6 py-3 rounded-xl font-bold" role="status">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span id="install-status-text">التطبيق مثبت ✅</span>
-                        </div>
-                    </div>
-
-                    <div id="install-unsupported" class="hidden">
-                        <p id="install-unsupported-text" class="text-sm text-gray-400 dark:text-gray-500">التثبيت غير متاح على هذا المتصفح أو الجهاز.</p>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <script src="install.js"></script>
     <script>
         const translations = {
             ar: {
@@ -219,11 +177,6 @@
                 notif_sound: "صوت التنبيه",
                 on: "مفعل",
                 off: "معطل",
-                install_title: "تثبيت التطبيق",
-                install_desc: "قم بتثبيت NovaStore على جهازك للوصول السريع والتصفح حتى بدون اتصال بالإنترنت.",
-                install_btn: "تثبيت التطبيق",
-                install_status: "التطبيق مثبت ✅",
-                install_unsupported: "التثبيت غير متاح على هذا المتصفح أو الجهاز.",
                 skip_to_content: "تخطي إلى المحتوى الأساسي"
             },
             fr: {
@@ -238,11 +191,6 @@
                 notif_sound: "Son d'alerte",
                 on: "Activé",
                 off: "Désactivé",
-                install_title: "Installer l'application",
-                install_desc: "Installez NovaStore sur votre appareil pour un accès rapide et une navigation même hors ligne.",
-                install_btn: "Installer l'application",
-                install_status: "Application installée ✅",
-                install_unsupported: "L'installation n'est pas disponible sur ce navigateur.",
                 skip_to_content: "Passer au contenu principal"
             },
             en: {
@@ -257,11 +205,6 @@
                 notif_sound: "Alert Sound",
                 on: "On",
                 off: "Off",
-                install_title: "Install App",
-                install_desc: "Install NovaStore on your device for quick access and offline browsing.",
-                install_btn: "Install App",
-                install_status: "App Installed ✅",
-                install_unsupported: "Installation is not available on this browser or device.",
                 skip_to_content: "Skip to main content"
             }
         };
@@ -361,56 +304,12 @@
             document.getElementById('check-fr').classList.toggle('hidden', !isFr);
             document.getElementById('check-en').classList.toggle('hidden', !isEn);
 
-            // تحديث قسم تثبيت التطبيق
-            var btnWrapper = document.getElementById('install-btn-wrapper');
-            var statusWrapper = document.getElementById('install-status-wrapper');
-            var unsupportedDiv = document.getElementById('install-unsupported');
-            var installTitleText = document.getElementById('install-title-text');
-            var installDesc = document.getElementById('install-desc');
-            var installBtnText = document.getElementById('install-btn-text');
-            var installStatusText = document.getElementById('install-status-text');
-            var installUnsupportedText = document.getElementById('install-unsupported-text');
-
-            if (installTitleText) installTitleText.textContent = t.install_title;
-            if (installDesc) installDesc.textContent = t.install_desc;
-            if (installBtnText) installBtnText.textContent = t.install_btn;
-            if (installStatusText) installStatusText.textContent = t.install_status;
-            if (installUnsupportedText) installUnsupportedText.textContent = t.install_unsupported;
-
-            if (sessionStorage.getItem('nova_installed') === 'true' || window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
-                if (btnWrapper) btnWrapper.classList.add('hidden');
-                if (statusWrapper) statusWrapper.classList.remove('hidden');
-                if (unsupportedDiv) unsupportedDiv.classList.add('hidden');
-            } else if (window.checkInstallAvailable && window.checkInstallAvailable()) {
-                if (btnWrapper) btnWrapper.classList.remove('hidden');
-                if (statusWrapper) statusWrapper.classList.add('hidden');
-                if (unsupportedDiv) unsupportedDiv.classList.add('hidden');
-            } else {
-                if (btnWrapper) btnWrapper.classList.add('hidden');
-                if (statusWrapper) statusWrapper.classList.add('hidden');
-                if (unsupportedDiv) unsupportedDiv.classList.remove('hidden');
-            }
-
             // استعادة التركيز إذا كان هناك hash (لمساعدة المكفوفين عند الانتقال من الإشعارات)
             if (window.location.hash === '#notification-settings') {
                 var section = document.getElementById('notification-settings');
                 if (section) section.scrollIntoView({ behavior: 'smooth' });
             }
         }
-
-        function handleInstallClick() {
-            if (window.showInstallPrompt) {
-                window.showInstallPrompt().then(function (accepted) {
-                    if (accepted) {
-                        updateUI();
-                    }
-                });
-            }
-        }
-
-        window.addEventListener('installPromptReady', function () {
-            updateUI();
-        });
 
         updateUI();
         // نقل التركيز لعنوان الصفحة عند الفتح لمساعدة مستخدمي قارئات الشاشة
