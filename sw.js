@@ -9,9 +9,9 @@ var STATIC_ASSETS = [
   'admin-login.html',
   'terms.html',
   'offline.html',
-  'icon.svg',
-  'icon-192x192.png',
-  'icon-512x512.png'
+  'assets/icons/icon.svg',
+  'assets/icons/icon-192x192.png',
+  'assets/icons/icon-512x512.png'
 ];
 
 self.addEventListener('install', function (event) {
