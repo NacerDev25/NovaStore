@@ -28,11 +28,20 @@
 
     // Update Banner
     var banner = document.getElementById('pwa-install-banner');
+    var categoriesSection = document.getElementById('categories-section');
     if (banner) {
       if (isAvailable && !isInstalled && !isDismissed) {
         banner.classList.remove('hidden');
+        if (categoriesSection) {
+          var headerHeight = window.innerWidth >= 768 ? 80 : 73;
+          var bannerHeight = banner.offsetHeight;
+          categoriesSection.style.top = (headerHeight + bannerHeight) + 'px';
+        }
       } else {
         banner.classList.add('hidden');
+        if (categoriesSection) {
+          categoriesSection.style.top = '';
+        }
       }
     }
   }
