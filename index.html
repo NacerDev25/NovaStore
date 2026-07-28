@@ -134,7 +134,7 @@
     </header>
 
     <!-- PWA Install Banner -->
-    <div id="pwa-install-banner" class="bg-indigo-50 dark:bg-indigo-950/40 border-b border-indigo-100 dark:border-indigo-900/50 py-3 px-4 hidden transition-all duration-300" role="alert">
+    <div id="pwa-install-banner" class="bg-indigo-50 dark:bg-indigo-950/40 border-b border-indigo-100 dark:border-indigo-900/50 py-3 px-4 hidden transition-all duration-300 sticky top-[73px] md:top-[80px] z-[45]" role="alert">
         <div class="container mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <div class="flex items-center gap-3">
                 <div class="p-2 bg-indigo-600 text-white rounded-lg flex-shrink-0">
@@ -339,7 +339,7 @@
         });
     </script>
     <!-- Main JS with Versioning for Cache Busting -->
-    <script src="./main.js?v=1.0.4"></script>
+    <script src="./main.js?v=1.0.5"></script>
     <script src="install.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

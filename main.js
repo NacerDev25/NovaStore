@@ -336,7 +336,7 @@ function renderCategories(lang) {
     container.innerHTML = categories.map(cat => `
         <button onclick="filterByCategory('${cat.id}')" 
                 aria-pressed="${currentCategory === cat.id}"
-                class="px-6 py-2.5 rounded-full font-bold transition-all flex items-center justify-center whitespace-nowrap ${currentCategory === cat.id ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-indigo-50 border border-gray-100 dark:border-gray-700'}">
+                class="flex-1 md:flex-initial min-w-[130px] md:min-w-[160px] px-6 py-2.5 rounded-full font-bold transition-all flex items-center justify-center whitespace-nowrap ${currentCategory === cat.id ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-indigo-50 border border-gray-100 dark:border-gray-700'}">
             ${categoryIcons[cat.id]}
             ${cat.name}
         </button>
