@@ -1,4 +1,4 @@
-var CACHE_NAME = 'novastore-cache-v1';
+var CACHE_NAME = 'novastore-cache-v2';
 var STATIC_ASSETS = [
   '.',
   'index.html',

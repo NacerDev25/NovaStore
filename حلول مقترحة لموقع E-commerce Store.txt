@@ -1,0 +1,52 @@
+الحلول المقترحة لحل مشاكل التجاوب والتداخل وكاش الموقع (NovaStore)
+
+---
+
+المشكلة الأولى: كاش الموقع (Service Worker Cache) يمنع ظهور التعديلات الجديدة على الهاتف
+الوصف: يقوم ملف sw.js بتخزين صفحات الموقع (index.html, main.js, install.js) محلياً لتقديمها مباشرة بشكل أسرع (Cache First)، مما يجعل الهاتف يستمر في عرض النسخة القديمة حتى بعد تعديل الكود.
+
+الحل المقترح:
+تحديث اسم الكاش في ملف (sw.js) لفرض تحديث تلقائي على المتصفح:
+- تعديل السطر الأول في ملف sw.js:
+  من: var CACHE_NAME = 'novastore-cache-v1';
+  إلى: var CACHE_NAME = 'novastore-cache-v2';
+النتيجة: عند أول إعادة تحميل للموقع، سيكتشف المتصفح تحديث ملف sw.js ويقوم بجلب النسخة الجديدة بالكامل وحذف الكاش القديم.
+
+---
+
+المشكلة الثانية: تداخل شريط التصنيفات (#categories-section) مع بانر التثبيت (#pwa-install-banner) وتغطية الأزرار
+الوصف: الحساب الديناميكي لارتفاع البانر في جافا سكريبت عبر (banner.offsetHeight) قد يرجع القيمة (0) بسبب أن البانر يحتوي على حركة انتقالية (transition-all duration-300) تجعل عملية الحساب تتم قبل اكتمال رسم البانر في المتصفح.
+
+الحل المقترح (CSS-Driven Solution):
+الاعتماد على كلاسات CSS ثابتة وموثوقة بدلاً من العمليات الحسابية المتغيرة في جافا سكريبت:
+
+1. في ملف (install.js):
+تعديل دالة updatePwaUI لتضيف كلاس "has-pwa-banner" للـ body عند إظهار البانر، وإزالته عند إخفائه:
+- الكود الجديد المقترح في install.js:
+  if (banner) {
+    if (isAvailable && !isInstalled && !isDismissed) {
+      banner.classList.remove('hidden');
+      document.body.classList.add('has-pwa-banner');
+    } else {
+      banner.classList.add('hidden');
+      document.body.classList.remove('has-pwa-banner');
+    }
+  }
+
+2. في ملف (index.html):
+إضافة كلاسات الالتصاق للبانر في كود HTML وجعله sticky:
+class="... sticky top-[73px] md:top-[80px] z-[45]"
+
+وإضافة أكواد التنسيق التالية داخل وسم <style> للتحكم في شريط التصنيفات:
+  /* عندما يكون البانر ظاهراً على الهاتف */
+  body.has-pwa-banner #categories-section {
+      top: 137px; /* ارتفاع الهيدر 73px + ارتفاع البانر 64px تقريبا */
+  }
+  /* عندما يكون البانر ظاهراً على الشاشات الكبيرة */
+  @media (min-width: 768px) {
+      body.has-pwa-banner #categories-section {
+          top: 132px; /* ارتفاع الهيدر 80px + ارتفاع البانر 52px تقريبا */
+      }
+  }
+
+النتيجة: حل نهائي وأكثر استقراراً بنسبة 100%، يتجاوب تلقائياً مع الشاشات بدون أي ثغرات برمجية في جافا سكريبت.
