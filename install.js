@@ -32,10 +32,34 @@
       if (isAvailable && !isInstalled && !isDismissed) {
         banner.classList.remove('hidden');
         document.body.classList.add('has-pwa-banner');
+        updateBannerHeight();
+        observeBannerResize();
       } else {
         banner.classList.add('hidden');
         document.body.classList.remove('has-pwa-banner');
+        document.body.style.removeProperty('--banner-height');
       }
+    }
+  }
+
+  function updateBannerHeight() {
+    var banner = document.getElementById('pwa-install-banner');
+    if (!banner) return;
+    var height = Math.ceil(banner.getBoundingClientRect().height);
+    if (height > 0) {
+      document.body.style.setProperty('--banner-height', height + 'px');
+    }
+  }
+
+  var bannerResizeObserver = null;
+  function observeBannerResize() {
+    var banner = document.getElementById('pwa-install-banner');
+    if (!banner || typeof ResizeObserver === 'undefined') return;
+    if (!bannerResizeObserver) {
+      bannerResizeObserver = new ResizeObserver(function () {
+        updateBannerHeight();
+      });
+      bannerResizeObserver.observe(banner);
     }
   }
 
@@ -104,6 +128,8 @@
         if (banner) {
           banner.classList.add('hidden');
         }
+        document.body.classList.remove('has-pwa-banner');
+        document.body.style.removeProperty('--banner-height');
       });
     }
 
