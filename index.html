@@ -92,7 +92,23 @@
     <!-- Header / Navbar -->
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50 transition-colors">
         <nav class="container mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4" aria-label="Main Navigation">
-            <a href="/" class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 flex-shrink-0">NovaStore</a>
+            <a href="/" class="flex items-center flex-shrink-0 text-indigo-600 dark:text-indigo-400" aria-label="NovaStore">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 36" class="h-8 w-auto" role="img" aria-label="NovaStore Logo">
+                    <title>NovaStore Logo</title>
+                    <defs>
+                        <linearGradient id="nova-logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#4f46e5" />
+                            <stop offset="100%" stop-color="#7c3aed" />
+                        </linearGradient>
+                    </defs>
+                    <g font-family="'Cairo', sans-serif" font-weight="700" font-size="24">
+                        <text x="5" y="26" fill="url(#nova-logo-gradient)">N</text>
+                        <path d="M33,7 Q33,17 23,17 Q33,17 33,27 Q33,17 43,17 Q33,17 33,7" fill="#f59e0b" />
+                        <text x="44" y="26" fill="url(#nova-logo-gradient)">va</text>
+                        <text x="73" y="26" fill="currentColor">Store</text>
+                    </g>
+                </svg>
+            </a>
             
             <!-- شريط البحث -->
             <div class="search-container order-3 md:order-2 flex-grow mx-auto md:mx-4">
