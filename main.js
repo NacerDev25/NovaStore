@@ -29,6 +29,7 @@ const translations = {
         nav_menu: "القائمة",
         skip_to_content: "تخطي إلى المحتوى الأساسي",
         clear_search: "مسح البحث",
+        search_visual: "البحث بواسطة الصورة",
         search_results_found: "تم العثور على {count} من المنتجات.",
         search_results_none: "لا توجد نتائج مطابقة لبحثك."
     },
@@ -61,6 +62,7 @@ const translations = {
         nav_menu: "Menu",
         skip_to_content: "Passer au contenu principal",
         clear_search: "Effacer la recherche",
+        search_visual: "Recherche par image",
         search_results_found: "{count} produits trouvés.",
         search_results_none: "Aucun produit ne correspond à votre recherche."
     },
@@ -93,6 +95,7 @@ const translations = {
         nav_menu: "Menu",
         skip_to_content: "Skip to main content",
         clear_search: "Clear search",
+        search_visual: "Search by image",
         search_results_found: "{count} products found.",
         search_results_none: "No products match your search."
     }
@@ -300,6 +303,12 @@ function applyTranslations() {
     const clearBtn = document.getElementById('clear-search');
     if(clearBtn) {
         clearBtn.setAttribute('aria-label', t.clear_search);
+    }
+
+    const visualBtn = document.getElementById('visual-search-btn');
+    if (visualBtn) {
+        visualBtn.setAttribute('aria-label', t.search_visual);
+        visualBtn.setAttribute('title', t.search_visual);
     }
 
     // روابط التذييل (Footer)

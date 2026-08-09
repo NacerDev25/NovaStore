@@ -140,14 +140,23 @@
             <!-- شريط البحث -->
             <div class="search-container order-3 md:order-2 flex-grow mx-auto md:mx-4">
                 <div class="relative group">
-                    <input type="search" id="product-search" 
-                           class="w-full bg-gray-100 dark:bg-gray-700 border-none rounded-xl py-2 px-10 focus:ring-2 focus:ring-indigo-600 transition-all text-sm dark:text-white"
-                           placeholder="ابحث عن المنتجات..."
-                           aria-label="ابحث عن المنتجات...">
-                    <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <input type="search" id="product-search" 
+                       class="w-full bg-gray-100 dark:bg-gray-700 border-none rounded-xl py-2 pl-20 pr-10 focus:ring-2 focus:ring-indigo-600 transition-all text-sm dark:text-white"
+                       placeholder="ابحث عن المنتجات..."
+                       aria-label="ابحث عن المنتجات...">
+                <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <!-- زر البحث البصري (Visual Search) -->
+                <button id="visual-search-btn" type="button"
+                        class="absolute left-9 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-indigo-600 transition-colors rounded-full"
+                        aria-label="البحث بواسطة الصورة" title="البحث بواسطة الصورة">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5" aria-hidden="true">
+                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                        <circle cx="12" cy="13" r="3"/>
                     </svg>
-                    <!-- زر مسح البحث -->
+                </button>
+                <!-- زر مسح البحث -->
                     <button id="clear-search" class="absolute right-3 top-2 text-gray-400 hover:text-indigo-600 hidden" aria-label="مسح البحث">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
