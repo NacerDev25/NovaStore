@@ -26,6 +26,34 @@
             outline: 3px solid #4f46e5;
             outline-offset: 2px;
         }
+
+        /* A11y: نصدرّج آمن (fallback + دعم + وضع التباين العالي) */
+        .nova-gradient {
+            background-image: linear-gradient(to right, var(--nova-g1, #4f46e5), var(--nova-g2, #7c3aed));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: var(--nova-c, #4f46e5);
+        }
+        .dark .nova-gradient {
+            --nova-g1: #818cf8;
+            --nova-g2: #a78bfa;
+            --nova-c: #818cf8;
+        }
+        @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+            .nova-gradient,
+            .dark .nova-gradient {
+                color: transparent;
+            }
+        }
+        @media (forced-colors: active) {
+            .nova-gradient,
+            .dark .nova-gradient {
+                color: CanvasText;
+                background-image: none;
+                -webkit-background-clip: border-box;
+                background-clip: border-box;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -36,21 +64,20 @@
     <header class="bg-white dark:bg-gray-800 shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a href="index.html" class="flex items-center flex-shrink-0 text-indigo-600 dark:text-indigo-400" aria-label="NovaStore">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 36" class="h-8 w-auto" role="img" aria-label="NovaStore Logo">
-                    <title>NovaStore Logo</title>
-                    <defs>
-                        <linearGradient id="nova-logo-gradient-terms" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stop-color="#4f46e5" />
-                            <stop offset="100%" stop-color="#7c3aed" />
-                        </linearGradient>
-                    </defs>
-                    <g font-family="'Cairo', sans-serif" font-weight="700" font-size="24">
-                        <text x="5" y="26" fill="url(#nova-logo-gradient-terms)">N</text>
-                        <path d="M33,7 Q33,17 23,17 Q33,17 33,27 Q33,17 43,17 Q33,17 33,7" fill="#f59e0b" />
-                        <text x="44" y="26" fill="url(#nova-logo-gradient-terms)">va</text>
-                        <text x="73" y="26" fill="currentColor">Store</text>
-                    </g>
-                </svg>
+                <span dir="ltr" class="inline-flex items-center text-2xl font-bold leading-none" aria-hidden="true">
+                    <span class="nova-gradient" style="font-family:'Cairo',sans-serif">N</span>
+                    <svg class="w-[0.9em] h-[0.9em] shrink-0 mx-0.5" viewBox="0 0 24 24" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="nova-star-gold-terms" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fde047" />
+                                <stop offset="100%" stop-color="#f59e0b" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M12 0C13.2 6.2 17.8 10.8 24 12C17.8 13.2 13.2 17.8 12 24C10.8 17.8 6.2 13.2 0 12C6.2 10.8 10.8 6.2 12 0Z" fill="url(#nova-star-gold-terms)" />
+                    </svg>
+                    <span class="nova-gradient" style="font-family:'Cairo',sans-serif">va</span>
+                    <span class="text-current" style="font-family:'Cairo',sans-serif">Store</span>
+                </span>
             </a>
             <a href="index.html#terms-link" class="flex items-center text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors">
                 <svg class="w-5 h-5 me-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
