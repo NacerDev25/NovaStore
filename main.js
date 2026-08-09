@@ -30,6 +30,10 @@ const translations = {
         skip_to_content: "تخطي إلى المحتوى الأساسي",
         clear_search: "مسح البحث",
         search_visual: "البحث بواسطة الصورة",
+        visual_menu_gallery: "رفع صورة من المعرض",
+        visual_menu_camera: "التقاط صورة بالكاميرا",
+        visual_status_searching: "جارٍ البحث عن منتجات مشابهة...",
+        visual_clear_photo: "إزالة الصورة",
         search_results_found: "تم العثور على {count} من المنتجات.",
         search_results_none: "لا توجد نتائج مطابقة لبحثك."
     },
@@ -63,6 +67,10 @@ const translations = {
         skip_to_content: "Passer au contenu principal",
         clear_search: "Effacer la recherche",
         search_visual: "Recherche par image",
+        visual_menu_gallery: "Importer une image de la galerie",
+        visual_menu_camera: "Prendre une photo",
+        visual_status_searching: "Recherche de produits similaires...",
+        visual_clear_photo: "Supprimer l'image",
         search_results_found: "{count} produits trouvés.",
         search_results_none: "Aucun produit ne correspond à votre recherche."
     },
@@ -96,6 +104,10 @@ const translations = {
         skip_to_content: "Skip to main content",
         clear_search: "Clear search",
         search_visual: "Search by image",
+        visual_menu_gallery: "Upload image from gallery",
+        visual_menu_camera: "Take a photo",
+        visual_status_searching: "Searching for similar products...",
+        visual_clear_photo: "Remove image",
         search_results_found: "{count} products found.",
         search_results_none: "No products match your search."
     }
@@ -310,6 +322,17 @@ function applyTranslations() {
         visualBtn.setAttribute('aria-label', t.search_visual);
         visualBtn.setAttribute('title', t.search_visual);
     }
+
+    const visualMenu = document.getElementById('visual-search-menu');
+    if (visualMenu) visualMenu.setAttribute('aria-label', t.search_visual);
+    const visualMenuTitle = document.getElementById('visual-menu-title');
+    if (visualMenuTitle) visualMenuTitle.textContent = t.search_visual;
+    const visualGalleryText = document.getElementById('visual-gallery-text');
+    if (visualGalleryText) visualGalleryText.textContent = t.visual_menu_gallery;
+    const visualCameraText = document.getElementById('visual-camera-text');
+    if (visualCameraText) visualCameraText.textContent = t.visual_menu_camera;
+    const visualClearText = document.getElementById('visual-search-clear-text');
+    if (visualClearText) visualClearText.textContent = t.visual_clear_photo;
 
     // روابط التذييل (Footer)
     const footerLinks = document.querySelectorAll('footer a');
@@ -807,12 +830,123 @@ function restoreFocus() {
     }
 }
 
+// تهيئة البحث البصري: قائمة الخيارات (معرض / كاميرا) + المعاينة
+function initVisualSearch() {
+    const btn = document.getElementById('visual-search-btn');
+    const menu = document.getElementById('visual-search-menu');
+    const galleryInput = document.getElementById('visual-file-gallery');
+    const cameraInput = document.getElementById('visual-file-camera');
+    const preview = document.getElementById('visual-search-preview');
+    const previewImg = document.getElementById('visual-search-img');
+    const statusEl = document.getElementById('visual-search-status');
+    const clearPreviewBtn = document.getElementById('visual-search-clear-preview');
+
+    if (!btn || !menu) return;
+
+    const menuItems = Array.from(menu.querySelectorAll('[role="menuitem"]'));
+
+    function getLang() {
+        return localStorage.getItem('selectedLang') || 'ar';
+    }
+
+    function openMenu() {
+        btn.setAttribute('aria-expanded', 'true');
+        menu.classList.remove('hidden');
+        if (menuItems.length) menuItems[0].focus();
+        document.addEventListener('click', handleOutsideClick);
+    }
+
+    function closeMenu(returnFocus) {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.classList.add('hidden');
+        document.removeEventListener('click', handleOutsideClick);
+        if (returnFocus) btn.focus();
+    }
+
+    function handleOutsideClick(e) {
+        if (!menu.classList.contains('hidden') && !btn.contains(e.target) && !menu.contains(e.target)) {
+            closeMenu(false);
+        }
+    }
+
+    function handleMenuKeydown(e) {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            closeMenu(true);
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            const i = menuItems.indexOf(document.activeElement);
+            menuItems[(i + 1) % menuItems.length].focus();
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            const i = menuItems.indexOf(document.activeElement);
+            menuItems[(i - 1 + menuItems.length) % menuItems.length].focus();
+        } else if (e.key === 'Home') {
+            e.preventDefault();
+            if (menuItems.length) menuItems[0].focus();
+        } else if (e.key === 'End') {
+            e.preventDefault();
+            if (menuItems.length) menuItems[menuItems.length - 1].focus();
+        }
+    }
+    menu.addEventListener('keydown', handleMenuKeydown);
+
+    btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (menu.classList.contains('hidden')) {
+            openMenu();
+        } else {
+            closeMenu(true);
+        }
+    });
+
+    menuItems.forEach(function (item) {
+        item.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const action = item.getAttribute('data-action');
+            closeMenu(false);
+            if (action === 'camera' && cameraInput) {
+                cameraInput.click();
+            } else if (galleryInput) {
+                galleryInput.click();
+            }
+        });
+    });
+
+    function handleFileChange(fileInput) {
+        fileInput.addEventListener('change', function () {
+            const file = fileInput.files && fileInput.files[0];
+            if (!file || !file.type.startsWith('image/')) return;
+            const reader = new FileReader();
+            reader.onload = function (evt) {
+                if (previewImg) previewImg.src = evt.target.result;
+                if (preview) preview.classList.remove('hidden');
+                if (statusEl) statusEl.textContent = translations[getLang()].visual_status_searching;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+    if (galleryInput) handleFileChange(galleryInput);
+    if (cameraInput) handleFileChange(cameraInput);
+
+    if (clearPreviewBtn && preview) {
+        clearPreviewBtn.addEventListener('click', function () {
+            preview.classList.add('hidden');
+            if (previewImg) previewImg.src = '';
+            if (galleryInput) galleryInput.value = '';
+            if (cameraInput) cameraInput.value = '';
+            btn.focus();
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     applyTheme();
     applyTranslations();
     initNavDrawer();
     initNotificationsDrawer();
     initSearch();
+    initVisualSearch();
     restoreFocus();
     updateNotificationBadge();
 });

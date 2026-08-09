@@ -138,29 +138,58 @@
             </a>
             
             <!-- شريط البحث -->
-            <div class="search-container order-3 md:order-2 flex-grow mx-auto md:mx-4">
+            <div class="search-container relative order-3 md:order-2 flex-grow mx-auto md:mx-4">
                 <div class="relative group">
-                <input type="search" id="product-search" 
-                       class="w-full bg-gray-100 dark:bg-gray-700 border-none rounded-xl py-2 pl-20 pr-10 focus:ring-2 focus:ring-indigo-600 transition-all text-sm dark:text-white"
-                       placeholder="ابحث عن المنتجات..."
-                       aria-label="ابحث عن المنتجات...">
-                <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <!-- زر البحث البصري (Visual Search) -->
-                <button id="visual-search-btn" type="button"
-                        class="absolute left-9 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-indigo-600 transition-colors rounded-full"
-                        aria-label="البحث بواسطة الصورة" title="البحث بواسطة الصورة">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5" aria-hidden="true">
-                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-                        <circle cx="12" cy="13" r="3"/>
+                    <input type="search" id="product-search" 
+                           class="w-full bg-gray-100 dark:bg-gray-700 border-none rounded-xl py-2 pl-20 pr-10 focus:ring-2 focus:ring-indigo-600 transition-all text-sm dark:text-white"
+                           placeholder="ابحث عن المنتجات..."
+                           aria-label="ابحث عن المنتجات...">
+                    <svg class="absolute left-3 top-2.5 h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                </button>
-                <!-- زر مسح البحث -->
+                    <!-- زر البحث البصري (Visual Search) -->
+                    <button id="visual-search-btn" type="button"
+                            class="absolute left-9 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-indigo-600 transition-colors rounded-full"
+                            aria-label="البحث بواسطة الصورة" title="البحث بواسطة الصورة"
+                            aria-haspopup="true" aria-expanded="false" aria-controls="visual-search-menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5" aria-hidden="true">
+                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                            <circle cx="12" cy="13" r="3"/>
+                        </svg>
+                    </button>
+                    <!-- زر مسح البحث -->
                     <button id="clear-search" class="absolute right-3 top-2 text-gray-400 hover:text-indigo-600 hidden" aria-label="مسح البحث">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                         </svg>
+                    </button>
+                </div>
+
+                <!-- حقل الرفع من المعرض (مخفي) -->
+                <input type="file" id="visual-file-gallery" accept="image/*" class="sr-only" tabindex="-1" aria-hidden="true">
+
+                <!-- حقل التقاط الصورة بالكاميرا (مخفي) -->
+                <input type="file" id="visual-file-camera" accept="image/*" capture="environment" class="sr-only" tabindex="-1" aria-hidden="true">
+
+                <!-- قائمة البحث البصري -->
+                <div id="visual-search-menu" class="hidden absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 z-[70] p-2" role="menu" aria-labelledby="visual-search-btn">
+                    <p id="visual-menu-title" class="px-3 py-2 text-xs font-bold text-gray-500 dark:text-gray-400">البحث بواسطة الصورة</p>
+                    <button type="button" data-action="gallery" class="w-full flex items-center justify-start gap-3 px-3 py-3 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors" role="menuitem">
+                        <svg class="w-6 h-6 flex-shrink-0 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <span id="visual-gallery-text" class="font-bold text-gray-700 dark:text-gray-200">رفع صورة من المعرض</span>
+                    </button>
+                    <button type="button" data-action="camera" class="w-full flex items-center justify-start gap-3 px-3 py-3 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors" role="menuitem">
+                        <svg class="w-6 h-6 flex-shrink-0 text-indigo-600 dark:text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                        <span id="visual-camera-text" class="font-bold text-gray-700 dark:text-gray-200">التقاط صورة بالكاميرا</span>
+                    </button>
+                </div>
+
+                <!-- معاينة الصورة المختارة -->
+                <div id="visual-search-preview" class="hidden mt-2 p-3 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 rounded-xl flex items-center gap-3">
+                    <img id="visual-search-img" alt="" class="w-12 h-12 rounded-lg object-cover flex-shrink-0 bg-white dark:bg-gray-700">
+                    <p id="visual-search-status" class="flex-1 min-w-0 text-sm font-bold text-indigo-700 dark:text-indigo-300"></p>
+                    <button type="button" id="visual-search-clear-preview" class="flex-shrink-0 text-xs px-3 py-2 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100/60 dark:hover:bg-indigo-900/30 rounded-lg font-bold transition-colors">
+                        <span id="visual-search-clear-text">إزالة الصورة</span>
                     </button>
                 </div>
             </div>
@@ -400,7 +429,7 @@
         });
     </script>
     <!-- Main JS with Versioning for Cache Busting -->
-    <script src="./main.js?v=1.0.5"></script>
+    <script src="./main.js?v=1.1.0"></script>
     <script src="install.js?v=1.0.6"></script>
     <script>
         if ('serviceWorker' in navigator) {
