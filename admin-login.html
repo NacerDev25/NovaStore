@@ -200,6 +200,20 @@
             if (theme === 'dark') document.documentElement.classList.add('dark');
         }
 
+        // بيانات الدخول الصحيحة في هذه المرحلة (التحقق عبر JavaScript)
+        // سيتم استبدالها لاحقاً بالتحقق من قاعدة البيانات
+        const adminCredentials = {
+            email: 'shahdbns@gmail.com',
+            password: 'shahd2008shahd2008'
+        };
+
+        // رسالة خطأ بيانات الدخول غير الصحيحة
+        const credErrorMsgs = {
+            ar: "البريد الإلكتروني أو كلمة السر غير صحيحة.",
+            fr: "L'e-mail ou le mot de passe est incorrect.",
+            en: "The email or password is incorrect."
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             applyTheme();
             applyPageTranslations();
@@ -273,9 +287,22 @@
                 }
                 
                 if (isValid) {
-                    const successMsg = document.getElementById('form-status');
-                    successMsg.textContent = lang === 'ar' ? 'تم استلام البيانات بنجاح (نموذج تجريبي)' : 'Données reçues avec succès (ceci est une démo)';
-                    successMsg.classList.remove('hidden');
+                    // التحقق من بيانات الدخول عبر JavaScript
+                    const enteredEmail = emailInput.value.trim();
+                    const enteredPassword = passwordInput.value.trim();
+
+                    if (enteredEmail === adminCredentials.email && enteredPassword === adminCredentials.password) {
+                        // إنشاء جلسة دخول بسيطة ثم التوجيه إلى لوحة التحكم
+                        sessionStorage.setItem('nova_admin_session', 'true');
+                        window.location.href = 'admin.html';
+                    } else {
+                        // عرض رسالة خطأ واضحة وإتاحة إعادة المحاولة
+                        const status = document.getElementById('form-status');
+                        status.textContent = credErrorMsgs[lang] || credErrorMsgs['ar'];
+                        status.className = 'text-center text-red-600 dark:text-red-400 font-bold p-4 bg-red-50 dark:bg-red-900/30 rounded-xl';
+                        status.classList.remove('hidden');
+                        passwordInput.focus();
+                    }
                 } else {
                     // تركيز لوحة المفاتيح على أول حقل غير صالح
                     if (emailInput.getAttribute('aria-invalid') === 'true') {
