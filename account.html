@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حسابي | NovaStore</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4f46e5',
+                        secondary: '#7c3aed',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+
+        :focus-visible {
+            outline: 3px solid #4f46e5;
+            outline-offset: 2px;
+        }
+
+        /* A11y: نص متدرّج آمن (fallback + دعم وضع التباين العالي) */
+        .nova-gradient {
+            background-image: linear-gradient(to right, var(--nova-g1, #4f46e5), var(--nova-g2, #7c3aed));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: var(--nova-c, #4f46e5);
+        }
+        .dark .nova-gradient {
+            --nova-g1: #818cf8;
+            --nova-g2: #a78bfa;
+            --nova-c: #818cf8;
+        }
+        @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+            .nova-gradient,
+            .dark .nova-gradient {
+                color: transparent;
+            }
+        }
+        @media (forced-colors: active) {
+            .nova-gradient,
+            .dark .nova-gradient {
+                color: CanvasText;
+                background-image: none;
+                -webkit-background-clip: border-box;
+                background-clip: border-box;
+            }
+        }
+
+        /* حركة ناعمة عند التبديل بين النماذج */
+        .tab-panel {
+            animation: fadeSlide 0.25s ease-in-out;
+        }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+    <!-- رابط الانتقال السريع للمحتوى الأساسي -->
+    <a href="#account-heading" id="skip-link" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:right-4 focus:bg-indigo-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-xl focus:z-[100] focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">تخطي إلى المحتوى الأساسي</a>
+
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-sm p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center flex-shrink-0 text-indigo-600 dark:text-indigo-400" aria-label="NovaStore">
+                <span dir="ltr" class="inline-flex items-center text-2xl font-bold leading-none" aria-hidden="true">
+                    <span class="nova-gradient" style="font-family:'Cairo',sans-serif">N</span>
+                    <svg class="w-[0.9em] h-[0.9em] shrink-0 mx-0.5" viewBox="0 0 24 24" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="nova-star-gold-account" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#fde047" />
+                                <stop offset="100%" stop-color="#f59e0b" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M12 0C13.2 6.2 17.8 10.8 24 12C17.8 13.2 13.2 17.8 12 24C10.8 17.8 6.2 13.2 0 12C6.2 10.8 10.8 6.2 12 0Z" fill="url(#nova-star-gold-account)" />
+                    </svg>
+                    <span class="nova-gradient" style="font-family:'Cairo',sans-serif">va</span>
+                    <span class="text-current" style="font-family:'Cairo',sans-serif">Store</span>
+                </span>
+            </a>
+            <a href="index.html" id="back-link" class="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 transition-colors font-bold" aria-label="العودة للمتجر">
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"/></svg>
+                <span id="back-text">العودة للمتجر</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="flex-grow w-full flex items-start justify-center px-4 py-10 md:py-16">
+        <div class="w-full max-w-md">
+            <!-- أيقونة الحساب (مضمّنة داخل HTML) -->
+            <div class="flex justify-center mb-8" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 64 64" fill="none" class="drop-shadow-lg">
+                    <defs>
+                        <linearGradient id="nova-account-grad-inline" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stop-color="#4f46e5"/>
+                            <stop offset="1" stop-color="#7c3aed"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="32" cy="32" r="30" fill="url(#nova-account-grad-inline)"/>
+                    <circle cx="32" cy="32" r="28" stroke="#ffffff" stroke-opacity="0.18" stroke-width="2" fill="none"/>
+                    <circle cx="32" cy="17" r="6.5" fill="#ffffff"/>
+                    <path d="M19 39c1.3-5.4 6.4-8.7 13-8.7s11.7 3.3 13 8.7c-4.2 2.2-8.3 3.4-13 3.4s-8.8-1.2-13-3.4z" fill="#ffffff"/>
+                    <path d="M32 45v15" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+                    <path d="M13 52.5h11" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+                    <path d="M24 48.5l8 4-8 4" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-6 md:p-8">
+                <h1 id="account-heading" tabindex="-1" class="text-2xl md:text-3xl font-bold text-center text-gray-800 dark:text-white focus:outline-none mb-2">حسابي</h1>
+                <p id="account-subtitle" class="text-center text-gray-500 dark:text-gray-400 mb-8 leading-relaxed">سجّل الدخول إلى حسابك أو أنشئ حساباً جديداً لتجربة تسوق أسرع.</p>
+
+                <!-- رسالة الحالة العامة -->
+                <div id="form-status" class="hidden mb-6 text-center font-bold p-4 rounded-xl" role="alert" aria-live="assertive"></div>
+
+                <!-- المبدّل (تسجيل الدخول / إنشاء حساب) -->
+                <div role="tablist" aria-label="نوع العملية" class="bg-gray-100 dark:bg-gray-700 rounded-full p-1 mb-8 grid grid-cols-2 gap-1">
+                    <button type="button" role="tab" id="tab-signin" aria-selected="true" aria-controls="panel-signin" class="tab-btn py-2.5 rounded-full text-sm font-bold transition-all cursor-pointer">
+                        <span id="tab-signin-text">تسجيل الدخول</span>
+                    </button>
+                    <button type="button" role="tab" id="tab-signup" aria-selected="false" aria-controls="panel-signup" class="tab-btn py-2.5 rounded-full text-sm font-bold transition-all cursor-pointer">
+                        <span id="tab-signup-text">إنشاء حساب</span>
+                    </button>
+                </div>
+
+                <!-- نموذج تسجيل الدخول -->
+                <section id="panel-signin" role="tabpanel" aria-labelledby="tab-signin" class="tab-panel">
+                    <form id="signin-form" class="space-y-6" novalidate>
+                        <div>
+                            <label for="login-email" id="label-login-email" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">البريد الإلكتروني</label>
+                            <input type="email" id="login-email" name="email" autocomplete="email" required
+                                   aria-required="true" aria-describedby="login-email-error"
+                                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-indigo-600 transition-all dark:text-white"
+                                   placeholder="you@example.com">
+                            <span id="login-email-error" class="text-xs text-red-500 mt-1.5 block hidden" role="alert"></span>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <label for="login-password" id="label-login-password" class="text-sm font-bold text-gray-700 dark:text-gray-300">كلمة السر</label>
+                                <button type="button" id="forgot-password" class="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline">هل نسيت كلمة السر؟</button>
+                            </div>
+                            <div class="relative">
+                                <input type="password" id="login-password" name="password" autocomplete="current-password" required
+                                       aria-required="true" aria-describedby="login-password-error"
+                                       class="w-full px-4 py-3 pr-10 rounded-xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-indigo-600 transition-all dark:text-white"
+                                       placeholder="••••••••">
+                                <button type="button" data-toggle-pass="login-password"
+                                        class="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-indigo-600 transition-colors rounded-full"
+                                        aria-label="إظهار كلمة السر" aria-pressed="false" aria-describedby="toggle-hint">
+                                    <svg class="svg-eye w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <svg class="svg-eye-off w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c6.5 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68M6.61 6.61A13.526 13.526 0 0 0 2 12s3.5 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+                                        <line x1="2" y1="2" x2="22" y2="22"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span id="login-password-error" class="text-xs text-red-500 mt-1.5 block hidden" role="alert"></span>
+                        </div>
+
+                        <button type="submit" id="btn-login" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg>
+                            <span id="btn-login-text">تسجيل الدخول</span>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- نموذج إنشاء حساب -->
+                <section id="panel-signup" role="tabpanel" aria-labelledby="tab-signup" class="tab-panel hidden">
+                    <form id="signup-form" class="space-y-6" novalidate>
+                        <div>
+                            <label for="signup-name" id="label-signup-name" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">الاسم الكامل</label>
+                            <input type="text" id="signup-name" name="name" autocomplete="name" required
+                                   aria-required="true" aria-describedby="signup-name-error"
+                                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-indigo-600 transition-all dark:text-white"
+                                   placeholder="محمد الأمين">
+                            <span id="signup-name-error" class="text-xs text-red-500 mt-1.5 block hidden" role="alert"></span>
+                        </div>
+
+                        <div>
+                            <label for="signup-email" id="label-signup-email" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">البريد الإلكتروني</label>
+                            <input type="email" id="signup-email" name="email" autocomplete="email" required
+                                   aria-required="true" aria-describedby="signup-email-error"
+                                   class="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-indigo-600 transition-all dark:text-white"
+                                   placeholder="you@example.com">
+                            <span id="signup-email-error" class="text-xs text-red-500 mt-1.5 block hidden" role="alert"></span>
+                        </div>
+
+                        <div>
+                            <label for="signup-password" id="label-signup-password" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">كلمة السر</label>
+                            <div class="relative">
+                                <input type="password" id="signup-password" name="password" autocomplete="new-password" required
+                                       aria-required="true" aria-describedby="signup-password-error"
+                                       class="w-full px-4 py-3 pr-10 rounded-xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-indigo-600 transition-all dark:text-white"
+                                       placeholder="8 أحرف على الأقل">
+                                <button type="button" data-toggle-pass="signup-password"
+                                        class="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-indigo-600 transition-colors rounded-full"
+                                        aria-label="إظهار كلمة السر" aria-pressed="false" aria-describedby="toggle-hint">
+                                    <svg class="svg-eye w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <svg class="svg-eye-off w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c6.5 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68M6.61 6.61A13.526 13.526 0 0 0 2 12s3.5 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+                                        <line x1="2" y1="2" x2="22" y2="22"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span id="signup-password-error" class="text-xs text-red-500 mt-1.5 block hidden" role="alert"></span>
+                        </div>
+
+                        <div>
+                            <label for="signup-confirm" id="label-signup-confirm" class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">تأكيد كلمة السر</label>
+                            <div class="relative">
+                                <input type="password" id="signup-confirm" name="confirm" autocomplete="new-password" required
+                                       aria-required="true" aria-describedby="signup-confirm-error"
+                                       class="w-full px-4 py-3 pr-10 rounded-xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-indigo-600 transition-all dark:text-white"
+                                       placeholder="••••••••">
+                                <button type="button" data-toggle-pass="signup-confirm"
+                                        class="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 text-gray-400 hover:text-indigo-600 transition-colors rounded-full"
+                                        aria-label="إظهار كلمة السر" aria-pressed="false" aria-describedby="toggle-hint">
+                                    <svg class="svg-eye w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <svg class="svg-eye-off w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c6.5 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68M6.61 6.61A13.526 13.526 0 0 0 2 12s3.5 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+                                        <line x1="2" y1="2" x2="22" y2="22"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <span id="signup-confirm-error" class="text-xs text-red-500 mt-1.5 block hidden" role="alert"></span>
+                        </div>
+
+                        <button type="submit" id="btn-signup" class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all shadow-lg flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/><line x1="19" y1="15" x2="19" y2="21"/><line x1="16" y1="18" x2="22" y2="18"/></svg>
+                            <span id="btn-signup-text">إنشاء حساب</span>
+                        </button>
+                    </form>
+                </section>
+            </div>
+
+            <!-- رابط إعادة تعيين كلمة السر (وهمي مؤقتاً) -->
+            <p id="toggle-hint" class="sr-only">اضغط لإظهار أو إخفاء كلمة السر</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-copyright" class="py-8 text-center text-gray-400 dark:text-gray-500 text-sm border-t border-gray-100 dark:border-gray-800">
+        &copy; 2026 NovaStore. جميع الحقوق محفوظة.
+    </footer>
+
+    <script>
+        // قاموس الترجمات
+        const translations = {
+            ar: {
+                title: "حسابي | NovaStore",
+                skip_to_content: "تخطي إلى المحتوى الأساسي",
+                back: "العودة للمتجر",
+                heading: "حسابي",
+                subtitle: "سجّل الدخول إلى حسابك أو أنشئ حساباً جديداً لتجربة تسوق أسرع.",
+                tablist_label: "نوع العملية",
+                tab_signin: "تسجيل الدخول",
+                tab_signup: "إنشاء حساب",
+                label_email: "البريد الإلكتروني",
+                label_password: "كلمة السر",
+                label_name: "الاسم الكامل",
+                label_confirm: "تأكيد كلمة السر",
+                email_placeholder: "you@example.com",
+                name_placeholder: "محمد الأمين",
+                pass_placeholder: "8 أحرف على الأقل",
+                show_password: "إظهار كلمة السر",
+                hide_password: "إخفاء كلمة السر",
+                toggle_hint: "اضغط لإظهار أو إخفاء كلمة السر",
+                forgot: "هل نسيت كلمة السر؟",
+                btn_login: "تسجيل الدخول",
+                btn_signup: "إنشاء حساب",
+                err_name_required: "يرجى إدخال الاسم الكامل.",
+                err_email_required: "يرجى إدخال البريد الإلكتروني.",
+                err_email_invalid: "يرجى إدخال بريد إلكتروني صالح.",
+                err_password_required: "يرجى إدخال كلمة السر.",
+                err_password_short: "كلمة السر يجب أن تكون 8 أحرف على الأقل.",
+                err_confirm_required: "يرجى تأكيد كلمة السر.",
+                err_confirm_mismatch: "كلمتا السر غير متطابقتين.",
+                signup_success: "تم إنشاء حسابك بنجاح! يمكنك الآن تسجيل الدخول.",
+                login_success: "مرحباً بعودتك! تم تسجيل الدخول بنجاح.",
+                login_fail: "البريد الإلكتروني أو كلمة السر غير صحيحة.",
+                user_not_found: "لا يوجد حساب بهذا البريد الإلكتروني. يرجى إنشاء حساب أولاً.",
+                welcome: "مرحباً",
+                footer_copyright: "&copy; 2026 NovaStore. جميع الحقوق محفوظة."
+            },
+            fr: {
+                title: "Mon compte | NovaStore",
+                skip_to_content: "Passer au contenu principal",
+                back: "Retour au magasin",
+                heading: "Mon compte",
+                subtitle: "Connectez-vous à votre compte ou créez-en un nouveau pour un shopping plus rapide.",
+                tablist_label: "Type d'opération",
+                tab_signin: "Connexion",
+                tab_signup: "Créer un compte",
+                label_email: "Adresse e-mail",
+                label_password: "Mot de passe",
+                label_name: "Nom complet",
+                label_confirm: "Confirmer le mot de passe",
+                email_placeholder: "you@example.com",
+                name_placeholder: "Ahmed Benali",
+                pass_placeholder: "8 caractères minimum",
+                show_password: "Afficher le mot de passe",
+                hide_password: "Masquer le mot de passe",
+                toggle_hint: "Cliquez pour afficher ou masquer le mot de passe",
+                forgot: "Mot de passe oublié ?",
+                btn_login: "Se connecter",
+                btn_signup: "Créer un compte",
+                err_name_required: "Veuillez saisir votre nom complet.",
+                err_email_required: "Veuillez saisir votre adresse e-mail.",
+                err_email_invalid: "Veuillez saisir une adresse e-mail valide.",
+                err_password_required: "Veuillez saisir votre mot de passe.",
+                err_password_short: "Le mot de passe doit contenir au moins 8 caractères.",
+                err_confirm_required: "Veuillez confirmer votre mot de passe.",
+                err_confirm_mismatch: "Les mots de passe ne correspondent pas.",
+                signup_success: "Compte créé avec succès ! Vous pouvez maintenant vous connecter.",
+                login_success: "Bon retour ! Connexion réussie.",
+                login_fail: "Adresse e-mail ou mot de passe incorrect.",
+                user_not_found: "Aucun compte trouvé avec cet e-mail. Veuillez créer un compte.",
+                welcome: "Bonjour",
+                footer_copyright: "&copy; 2026 NovaStore. Tous droits réservés."
+            },
+            en: {
+                title: "My Account | NovaStore",
+                skip_to_content: "Skip to main content",
+                back: "Back to store",
+                heading: "My Account",
+                subtitle: "Sign in to your account or create a new one for faster shopping.",
+                tablist_label: "Operation type",
+                tab_signin: "Sign In",
+                tab_signup: "Create Account",
+                label_email: "Email Address",
+                label_password: "Password",
+                label_name: "Full Name",
+                label_confirm: "Confirm Password",
+                email_placeholder: "you@example.com",
+                name_placeholder: "John Doe",
+                pass_placeholder: "8 characters min",
+                show_password: "Show password",
+                hide_password: "Hide password",
+                toggle_hint: "Click to show or hide the password",
+                forgot: "Forgot password?",
+                btn_login: "Sign In",
+                btn_signup: "Create Account",
+                err_name_required: "Please enter your full name.",
+                err_email_required: "Please enter your email address.",
+                err_email_invalid: "Please enter a valid email address.",
+                err_password_required: "Please enter your password.",
+                err_password_short: "Password must be at least 8 characters.",
+                err_confirm_required: "Please confirm your password.",
+                err_confirm_mismatch: "Passwords do not match.",
+                signup_success: "Account created successfully! You can now sign in.",
+                login_success: "Welcome back! Signed in successfully.",
+                login_fail: "Incorrect email or password.",
+                user_not_found: "No account found with this email. Please create an account.",
+                welcome: "Welcome",
+                footer_copyright: "&copy; 2026 NovaStore. All rights reserved."
+            }
+        };
+
+        const STORAGE_KEY = 'nova_user';
+
+        function getLang() {
+            return localStorage.getItem('selectedLang') || 'ar';
+        }
+
+        function applyTheme() {
+            const theme = localStorage.getItem('selectedTheme') || 'light';
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        function applyLang() {
+            const lang = getLang();
+            const t = translations[lang];
+
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = lang;
+            document.title = t.title;
+
+            document.getElementById('skip-link').textContent = t.skip_to_content;
+            document.getElementById('back-text').textContent = t.back;
+            document.getElementById('back-link').setAttribute('aria-label', t.back);
+            document.getElementById('account-heading').textContent = t.heading;
+            document.getElementById('account-subtitle').textContent = t.subtitle;
+
+            const tablist = document.querySelector('[role="tablist"]');
+            tablist.setAttribute('aria-label', t.tablist_label);
+            document.getElementById('tab-signin-text').textContent = t.tab_signin;
+            document.getElementById('tab-signup-text').textContent = t.tab_signup;
+
+            document.getElementById('label-login-email').textContent = t.label_email;
+            document.getElementById('label-login-password').textContent = t.label_password;
+            document.getElementById('login-email').placeholder = t.email_placeholder;
+            document.getElementById('label-signup-name').textContent = t.label_name;
+            document.getElementById('label-signup-email').textContent = t.label_email;
+            document.getElementById('label-signup-password').textContent = t.label_password;
+            document.getElementById('label-signup-confirm').textContent = t.label_confirm;
+            document.getElementById('signup-name').placeholder = t.name_placeholder;
+            document.getElementById('signup-email').placeholder = t.email_placeholder;
+            document.getElementById('signup-password').placeholder = t.pass_placeholder;
+
+            document.getElementById('forgot-password').textContent = t.forgot;
+            document.getElementById('btn-login-text').textContent = t.btn_login;
+            document.getElementById('btn-signup-text').textContent = t.btn_signup;
+            document.getElementById('toggle-hint').textContent = t.toggle_hint;
+            document.getElementById('footer-copyright').innerHTML = t.footer_copyright;
+
+            showPasswordButtons.forEach(function (btn) {
+                const input = document.getElementById(btn.getAttribute('data-toggle-pass'));
+                const isVisible = input && input.type === 'text';
+                btn.setAttribute('aria-label', isVisible ? t.hide_password : t.show_password);
+            });
+        }
+
+        // عناصر محفوظة
+        let showPasswordButtons = [];
+
+        function initShowPassword() {
+            showPasswordButtons = Array.from(document.querySelectorAll('[data-toggle-pass]'));
+            showPasswordButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const input = document.getElementById(btn.getAttribute('data-toggle-pass'));
+                    if (!input) return;
+                    const isVisible = input.type === 'text';
+                    input.type = isVisible ? 'password' : 'text';
+                    btn.setAttribute('aria-pressed', isVisible ? 'false' : 'true');
+                    const t = translations[getLang()];
+                    btn.setAttribute('aria-label', isVisible ? t.show_password : t.hide_password);
+                    btn.querySelector('.svg-eye').classList.toggle('hidden', !isVisible);
+                    btn.querySelector('.svg-eye-off').classList.toggle('hidden', isVisible);
+                    input.focus();
+                });
+            });
+        }
+
+        // التبديل بين النماذج
+        function switchTab(tabId) {
+            const isSignin = tabId === 'signin';
+            const tabEl = document.getElementById('tab-' + tabId);
+            const otherTab = document.getElementById(isSignin ? 'tab-signup' : 'tab-signin');
+            const panel = document.getElementById('panel-' + tabId);
+            const otherPanel = document.getElementById(isSignin ? 'panel-signup' : 'panel-signin');
+            const t = translations[getLang()];
+
+            const activeClass = 'bg-white dark:bg-gray-800 text-indigo-600 dark:text-indigo-400 shadow';
+            const inactiveClass = 'text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400';
+
+            tabEl.setAttribute('aria-selected', 'true');
+            tabEl.classList.remove(inactiveClass);
+            tabEl.classList.add(activeClass);
+            otherTab.setAttribute('aria-selected', 'false');
+            otherTab.classList.remove(activeClass);
+            otherTab.classList.add(inactiveClass);
+
+            panel.classList.remove('hidden');
+            otherPanel.classList.add('hidden');
+
+            hideStatus();
+            if (isSignin) {
+                document.getElementById('login-password').focus();
+            } else {
+                document.getElementById('signup-name').focus();
+            }
+        }
+
+        // رسالة الحالة العامة
+        function showStatus(message, isError) {
+            const status = document.getElementById('form-status');
+            if (!message) {
+                status.classList.add('hidden');
+                return;
+            }
+            status.textContent = message;
+            status.classList.remove('hidden');
+            status.className = 'mb-6 text-center font-bold p-4 rounded-xl ' + (isError
+                ? 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/30'
+                : 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/30');
+        }
+
+        function hideStatus() {
+            const status = document.getElementById('form-status');
+            if (status) status.classList.add('hidden');
+        }
+
+        function setError(errorEl, input, message) {
+            if (!message) {
+                errorEl.textContent = "";
+                errorEl.classList.add('hidden');
+                input.removeAttribute('aria-invalid');
+            } else {
+                errorEl.textContent = message;
+                errorEl.classList.remove('hidden');
+                input.setAttribute('aria-invalid', 'true');
+            }
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // نموذج تسجيل الدخول
+        function handleSignin(e) {
+            e.preventDefault();
+            const t = translations[getLang()];
+            hideStatus();
+
+            const emailInput = document.getElementById('login-email');
+            const passInput = document.getElementById('login-password');
+            const emailError = document.getElementById('login-email-error');
+            const passError = document.getElementById('login-password-error');
+
+            let isValid = true;
+            setError(emailError, emailInput, !emailInput.value.trim()
+                ? t.err_email_required : (!emailPattern.test(emailInput.value.trim()) ? t.err_email_invalid : ""));
+            if (emailInput.getAttribute('aria-invalid') === 'true') isValid = false;
+
+            setError(passError, passInput, !passInput.value ? t.err_password_required : "");
+            if (passInput.getAttribute('aria-invalid') === 'true') isValid = false;
+
+            if (!isValid) {
+                const firstInvalid = document.querySelector('#signin-form [aria-invalid="true"]');
+                if (firstInvalid) firstInvalid.focus();
+                return;
+            }
+
+            const email = emailInput.value.trim().toLowerCase();
+            const password = passInput.value;
+            const stored = localStorage.getItem(STORAGE_KEY);
+
+            if (!stored) {
+                showStatus(t.user_not_found, true);
+                return;
+            }
+
+            const user = JSON.parse(stored);
+            if (user.email === email && user.password === password) {
+                sessionStorage.setItem('nova_logged_in', user.name);
+                showStatus(t.login_success, false);
+                passInput.value = "";
+            } else {
+                showStatus(t.login_fail, true);
+                passInput.focus();
+            }
+        }
+
+        // نموذج إنشاء حساب (واجهة أمامية فقط — جاهز للربط بالـ Backend)
+        function handleSignup(e) {
+            e.preventDefault();
+            const t = translations[getLang()];
+            hideStatus();
+
+            const nameInput = document.getElementById('signup-name');
+            const emailInput = document.getElementById('signup-email');
+            const passInput = document.getElementById('signup-password');
+            const confirmInput = document.getElementById('signup-confirm');
+            const nameError = document.getElementById('signup-name-error');
+            const emailError = document.getElementById('signup-email-error');
+            const passError = document.getElementById('signup-password-error');
+            const confirmError = document.getElementById('signup-confirm-error');
+
+            let isValid = true;
+
+            setError(nameError, nameInput, !nameInput.value.trim() ? t.err_name_required : "");
+            if (nameInput.getAttribute('aria-invalid') === 'true') isValid = false;
+
+            setError(emailError, emailInput, !emailInput.value.trim()
+                ? t.err_email_required : (!emailPattern.test(emailInput.value.trim()) ? t.err_email_invalid : ""));
+            if (emailInput.getAttribute('aria-invalid') === 'true') isValid = false;
+
+            setError(passError, passInput, !passInput.value
+                ? t.err_password_required : (passInput.value.length < 8 ? t.err_password_short : ""));
+            if (passInput.getAttribute('aria-invalid') === 'true') isValid = false;
+
+            if (!confirmInput.value) {
+                setError(confirmError, confirmInput, t.err_confirm_required);
+                isValid = false;
+            } else if (confirmInput.value !== passInput.value) {
+                setError(confirmError, confirmInput, t.err_confirm_mismatch);
+                isValid = false;
+            } else {
+                setError(confirmError, confirmInput, "");
+            }
+
+            if (!isValid) {
+                const firstInvalid = document.querySelector('#signup-form [aria-invalid="true"]');
+                if (firstInvalid) firstInvalid.focus();
+                return;
+            }
+
+            // حفظ محلي مؤقت (سيُستبدل لاحقاً بالاتصال بالخادم)
+            const user = {
+                name: nameInput.value.trim(),
+                email: emailInput.value.trim().toLowerCase(),
+                password: passInput.value
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+
+            showStatus(t.signup_success, false);
+            document.getElementById('login-email').value = user.email;
+            switchTab('signin');
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            applyTheme();
+            applyLang();
+            initShowPassword();
+
+            document.getElementById('tab-signin').addEventListener('click', function () { switchTab('signin'); });
+            document.getElementById('tab-signup').addEventListener('click', function () { switchTab('signup'); });
+
+            document.getElementById('signin-form').addEventListener('submit', handleSignin);
+            document.getElementById('signup-form').addEventListener('submit', handleSignup);
+
+            document.getElementById('forgot-password').addEventListener('click', function () {
+                const t = translations[getLang()];
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    const msgMap = {
+                        ar: "ميزة استعادة كلمة السر ستتوفر عند ربط الواجهة الخلفية.",
+                        fr: "La récupération du mot de passe sera disponible lors de la connexion au backend.",
+                        en: "Password recovery will be available once the backend is connected."
+                    };
+                    showStatus(msgMap[getLang()], false);
+                } else {
+                    showStatus(t.user_not_found, true);
+                }
+            });
+
+            const heading = document.getElementById('account-heading');
+            if (heading) heading.focus();
+        });
+    </script>
+</body>
+</html>
