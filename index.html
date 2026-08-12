@@ -60,6 +60,14 @@
             transition: transform 0.3s ease-in-out;
         }
 
+        /* تأثير أيقونة تسجيل الدخول / إنشاء الحساب */
+        #account-btn svg {
+            transition: transform 0.25s ease-in-out;
+        }
+        #account-btn:hover svg {
+            transform: scale(1.1);
+        }
+
         /* منع شريط التمرير للتصنيفات */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -204,6 +212,27 @@
                     </span>
                     <span class="hidden md:inline font-medium">الإشعارات</span>
                 </button>
+
+
+                <!-- زر تسجيل الدخول / إنشاء حساب -->
+                <a href="account.html" id="account-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors flex items-center gap-2" aria-label="تسجيل الدخول أو إنشاء حساب">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" class="w-7 h-7" aria-hidden="true">
+                        <defs>
+                            <linearGradient id="nova-account-grad-header" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                                <stop offset="0" stop-color="#4f46e5"/>
+                                <stop offset="1" stop-color="#7c3aed"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="32" cy="32" r="30" fill="url(#nova-account-grad-header)"/>
+                        <circle cx="32" cy="32" r="28" stroke="#ffffff" stroke-opacity="0.18" stroke-width="2" fill="none"/>
+                        <circle cx="32" cy="17" r="6.5" fill="#ffffff"/>
+                        <path d="M19 39c1.3-5.4 6.4-8.7 13-8.7s11.7 3.3 13 8.7c-4.2 2.2-8.3 3.4-13 3.4s-8.8-1.2-13-3.4z" fill="#ffffff"/>
+                        <path d="M32 45v15" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+                        <path d="M13 52.5h11" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round"/>
+                        <path d="M24 48.5l8 4-8 4" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                    <span class="hidden md:inline font-medium">حسابي</span>
+                </a>
 
 
                 <button id="menu-btn" class="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors relative z-50 flex items-center gap-1" aria-label="فتح قائمة التنقل" aria-expanded="false" aria-controls="nav-drawer">
