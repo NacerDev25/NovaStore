@@ -27,6 +27,8 @@ const translations = {
         nav_admin: "لوحة التحكم",
         nav_notifications: "الإشعارات",
         nav_menu: "القائمة",
+        nav_account: "حسابي",
+        nav_account_label: "تسجيل الدخول أو إنشاء حساب",
         skip_to_content: "تخطي إلى المحتوى الأساسي",
         clear_search: "مسح البحث",
         search_visual: "البحث بواسطة الصورة",
@@ -64,6 +66,8 @@ const translations = {
         nav_admin: "Tableau de bord",
         nav_notifications: "Notifications",
         nav_menu: "Menu",
+        nav_account: "Mon compte",
+        nav_account_label: "Se connecter ou créer un compte",
         skip_to_content: "Passer au contenu principal",
         clear_search: "Effacer la recherche",
         search_visual: "Recherche par image",
@@ -101,6 +105,8 @@ const translations = {
         nav_admin: "Admin Panel",
         nav_notifications: "Notifications",
         nav_menu: "Menu",
+        nav_account: "My Account",
+        nav_account_label: "Sign in or create account",
         skip_to_content: "Skip to main content",
         clear_search: "Clear search",
         search_visual: "Search by image",
@@ -281,6 +287,13 @@ function applyTranslations() {
         adminBtn.setAttribute('aria-label', t.nav_admin);
         const adminText = adminBtn.querySelector('span');
         if(adminText) adminText.textContent = t.nav_admin;
+    }
+
+    const accountBtn = document.getElementById('account-btn');
+    if(accountBtn) {
+        accountBtn.setAttribute('aria-label', t.nav_account_label);
+        const accountText = accountBtn.querySelector('span');
+        if(accountText) accountText.textContent = t.nav_account;
     }
 
     const menuBtn = document.getElementById('menu-btn');
